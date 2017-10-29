@@ -77,7 +77,11 @@ public class VideoEncoderFromBuffer
 				IFRAME_INTERVAL);
 		if (VERBOSE)
 			Log.d(TAG, "format: " + mediaFormat);
-		mMediaCodec = MediaCodec.createByCodecName(codecInfo.getName());
+		try {
+			mMediaCodec = MediaCodec.createByCodecName(codecInfo.getName());
+		} catch (IOException e) {
+			Log.d(TAG, "IOException" ,e);
+		}
 		mMediaCodec.configure(mediaFormat, null, null,
 				MediaCodec.CONFIGURE_FLAG_ENCODE);
 		mMediaCodec.start();

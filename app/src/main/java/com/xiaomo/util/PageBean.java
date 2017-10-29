@@ -2,9 +2,9 @@ package com.xiaomo.util;
 
 public class PageBean {
 
-	private int start;//起始页
-	private int page;//第几页
-	private int pageSize;//每页记录数
+	private int start;
+	private int page;
+	private int pageSize;
 	public PageBean(int page, int pageSize) {
 		super();
 		this.page = page;
