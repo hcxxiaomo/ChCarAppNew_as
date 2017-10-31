@@ -1,41 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="none">
+
         <item
             android:id="@+id/action_delete_img"
             android:title="@string/action_delete_img"
             android:checkable="true"
-            android:icon="@drawable/ic_mine_gray_24"/>
+            android:icon="@drawable/menu_icon_1"/>
         <item
             android:id="@+id/action_network_set"
             android:title="@string/action_network_set"
-            android:icon="@drawable/ic_friends_gray_24"/>
+            android:icon="@drawable/menu_icon_2"/>
         <item
             android:id="@+id/action_illegal_action"
             android:title="@string/action_illegal_action"
-            android:icon="@drawable/ic_notification_gray_24"/>
+            android:icon="@drawable/menu_icon_3"/>
         <item
             android:id="@+id/action_default_area"
             android:title="@string/action_default_area"
-            android:icon="@drawable/ic_messages_gray_24"
+            android:icon="@drawable/menu_icon_4"
             />
-    </group>
-    <group android:checkableBehavior="none"
         android:id="@+id/group_manage">
         <item
             android:id="@+id/action_commo_address"
             android:title="@string/action_commo_address"
-            android:icon="@drawable/ic_app_management_gray_24"/>
-    </group>
-   <group
-       android:checkableBehavior="none"
-       android:id="@+id/group_settings">
+            android:icon="@drawable/menu_icon_5"/>
        <item android:id="@+id/action_sycn_blacklist"
+           android:icon="@drawable/menu_icon_6"
            android:title="@string/action_sycn_blacklist"/>
        <item android:id="@+id/action_advanced_set"
+           android:icon="@drawable/menu_icon_7"
            android:title="@string/action_advanced_set"/>
        <item android:id="@+id/action_seize_type"
+
            android:title="@string/action_seize_type"/>
-   </group>
 </menu>
