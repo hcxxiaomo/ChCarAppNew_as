@@ -12,13 +12,14 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
+import com.carOCR.activity.ScanActivity;
 import com.xiaomo.chcarappnew.R;
+import com.xiaomo.chcarappnew.adapt.MyGridViewAdapt;
+import com.xiaomo.chcarappnew.view.MyGridView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -26,6 +27,10 @@ public class MainActivity extends AppCompatActivity
     private TextView mTextView;
     private ImageView mImageView;
     private  DrawerLayout drawer;
+
+    private MyGridView gridview;
+
+    private Intent intent = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,25 @@ public class MainActivity extends AppCompatActivity
         mImageView.setOnClickListener(this);
 
         //ButterKnife.bind(this);
+        gridview= (MyGridView) findViewById(R.id.gridview);
+        gridview.setAdapter(new MyGridViewAdapt(this));
+
+        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                if (position == 3) {
+                    intent = new Intent(MainActivity.this, StaticActivity.class);
+                    startActivity(intent);
+                }else if(position == 0){
+                    intent = new Intent(MainActivity.this, ScanActivity.class);
+                    startActivity(intent);
+                }
+
+            }
+        });
+
     }
 
     @Override

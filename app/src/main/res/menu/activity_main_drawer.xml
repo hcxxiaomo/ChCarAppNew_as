@@ -32,6 +32,6 @@
            android:icon="@drawable/menu_icon_7"
            android:title="@string/action_advanced_set"/>
        <item android:id="@+id/action_seize_type"
-
+           android:icon="@drawable/menu_icon_8"
            android:title="@string/action_seize_type"/>
 </menu>
