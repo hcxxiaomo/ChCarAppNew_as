@@ -2,6 +2,7 @@ package com.carOCR.activity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import org.apache.http.Header;
@@ -11,6 +12,8 @@ import com.carOCR.RecogEngine;
 import com.carOCR.RecogResult;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.smarttop.blacklist.BlackListManager;
+import com.smarttop.blacklist.bean.BlackList;
 import com.szOCR.camera.CameraPreview;
 import com.szOCR.camera.ScanHandler;
 import com.szOCR.camera.ViewfinderView;
@@ -162,7 +165,9 @@ public class ScanActivity extends Activity implements SensorEventListener,View.O
 	public 	boolean				m_bShowVideoBtn;
 	public 	boolean				m_bShowZoomBar;
 	public 	boolean				m_bAutoFocus;
-	int mCameraId;// =2 
+	int mCameraId;// =2
+
+    private BlackListManager blackListManager;
 	
     public void onCreate(Bundle savedInstanceState) 
     {
@@ -274,7 +279,8 @@ public class ScanActivity extends Activity implements SensorEventListener,View.O
         
         soundPool= new SoundPool(2,AudioManager.STREAM_SYSTEM,5);//第二行将soundPool实例化，第一个参数为soundPool可以支持的声音数量，这决定了Android为其开设多大的缓冲区，第二个参数为声音类型，在这里标识为系统声音，除此之外还有AudioManager.STREAM_RING以及AudioManager.STREAM_MUSIC等，系统会根据不同的声音为其标志不同的优先级和缓冲区，最后参数为声音品质，品质越高，声音效果越好，但耗费更多的系统资源。
         soundPool.load(this,R.raw.illegal,1);//系统为soundPool加载声音，第一个参数为上下文参数，第二个参数为声音的id，一般我们将声音信息保存在res的raw文件夹下，如下图所示。
-        
+
+        blackListManager = new BlackListManager(this);
     }
     @SuppressLint("HandlerLeak")
 	Handler handler = new Handler()
@@ -595,14 +601,11 @@ public class ScanActivity extends Activity implements SensorEventListener,View.O
 				lastCarNumber = result.m_szRecogTxt[0];
 				//保存图片到本地去
 				CGlobal.carPath =  CGlobal.SaveRecogBitmap("", CGlobal.myEngine.getRecgBitmap());
-				
+
 				//调用接口查询车辆信息
 				//保存到数据库中
 				getCarInfoAndSave();
-				
-			
-			
-			
+
 //			m_PopupResult.showAtLocation(mViewfinderView, 0, 0);
 //			m_PopupResult.showAtLocation(mViewfinderView, 0, 0);
 		}
@@ -888,7 +891,6 @@ public class ScanActivity extends Activity implements SensorEventListener,View.O
 				,networkPrefs.getString("port", "8080")
 				,networkPrefs.getString("dir", "carplatenumber")
 				,"carplatenumber/carNumber/getCarInfoWithoutType", params, new JsonHttpResponseHandler(){
-
 			@Override
 			public void onSuccess(int statusCode, Header[] headers,
 					JSONObject response) {
@@ -908,30 +910,30 @@ public class ScanActivity extends Activity implements SensorEventListener,View.O
 				
 				StringBuilder sb = new StringBuilder();
 				
-				boolean is_leage = false;//正常车辆
+				boolean is_leagle = false;//正常车辆
 				if (response.optInt("isYellowCar") == 1) {
 					sb.append("黄标车  ");
 					cni.setIsBlackListCar(1);
-					is_leage = true;
+                    is_leagle = true;
 				}
 				if (response.optInt("isBlackListCar") == 1) {
 					sb.append("布控车  ");
 					cni.setIsBlackListCar(1);
-					is_leage = true;
+                    is_leagle = true;
 				}
 				if (response.optInt("isSeizedCar") == 1) {
 					sb.append("查封车  ");
 					cni.setIsSeizedCar(1);
-					is_leage = true;
+                    is_leagle = true;
 				}
 				if (response.optInt("isCheckOkCar") == 1) {
 					sb.append("逾期未年审车  ");
 					cni.setIsCheckOkCar(1);
-					is_leage = true;
+                    is_leagle = true;
 				}
 				if (response.optInt("isScrappedCar") == 1) {
 					sb.append("报废车  ");
-					is_leage = true;
+                    is_leagle = true;
 				}
 				if (response.optInt("legalNumber") >= 1) {
 					sb.append("有");
@@ -939,9 +941,21 @@ public class ScanActivity extends Activity implements SensorEventListener,View.O
 					sb.append("次违法未处理");
 					cni.setIsLegalCar(1);
 					cni.setLegalNumber(response.optInt("legalNumber"));
-					is_leage = true;
+                    is_leagle = true;
 				}
-				if (is_leage) {
+                //调用本地黑名单数据库
+                List<BlackList> listBlackList =  blackListManager.getBlackList(CGlobal.g_RecogResult.m_szRecogTxt[0]);
+                if (!listBlackList.isEmpty()){
+                    is_leagle = true;
+                    sb.append("\n");
+                    for (BlackList blackList : listBlackList){
+                            sb.append(blackList.type.concat(" "));
+                    }
+                    sb.append("[本地库]");
+                }
+
+
+                if (is_leagle) {
 					soundPool.play(1,1, 1, 0, 0, 1); //播放了，第一个参数为id，id即为放入到soundPool中的顺序，比如现在collide.wav是第一个，因此它的id就是1。第二个和第三个参数为左右声道的音量控制。第四个参数为优先级，由于只有这一个声音，因此优先级在这里并不重要。第五个参数为是否循环播放，0为不循环，-1为循环。最后一个参数为播放比率，从0.5到2，一般为1，表示正常播放。
 					car_illegal.setText(sb.toString());
 					

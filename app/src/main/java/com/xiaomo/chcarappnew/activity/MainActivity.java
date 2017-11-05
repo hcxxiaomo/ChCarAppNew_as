@@ -1,7 +1,9 @@
 package com.xiaomo.chcarappnew.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,8 +17,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.carOCR.activity.ScanActivity;
+import com.carOCR.activity.ScanIllegalActivity;
 import com.xiaomo.chcarappnew.R;
 import com.xiaomo.chcarappnew.adapt.MyGridViewAdapt;
 import com.xiaomo.chcarappnew.view.MyGridView;
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity
     private MyGridView gridview;
 
     private Intent intent = null;
+    private SharedPreferences preference = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,9 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
 
+        Menu menu = navigationView.getMenu();
+        preference = this.getSharedPreferences("NavigationView",MODE_PRIVATE);
+        menu.findItem(R.id.action_delete_img).setChecked( preference.getBoolean("auto_delete_image",true));
         mTextView = (TextView) findViewById(R.id.textView);
         mImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.ivAvatar);
         mImageView.setOnClickListener(this);
@@ -68,16 +76,22 @@ public class MainActivity extends AppCompatActivity
                 }else if(position == 0){
                     intent = new Intent(MainActivity.this, ScanActivity.class);
                     startActivity(intent);
+                } else if(position == 1){
+                    intent = new Intent(MainActivity.this, ScanIllegalActivity.class);
+                    startActivity(intent);
                 }
 
             }
         });
+
+
 
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -112,16 +126,35 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
-        String string = null;
+        //String string = null;
+        Intent intent = null;
         switch (id){
+            case R.id.action_delete_img:
+
+                if(item.isChecked()){
+                    item.setChecked(false);
+                    preference.edit().putBoolean("auto_delete_image",false).apply();
+                }else {
+                    item.setChecked(true);
+                    preference.edit().putBoolean("auto_delete_image",true).apply();
+                }
+
+
+                break;
             case R.id.action_network_set:
-                string = "我";
+                intent = new Intent(MainActivity.this,NetworkSetActivity.class);
+                startActivity(intent);
                 break;
             case R.id.action_commo_address:
-                string = "关于";
+                intent = new Intent(MainActivity.this,DefaultAreaActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.action_sycn_blacklist:
+                //TODO 后面需要增加联网同步的功能
+                Toast.makeText(MainActivity.this,"黑名单已经同步",Toast.LENGTH_SHORT).show();
                 break;
         }
-        if (!TextUtils.isEmpty(string))
+        //if (!TextUtils.isEmpty(string))
            //mTextView.setText("你点击了"+string);
         //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

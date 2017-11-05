@@ -30,12 +30,10 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.xiaomo.chcarappnew.activity.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name="com.xiaomo.chcarappnew.activity.LoginActivity"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -47,11 +45,15 @@
             android:theme="@style/CaptureTheme"
            >
        </activity>
-         <activity android:name="com.xiaomo.chcarappnew.activity.NetworkSetActivity">
+         <activity android:name="com.xiaomo.chcarappnew.activity.NetworkSetActivity"
+             android:theme="@android:style/Theme.Holo.Light">
        </activity>
          <activity android:name="com.xiaomo.chcarappnew.activity.DefaultAreaActivity">
        </activity>
          <activity android:name="com.xiaomo.chcarappnew.activity.StaticActivity">
+       </activity>
+        <activity android:name="com.xiaomo.chcarappnew.activity.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
        </activity>
         
     </application>
