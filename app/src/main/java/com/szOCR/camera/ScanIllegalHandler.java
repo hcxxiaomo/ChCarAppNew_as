@@ -22,12 +22,12 @@ public final class ScanIllegalHandler extends Handler {
 	private static final String TAG = ScanIllegalHandler.class.getSimpleName();
 
 	private final ScanIllegalActivity mActivity;
-	private final CameraPreview m_CameraPreview;
+	private final CameraIllegalPreview m_CameraPreview;
 	private State state;
 	 
 	private enum State {PREVIEW, SUCCESS, DONE}
 
-	public ScanIllegalHandler(ScanIllegalActivity activity,CameraPreview cameraPreview) 
+	public ScanIllegalHandler(ScanIllegalActivity activity,CameraIllegalPreview cameraPreview)
 	{
 		this.mActivity = activity;
 		this.m_CameraPreview = cameraPreview;

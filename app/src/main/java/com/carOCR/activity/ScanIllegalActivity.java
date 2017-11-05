@@ -11,6 +11,7 @@ import com.carOCR.RecogEngine;
 import com.carOCR.RecogResult;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.szOCR.camera.CameraIllegalPreview;
 import com.szOCR.camera.CameraPreview;
 import com.szOCR.camera.ScanHandler;
 import com.szOCR.camera.ScanIllegalHandler;
@@ -71,7 +72,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 	
 	public int 				m_infor_prevent;
 	
-	public  CameraPreview 	mCameraPreview;
+	public CameraIllegalPreview mCameraPreview;
 	public 	ViewfinderView	mViewfinderView;
 	
     public  RelativeLayout 	mHomeLayout;
@@ -415,7 +416,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         super.onResume();
 
         
-        mCameraPreview = new CameraPreview(this, mCameraId, CameraPreview.LayoutMode.FitToParent);//2
+        mCameraPreview = new CameraIllegalPreview(this, mCameraId, CameraIllegalPreview.LayoutMode.FitToParent);//2
         RelativeLayout.LayoutParams previewLayoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
         previewLayoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);
 
@@ -813,14 +814,14 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 		{
 			ShowResultCtrls();
 			//保存图片功能
-			CGlobal.carPath =  CGlobal.SaveRecogBitmap("", CGlobal.myEngine.getRecgBitmap());
+			String imagePath =  mCameraPreview.takePhoto();
 			if (scan_illegal_image_1.getDrawable() == null) {
 				scan_illegal_image_1.setImageBitmap(
-						(BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(CGlobal.carPath), 120, 160, true))	
+						(BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
 				);
 			}else if (scan_illegal_image_2.getDrawable() == null){
 				scan_illegal_image_2.setImageBitmap(
-						(BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(CGlobal.carPath), 120, 160, true))	
+						(BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
 				);
 			}else{
 				Toast.makeText(this, "请点击对应的图片进行删除", Toast.LENGTH_SHORT).show();
