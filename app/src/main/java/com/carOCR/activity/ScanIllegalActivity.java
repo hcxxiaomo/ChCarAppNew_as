@@ -1,30 +1,5 @@
 package com.carOCR.activity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
-import org.apache.http.Header;
-import org.json.JSONObject;
-
-import com.carOCR.RecogEngine;
-import com.carOCR.RecogResult;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import com.szOCR.camera.CameraIllegalPreview;
-import com.szOCR.camera.CameraPreview;
-import com.szOCR.camera.ScanHandler;
-import com.szOCR.camera.ScanIllegalHandler;
-import com.szOCR.camera.ViewfinderView;
-import com.szOCR.general.CGlobal;
-import com.szOCR.general.Defines;
-import com.xiaomo.chcarappnew.R;
-import com.xiaomo.db.dao.CarNumberInfoDao;
-import com.xiaomo.db.model.CarNumberInfo;
-import com.xiaomo.util.BitmapThumb;
-import com.xiaomo.util.MyDbHelper;
-import com.xiaomo.util.RestClient;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -33,8 +8,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.hardware.Sensor;
@@ -42,13 +15,13 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.Vibrator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -62,6 +35,25 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.carOCR.RecogEngine;
+import com.carOCR.RecogResult;
+import com.szOCR.camera.CameraIllegalPreview;
+import com.szOCR.camera.ScanIllegalHandler;
+import com.szOCR.camera.ViewfinderView;
+import com.szOCR.general.CGlobal;
+import com.xiaomo.chcarappnew.R;
+import com.xiaomo.chcarappnew.adapt.GalleryAdapter;
+import com.xiaomo.chcarappnew.adapt.GalleryAdapter.OnItemClickLitener;
+import com.xiaomo.chcarappnew.view.MyRecyclerView;
+import com.xiaomo.chcarappnew.view.MyRecyclerView.OnItemScrollChangeListener;
+import com.xiaomo.db.dao.CarNumberInfoDao;
+import com.xiaomo.util.BitmapThumb;
+import com.xiaomo.util.MyDbHelper;
+
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ScanIllegalActivity extends Activity implements SensorEventListener,View.OnClickListener, OnTouchListener
 {
@@ -169,7 +161,12 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 	public 	boolean				m_bShowVideoBtn;
 	public 	boolean				m_bShowZoomBar;
 	public 	boolean				m_bAutoFocus;
-	int mCameraId;// =2 
+	int mCameraId;// =2
+
+	//横向ListView选择违法数据信息
+    private MyRecyclerView mRecyclerView;
+    private GalleryAdapter mAdapter;
+    private List<String> mDatas;
 	
     public void onCreate(Bundle savedInstanceState) 
     {
@@ -284,8 +281,47 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         
         soundPool= new SoundPool(2,AudioManager.STREAM_SYSTEM,5);//第二行将soundPool实例化，第一个参数为soundPool可以支持的声音数量，这决定了Android为其开设多大的缓冲区，第二个参数为声音类型，在这里标识为系统声音，除此之外还有AudioManager.STREAM_RING以及AudioManager.STREAM_MUSIC等，系统会根据不同的声音为其标志不同的优先级和缓冲区，最后参数为声音品质，品质越高，声音效果越好，但耗费更多的系统资源。
         soundPool.load(this,R.raw.illegal,1);//系统为soundPool加载声音，第一个参数为上下文参数，第二个参数为声音的id，一般我们将声音信息保存在res的raw文件夹下，如下图所示。
+
+
+        initDatas();
+        //得到控件
+        mRecyclerView = (MyRecyclerView) findViewById(R.id.id_recyclerview_horizontal);
+        //id_show_title = (TextView) findViewById(R.id.id_show_title);
+        //mImg = (ImageView) findViewById(R.id.id_content);
+        //设置布局管理器
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        linearLayoutManager.scrollToPosition(3);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+
+        //设置适配器
+        mAdapter = new GalleryAdapter(this, mDatas);
+        //在主Activity中设置监听
+        mAdapter.setOnItemClickLitener(new OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(ScanIllegalActivity.this, position + "", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
+        mRecyclerView.setOnItemScrollChangeListener(new OnItemScrollChangeListener() {
+            @Override
+            public void onChange(View view, int position) {
+                //mImg.setImageResource(mDatas.get(position + 1));
+                //id_show_title.setText(mDatas.get(position + 1));
+            }
+
+            ;
+        });
+
+        mRecyclerView.setAdapter(mAdapter);
         
     }
+
+    private void initDatas() {
+        mDatas = new LinkedList<String>(Arrays.asList("开始","中间1","中间2","中间3","中间4","中间5","中间6","结束"));
+    }
+
     @SuppressLint("HandlerLeak")
 	Handler handler = new Handler()
     {

@@ -36,6 +36,13 @@
             android:layout_centerInParent="true"
             android:src="@drawable/camera_bg_normal" />
 
+        <com.xiaomo.testlistview.MyRecyclerView
+            android:id="@+id/id_recyclerview_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_centerVertical="true"
+            android:scrollbars="none" />
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="30dp"
