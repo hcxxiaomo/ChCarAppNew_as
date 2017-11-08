@@ -694,6 +694,7 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 		{			
 			public void run()
 			{
+                //车牌识别的入口，在这里改成一个拍照的功能试试
 				boolean bRet = recogCar(data, width, height);
 				bIsRecognizing = false;
 			}

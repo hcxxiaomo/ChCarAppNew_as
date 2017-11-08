@@ -3,6 +3,8 @@ package com.szOCR.camera;
 import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.hardware.Camera.PreviewCallback;
@@ -18,7 +20,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.carOCR.RecogResult;
-import com.carOCR.activity.ScanActivity;
 import com.carOCR.activity.ScanIllegalActivity;
 import com.szOCR.general.CGlobal;
 import com.szOCR.general.Defines;
@@ -828,23 +829,73 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
 	}
 
 
+    /**
+     * 拍照成功回调
+     */
+    public class PicCallback implements Camera.PictureCallback {
+        private String TAG = getClass().getSimpleName();
+        private Camera mCamera;
+
+        public PicCallback(Camera camera) {
+            mCamera = camera;
+        }
+
+        /*
+         * 将拍照得到的字节转为bitmap，然后旋转，接着写入SD卡
+         * @param data
+         * @param camera
+         */
+        @Override
+        public void onPictureTaken(byte[] data, Camera camera) {
+            // 将得到的照片进行270°旋转，使其竖直
+            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+            Matrix matrix = new Matrix();
+            matrix.preRotate(270);
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            // 创建并保存图片文件
+            File dir = new File(Environment.getExternalStorageDirectory().toString(), "/aCarImage/PreviewImages/");
+            String szFileName =  CGlobal.getCurTimeString()+".jpg";
+            if (!dir.exists())
+            {
+                if (!dir.mkdirs())
+                {
+                    Log.d("App", "failed to create directory");
+
+                }
+            }
+            File pictureFile = new File(dir.getAbsolutePath(), szFileName);
+            path = pictureFile.getAbsolutePath();
+            try {
+                FileOutputStream fos = new FileOutputStream(pictureFile);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                bitmap.recycle();
+                fos.close();
+                Log.i(TAG, "拍摄成功！");
+            } catch (Exception error) {
+                Log.e(TAG, "拍摄失败");
+                error.printStackTrace();
+            } finally {
+               /* mCamera.stopPreview();
+                mCamera.release();
+                mCamera = null;*/
+            }
+        }
+
+    }
+
+
+
     public String takePhoto() {
 
         if (mCamera == null || mWaitForTakePhoto) {
             return null;
         }
         mWaitForTakePhoto = true;
-        mCamera.takePicture(null, null, new Camera.PictureCallback() {
-            @Override
-            public void onPictureTaken(byte[] data, Camera camera) {
-                path =  onTakePhoto(data);
-                mWaitForTakePhoto = false;
-            }
-        });
+        mCamera.takePicture(null, null, new PicCallback(mCamera));
         return path;
     }
 
-    private String onTakePhoto(byte[] data) {
+    /*private String onTakePhoto(byte[] data) {
         File dir = new File(Environment.getExternalStorageDirectory().toString(), "/aCarImage/PreviewImages/");
         String szFileName =  CGlobal.getCurTimeString()+".jpg";
         if (!dir.exists())
@@ -873,6 +924,6 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
             }
         }
         return file.getAbsolutePath();
-    }
+    }*/
 
 }
