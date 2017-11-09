@@ -850,7 +850,7 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
             // 将得到的照片进行270°旋转，使其竖直
             Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
             Matrix matrix = new Matrix();
-            matrix.preRotate(270);
+            matrix.preRotate(90);
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
             // 创建并保存图片文件
             File dir = new File(Environment.getExternalStorageDirectory().toString(), "/aCarImage/PreviewImages/");
@@ -865,6 +865,7 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
             }
             File pictureFile = new File(dir.getAbsolutePath(), szFileName);
             path = pictureFile.getAbsolutePath();
+            Log.e("-xiaomo-",path);
             try {
                 FileOutputStream fos = new FileOutputStream(pictureFile);
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
@@ -872,8 +873,8 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
                 fos.close();
                 Log.i(TAG, "拍摄成功！");
             } catch (Exception error) {
-                Log.e(TAG, "拍摄失败");
-                error.printStackTrace();
+                Log.e(TAG, "拍摄失败",error);
+                //error.printStackTrace();
             } finally {
                /* mCamera.stopPreview();
                 mCamera.release();
@@ -891,7 +892,11 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
             return null;
         }
         mWaitForTakePhoto = true;
-        mCamera.takePicture(null, null, new PicCallback(mCamera));
+        try {
+            mCamera.takePicture(null, null, new PicCallback(mCamera));
+        } catch (Exception e) {
+           Log.e("-xiaomo-","mCamera.takePicture",e);
+        }
         return path;
     }
 

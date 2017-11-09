@@ -215,8 +215,8 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         mViewfinderView.setOnTouchListener(this);
         //mResultLayout.setVisibility(View.GONE);
     	
-        mbtnPicture=(ImageView)findViewById(R.id.idStartPicture);
-        mbtnPicture.setOnClickListener(this);
+        //mbtnPicture=(ImageView)findViewById(R.id.idStartPicture);
+        //mbtnPicture.setOnClickListener(this);
 //        mbtnRecoder.setVisibility(View.GONE);
 
  		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -300,8 +300,21 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         mAdapter.setOnItemClickLitener(new OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(ScanIllegalActivity.this, position + "", Toast.LENGTH_SHORT)
-                        .show();
+                //Toast.makeText(ScanIllegalActivity.this, position + "", Toast.LENGTH_SHORT).show();
+				//保存图片功能
+            String imagePath =  mCameraPreview.takePhoto();
+                Log.e("-xiaomo-","imagePath="+imagePath);
+            if (scan_illegal_image_1.getDrawable() == null) {
+                scan_illegal_image_1.setImageBitmap(
+                        (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
+                );
+            }else if (scan_illegal_image_2.getDrawable() == null){
+                scan_illegal_image_2.setImageBitmap(
+                        (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
+                );
+            }else{
+                Toast.makeText(ScanIllegalActivity.this, "请先点击对应的图片进行删除", Toast.LENGTH_SHORT).show();
+            }
             }
         });
         mRecyclerView.setOnItemScrollChangeListener(new OnItemScrollChangeListener() {
@@ -846,7 +859,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 	public void onClick(View v) 
 	{
 //		Log.i("-xiaomo-", "ScanActivity.onClick"+v.getId());
-		if(v.getId() == R.id.idStartPicture)
+		/*if(v.getId() == R.id.idStartPicture)
 		{
 			ShowResultCtrls();
 			//保存图片功能
@@ -862,23 +875,10 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 			}else{
 				Toast.makeText(this, "请点击对应的图片进行删除", Toast.LENGTH_SHORT).show();
 			}
-			
-			
-//			m_scanHandler.sendEmptyMessageDelayed(R.id.restart_preview,10);
-			
-//			if (m_bRecorderStarted == false) 
-//		      {
-//		    	  mbtnRecoder.setImageResource(R.drawable.shutter_bg_pressed);
-//		    	  mCameraPreview.startRecording();
-//	              m_bRecorderStarted = true;
-//		      } else 
-//		      {
-//		    	  m_bRecorderStarted = false;
-//		    	  mbtnRecoder.setImageResource(R.drawable.shutter_bg_normal);
-//		    	  mCameraPreview.stopRecording();
-//		      }
+
 		}
-    	else if (v.equals(m_PopupResult.m_btnOk) )
+    	else */
+    	    if (v.equals(m_PopupResult.m_btnOk) )
     	{
     		m_bShowPopupResult = false;
     		m_PopupResult.hide();

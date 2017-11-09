@@ -26,22 +26,26 @@
     <RelativeLayout
         android:id="@+id/layoutResult"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        >
 
-        <ImageView
-            android:id="@+id/idStartPicture"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:src="@drawable/camera_bg_normal" />
-
-        <com.xiaomo.testlistview.MyRecyclerView
+        <com.xiaomo.chcarappnew.view.MyRecyclerView
             android:id="@+id/id_recyclerview_horizontal"
             android:layout_width="match_parent"
             android:layout_height="120dp"
+            android:scrollbars="none"
+            android:layout_above="@+id/linearLayout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+       <!-- <ImageView
+            android:id="@+id/idStartPicture"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/camera_bg_normal"
             android:layout_centerVertical="true"
-            android:scrollbars="none" />
+            android:layout_centerHorizontal="true" />-->
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -49,7 +53,8 @@
             android:layout_alignParentBottom="true"
             android:background="#44000000"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/linearLayout">
 
             <TextView
                 android:id="@+id/txtViewPreviewSize"
