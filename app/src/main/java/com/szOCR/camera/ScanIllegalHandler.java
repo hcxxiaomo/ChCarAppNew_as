@@ -10,7 +10,6 @@ import android.os.Message;
 import android.util.Log;
 
 import com.carOCR.RecogResult;
-import com.carOCR.activity.ScanActivity;
 import com.carOCR.activity.ScanIllegalActivity;
 import com.szOCR.general.CGlobal;
 import com.szOCR.general.Defines;
@@ -87,6 +86,11 @@ public final class ScanIllegalHandler extends Handler {
 				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 				mActivity.startActivity(intent);
+				break;
+			case R.id.id_recyclerview_horizontal:
+				Log.d(TAG, "保存照片功能");
+				String picturePath = (String) message.obj;
+				mActivity.showPicture(picturePath);
 				break;
 		}
 	}

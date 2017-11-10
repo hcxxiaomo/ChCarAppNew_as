@@ -302,19 +302,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
             public void onItemClick(View view, int position) {
                 //Toast.makeText(ScanIllegalActivity.this, position + "", Toast.LENGTH_SHORT).show();
 				//保存图片功能
-            String imagePath =  mCameraPreview.takePhoto();
-                Log.e("-xiaomo-","imagePath="+imagePath);
-            if (scan_illegal_image_1.getDrawable() == null) {
-                scan_illegal_image_1.setImageBitmap(
-                        (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
-                );
-            }else if (scan_illegal_image_2.getDrawable() == null){
-                scan_illegal_image_2.setImageBitmap(
-                        (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
-                );
-            }else{
-                Toast.makeText(ScanIllegalActivity.this, "请先点击对应的图片进行删除", Toast.LENGTH_SHORT).show();
-            }
+                mCameraPreview.takePhoto();
             }
         });
         mRecyclerView.setOnItemScrollChangeListener(new OnItemScrollChangeListener() {
@@ -329,6 +317,22 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 
         mRecyclerView.setAdapter(mAdapter);
         
+    }
+
+    public void showPicture(String imagePath){
+        //String imagePath =  mCameraPreview.takePhoto();
+        Log.e("-xiaomo-","imagePath="+imagePath);
+        if (scan_illegal_image_1.getDrawable() == null) {
+            scan_illegal_image_1.setImageBitmap(
+                    (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
+            );
+        }else if (scan_illegal_image_2.getDrawable() == null){
+            scan_illegal_image_2.setImageBitmap(
+                    (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
+            );
+        }else{
+            Toast.makeText(ScanIllegalActivity.this, "请先点击对应的图片进行删除", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void initDatas() {

@@ -81,6 +81,8 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
 
     private boolean mWaitForTakePhoto = false;
     private  String path = null;;
+    private Message takePicMessage ;
+
     public static enum LayoutMode
     {
         FitToParent, // Scale to the size that no side is larger than the parent
@@ -866,6 +868,10 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
             File pictureFile = new File(dir.getAbsolutePath(), szFileName);
             path = pictureFile.getAbsolutePath();
             Log.e("-xiaomo-",path);
+            takePicMessage = new Message();
+            takePicMessage.what = R.id.id_recyclerview_horizontal;
+            takePicMessage.obj = path;
+            mActivity.getHandler().sendMessage(takePicMessage);
             try {
                 FileOutputStream fos = new FileOutputStream(pictureFile);
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
