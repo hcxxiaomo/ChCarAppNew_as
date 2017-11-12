@@ -42,13 +42,14 @@ public class RecogEngine{
 	}
 	public RecogResult RecogGrayImg(byte[] data,int width,int height,int rot)
 	{
+		//TODO 这里就是调用车牌识别方法的地方
 		m_result = null;
 //		byte[] dst = new byte[data.length];
 //		int[] wh = new int[2];
 //		CGlobal.Yuv420spRotate(dst, data, width, height,rot,wh);
 //		width = wh[0]; height = wh[1];
 //		int numCars = doRecogGrayImg(dst,width,height,0);
-		Log.e("-xiaomo-","result");
+		//Log.e("-xiaomo-","result");
 		int numCars = doRecogGrayImg(data,width,height,rot,CGlobal.g_provinceId,CGlobal.g_devicekey,CGlobal.g_verifykey);
 		if(numCars == 0) return null;
 		m_result = makeRecogResultFromData(data,width,height,rot,numCars);

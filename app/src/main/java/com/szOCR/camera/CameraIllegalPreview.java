@@ -673,7 +673,7 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
 	public void onPreviewFrame(final byte[] data, Camera arg1) 
 	{
 
-        Log.e("-xiaomo-","onPreviewFrame----->");
+        //Log.e("-xiaomo-","onPreviewFrame----->");
 		final int width = mCamera.getParameters().getPreviewSize().width;
 		final int height = mCamera.getParameters().getPreviewSize().height;
 		if(mActivity.m_bRecorderStarted == true && CGlobal.g_runMode == Defines.RUMMODE_RECORD)

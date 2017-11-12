@@ -210,7 +210,9 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 
         scan_illegal_save_btn = (Button) findViewById(R.id.scan_illegal_save_btn);
 
-		scan_illegal_image_1.setOnClickListener(this);
+        default_address = (TextView) findViewById(R.id.default_address);
+
+        scan_illegal_image_1.setOnClickListener(this);
 		scan_illegal_image_2.setOnClickListener(this);
 
         scan_illegal_save_btn.setOnClickListener(this);
@@ -934,7 +936,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 //    		Log.i("-xiaomo-", "m_PopupResult.hide()");
     	}else if (v.equals(scan_illegal_save_btn))
     	{
-            // TODO 单击了保存按钮的
+            // TODO 单击了保存按钮的--后面需要增加读写数据库的功能
             if (TextUtils.isEmpty(record_car_number.getText())){
                 Toast.makeText(this,"请识别车牌号",Toast.LENGTH_SHORT).show();
                 return;
@@ -943,8 +945,17 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
                 Toast.makeText(this,"请拍摄两张照片",Toast.LENGTH_SHORT).show();
                 return;
             }
-            carIllegalInfo.carNumber = record_car_number.getText().toString();
             carIllegalInfo = new CarIllegalInfo();
+            carIllegalInfo.carNumber = record_car_number.getText().toString();
+            carIllegalInfo.address = default_address.getText().toString();
+            //carIllegalInfo.illegalId
+            Toast.makeText(this,"罚单信息保存成功",Toast.LENGTH_SHORT).show();
+            images[0] = null;
+            images[1] = null;
+            record_car_number.setText("");
+            scan_illegal_image_1.setImageResource(0);
+            scan_illegal_image_2.setImageResource(0);
+
 //    		Log.i("-xiaomo-", "m_PopupResult.hide()");
     	}
     	else if(v.equals(scan_illegal_image_1)  ){

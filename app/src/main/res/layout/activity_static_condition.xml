@@ -34,7 +34,7 @@
         />
     
     <EditText
-        android:id="@+id/et_tatic_condition_carnumber"
+        android:id="@+id/et_static_condition_carnumber"
            android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:inputType="text"
@@ -99,7 +99,7 @@
     
     
     <Button 
-        android:id="@+id/bt_network_set"
+        android:id="@+id/bt_choose_condition"
 		 android:layout_width="match_parent"
          android:layout_height="40sp"
         android:layout_marginTop="40sp"

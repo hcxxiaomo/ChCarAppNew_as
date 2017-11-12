@@ -5,6 +5,7 @@ import java.util.Calendar;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,13 +24,15 @@ public class StaticConditionActivity  extends Activity {
 	
 	private Spinner sn_static_condition_action;
 	private Spinner sn_static_condition_upload;
-	private EditText et_tatic_condition_carnumber;
+	private EditText et_static_condition_carnumber;
 	private Button bt_static_condition_starttime;
 	private Button bt_static_condition_endtime;
 	
 	   private int year;
 	    private int month;
 	    private int day;
+
+	private  Button bt_choose_condition;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +40,13 @@ public class StaticConditionActivity  extends Activity {
 		setContentView(R.layout.activity_static_condition);
 		sn_static_condition_action = (Spinner) findViewById(R.id.sn_static_condition_action);
 		sn_static_condition_upload = (Spinner) findViewById(R.id.sn_static_condition_upload);
-		et_tatic_condition_carnumber = (EditText) findViewById(R.id.et_tatic_condition_carnumber);
+		et_static_condition_carnumber = (EditText) findViewById(R.id.et_static_condition_carnumber);
 		bt_static_condition_starttime = (Button) findViewById(R.id.bt_static_condition_starttime);
 		bt_static_condition_endtime = (Button) findViewById(R.id.bt_static_condition_endtime);
-		ActionBar actionBar = getActionBar();
+
+        bt_choose_condition = (Button) findViewById(R.id.bt_choose_condition);
+
+        ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		//actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer); //修改actionbar左上角返回按钮的图标
 		
@@ -77,6 +83,27 @@ public class StaticConditionActivity  extends Activity {
         		DatePickerDialog dpd=new DatePickerDialog(StaticConditionActivity.this,endDatelistener,year,month,day);
         		dpd.show();//显示DatePickerDialog组件
         	}
+        });
+
+        bt_choose_condition.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*
+                type = intent.getStringExtra("type");
+   		car_number = intent.getStringExtra("car_number");
+   		upload = intent.getStringExtra("upload");
+   		started_date = intent.getStringExtra("started_date");
+   		end_date = intent.getStringExtra("end_date");
+                 */
+                Intent intent = new Intent(StaticConditionActivity.this,StaticActivity.class);
+                //intent.putExtra("type",)
+                intent.putExtra("car_number",et_static_condition_carnumber.getText().toString());
+                intent.putExtra("upload",sn_static_condition_upload.getSelectedItem().toString());
+                intent.putExtra("started_date",bt_static_condition_starttime.getText().toString());
+                intent.putExtra("end_date",bt_static_condition_endtime.getText().toString());
+                startActivity(intent);
+                StaticConditionActivity.this.finish();
+            }
         });
 
 	}
@@ -163,4 +190,6 @@ public class StaticConditionActivity  extends Activity {
         	 bt_static_condition_endtime.setTextColor(Color.BLUE);
     	 }
      };
+
+
 }

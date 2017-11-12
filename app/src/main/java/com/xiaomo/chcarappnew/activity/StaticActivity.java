@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -65,6 +66,8 @@ public class StaticActivity  extends Activity {
 	private String end_date = null;
 	private String car_number = null;
 
+    private Button check_car_type;
+
 //    String[] date = {"10-22","11-22","12-22","1-22","6-22","5-23","5-22","6-22","5-23","5-22"};//X轴的标注
 //    int[] score= {50,42,90,33,10,74,22,18,79,20};//图表的数据点
 //    int[] score_new= {30,40,90,30,10,70,20,10,70,20};//图表的数据点
@@ -92,6 +95,9 @@ public class StaticActivity  extends Activity {
    		progressBar = new ProgressBar(this);
    		linearLayout.addView(progressBar, params);
    		linearLayout.setGravity(Gravity.CENTER);
+
+        check_car_type = (Button) findViewById(R.id.check_car_type);
+        check_car_type.setOnClickListener(new MyOnClickListener());
    		
    		listPiePojo = carNumberInfoDao.getPieInfo();
    		
@@ -293,6 +299,18 @@ public class StaticActivity  extends Activity {
 	nChAdaper.notifyDataSetChanged();//通知数据改变
 }
 
+
+    public class MyOnClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            if (R.id.check_car_type == v.getId()){
+                Intent i = new Intent(StaticActivity.this,StaticConditionActivity.class);
+                startActivity(i);
+                StaticActivity.this.finish();
+            }
+        }
+    }
 	
 	public class MyOnScrollListener implements OnScrollListener{
 
