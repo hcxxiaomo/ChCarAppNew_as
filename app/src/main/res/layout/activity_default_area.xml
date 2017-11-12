@@ -10,7 +10,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="选择地区" />
+        android:text="@string/choose_addrss" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/address_et_input"
+        android:id="@+id/et_address_desc"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bt_save_address"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/textview_border_without_backcolor"
+        android:gravity="center"
+        android:text="@string/frag_input_ids_button"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_default_address"/>
+
+    <ListView
+
+        android:id="@+id/lv_default_area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:choiceMode="singleChoice"
+        android:cacheColorHint="@android:color/transparent"
+        android:listSelector="@android:color/transparent">
+    </ListView>
+
 
     <LinearLayout
         android:id="@+id/content"

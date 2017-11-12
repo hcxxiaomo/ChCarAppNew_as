@@ -38,7 +38,10 @@
     <string name="illegal_action_title_5">违反禁止标线指示 1230</string>
     <string name="illegal_action_title_6">不按规定倒车 4601</string>
     <string name="illegal_action_title_7">违反警告标志指示 1090</string>
-    
+
+    <string name="address_et_input">请输入详细地址信息</string>
+    <string name="choose_addrss">请单击此处选择地区</string>
+
     <string name="password_title">请输入验证码</string>
     <string name="system_key">系统号码 : </string>
     <string name="verify_key">验证号码 : </string>
@@ -65,10 +68,11 @@
     <string name="result_car_number" >车牌识别结果</string>
     
     <string name="recog_car_number_result" >重新识别</string>
-    
+
     <string name="recog_car_number_start_compare" >开始比对</string>
     <string name="continue_scan_car" >继续查车</string>
-    
+    <string name="choose_default_address" >请在下方选择默认地址</string>
+
     
     <string name="login">登录</string>
     <string name="forget">忘记密码</string>

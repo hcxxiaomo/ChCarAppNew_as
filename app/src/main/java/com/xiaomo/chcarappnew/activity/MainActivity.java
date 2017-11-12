@@ -145,6 +145,10 @@ public class MainActivity extends AppCompatActivity
                 intent = new Intent(MainActivity.this,NetworkSetActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.action_illegal_action:
+                intent = new Intent(MainActivity.this,IllegalActionActivity.class);
+                startActivity(intent);
+                break;
             case R.id.action_commo_address:
                 intent = new Intent(MainActivity.this,DefaultAreaActivity.class);
                 startActivity(intent);

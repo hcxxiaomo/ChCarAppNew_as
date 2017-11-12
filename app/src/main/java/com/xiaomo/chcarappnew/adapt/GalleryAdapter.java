@@ -34,6 +34,7 @@ RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
   
     private LayoutInflater mInflater;
     private List<String> mDatas;
+    private String[] data;
   
     public GalleryAdapter(Context context, List<String> datats)
     {  
@@ -79,8 +80,9 @@ RecyclerView.Adapter<GalleryAdapter.ViewHolder> {
     public void onBindViewHolder(final ViewHolder viewHolder, final int i)  
     {  
         //viewHolder.mImg.setImageResource(mDatas.get(i));
-        viewHolder.txtTitle.setText(mDatas.get(i));
-        viewHolder.txtContent.setText(mDatas.get(i)+"detail");
+        data = mDatas.get(i).split("_");
+        viewHolder.txtTitle.setText(data[1]);
+        viewHolder.txtContent.setText(data[0]);
 
         //如果设置了回调，则设置点击事件  
         if (mOnItemClickLitener != null)  

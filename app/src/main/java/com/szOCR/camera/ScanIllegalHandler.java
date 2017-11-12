@@ -91,6 +91,8 @@ public final class ScanIllegalHandler extends Handler {
 				Log.d(TAG, "保存照片功能");
 				String picturePath = (String) message.obj;
 				mActivity.showPicture(picturePath);
+				m_CameraPreview.setPreviewCallback(m_CameraPreview);
+                m_CameraPreview.mCamera.startPreview();
 				break;
 		}
 	}

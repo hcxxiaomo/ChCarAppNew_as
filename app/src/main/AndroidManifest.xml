@@ -48,9 +48,15 @@
          <activity android:name="com.xiaomo.chcarappnew.activity.NetworkSetActivity"
              android:theme="@android:style/Theme.Holo.Light">
        </activity>
-         <activity android:name="com.xiaomo.chcarappnew.activity.DefaultAreaActivity">
+         <activity android:name="com.xiaomo.chcarappnew.activity.DefaultAreaActivity"
+             android:windowSoftInputMode="adjustUnspecified|stateHidden"
+             android:theme="@style/AppBaseTheme">
        </activity>
-         <activity android:name="com.xiaomo.chcarappnew.activity.StaticActivity">
+         <activity android:name="com.xiaomo.chcarappnew.activity.StaticActivity"
+             android:theme="@style/AppBaseTheme">
+       </activity>
+        <activity android:name="com.xiaomo.chcarappnew.activity.IllegalActionActivity"
+             android:theme="@style/AppBaseTheme">
        </activity>
         <activity android:name="com.xiaomo.chcarappnew.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

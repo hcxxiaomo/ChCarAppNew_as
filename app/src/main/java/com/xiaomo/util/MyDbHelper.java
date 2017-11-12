@@ -43,6 +43,41 @@ public class MyDbHelper extends SQLiteOpenHelper {
 					// + "  compare_time varchar(50)  " 
 					 + "  car_type varchar(50)  " 
 					 + ") ";
+
+	private static final String SQL_CREATE_TABLE_ILLEGAL =
+//			"CREATE TABLE t_carnumber_raid ("
+//					 + "  _id integer  primary key autoincrement ,"
+//					 + "  carNumber varchar(20)  UNIQUE,"
+//					 + "  illegalString varchar(200) ,"
+//					 + "  imgPath varchar(200) ,"
+//					 + "  isReported smallint ,"
+//					 + "  createdTime varchar(50)"
+//					 + ") ";
+			"CREATE TABLE t_illegal_info ("
+					 + "  _id integer  primary key,"
+					 + "  car_number varchar(20) ,"
+					// + "  color varchar(5) ,"
+					// + "  maker varchar(20) ,"
+					 + "  type varchar(50) ,"
+					// + "  vin varchar(50) ,"
+					// + "  engine_no varchar(50)  ,"
+					 + "  illegal_id varchar(50) ,"
+					 + "  illegal_info varchar(50)  ,"
+					 + "  address varchar(500)   ,"
+					// + "  owner varchar(50) ,"
+					// + "  owner_id varchar(50)  ,"
+					// + "  car_color varchar(50) ,"
+					 + "  img1 varchar(50)  ,"
+					// + "  video varchar(50)  ,"
+					// + "  report_police_id varchar(50) ,"
+					// + "  report_police_name varchar(50) ,"
+					 + "   img2 varchar(50)  ,"
+					 + "   is_reported smallint  ,"
+					 + "  server_carid integer ,"
+					 + "  create_time varchar(50) "
+					// + "  compare_time varchar(50)  "
+					 //+ "  car_type varchar(50)  "
+					 + ") ";
 	
 	private static final String SQL_DROP_TABLE = "drop table is exists t_carnumber_info";
 
@@ -55,13 +90,14 @@ public class MyDbHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 //		db.execSQL(SQL_DROP_TABLE);
-		db.execSQL(SQL_CREATE_TABLE);
+        db.execSQL(SQL_CREATE_TABLE_ILLEGAL);
+        db.execSQL(SQL_CREATE_TABLE);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 //		db.execSQL(SQL_DROP_TABLE);
-		this.onCreate(db);
+		//this.onCreate(db);
 	}
 
 }

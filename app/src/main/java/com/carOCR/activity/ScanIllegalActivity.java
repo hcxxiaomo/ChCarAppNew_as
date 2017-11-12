@@ -22,6 +22,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -47,7 +49,9 @@ import com.xiaomo.chcarappnew.adapt.GalleryAdapter;
 import com.xiaomo.chcarappnew.adapt.GalleryAdapter.OnItemClickLitener;
 import com.xiaomo.chcarappnew.view.MyRecyclerView;
 import com.xiaomo.chcarappnew.view.MyRecyclerView.OnItemScrollChangeListener;
+import com.xiaomo.db.dao.CarIllegalInfoDao;
 import com.xiaomo.db.dao.CarNumberInfoDao;
+import com.xiaomo.db.model.CarIllegalInfo;
 import com.xiaomo.util.BitmapThumb;
 import com.xiaomo.util.MyDbHelper;
 
@@ -74,15 +78,20 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 	private TextView		mTxtViewPreviewSize;
 	private TextView		mTxtViewRecogTime;
 	private TextView		record_car_number;
+	private TextView		record_car_address;
 
 //	public  RelativeLayout 	car_number_layout;
 //	private TextView		car_number;
 //	private TextView		car_illegal;
 	
 	private MyDbHelper myDbHelper;
-	private CarNumberInfoDao carNumberInfoDao;
+	private CarIllegalInfoDao carIllegalInfoDao;
+    private CarIllegalInfo carIllegalInfo;
+
 	private SharedPreferences sp;
-	
+	private SharedPreferences selectSp;
+	private SharedPreferences  defaultAddressSp;;
+
 	public boolean			 m_bShowPopupResult;
 	private PopupRecogResult m_PopupResult;
 	public  PopupPassword 	 m_PopupPassword;
@@ -92,7 +101,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 	private ImageView		scan_illegal_image_1;
 	private ImageView		scan_illegal_image_2;
 	
-	private SoundPool soundPool;
+	//private SoundPool soundPool;
 //	private AnimationDrawable animationDrawable;
 	
 //	private MediaPlayer mp;//mediaPlayer对象 
@@ -167,7 +176,12 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
     private MyRecyclerView mRecyclerView;
     private GalleryAdapter mAdapter;
     private List<String> mDatas;
-	
+
+	private Button scan_illegal_save_btn;
+    private String[] images = new String[2];
+
+    private TextView default_address;
+
     public void onCreate(Bundle savedInstanceState) 
     {
         super.onCreate(savedInstanceState);
@@ -188,10 +202,19 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         mTxtViewPreviewSize = (TextView)findViewById(R.id.txtViewPreviewSize);
         mTxtViewRecogTime = (TextView)findViewById(R.id.txtViewRecogTime);
         record_car_number = (TextView)findViewById(R.id.record_car_number);
-        
+        record_car_address = (TextView)findViewById(R.id.record_car_address);
+
         imageView_animation1 = (ImageView) findViewById(R.id.imageView_animation1);
         scan_illegal_image_1 = (ImageView) findViewById(R.id.scan_illegal_image_1);
         scan_illegal_image_2 = (ImageView) findViewById(R.id.scan_illegal_image_2);
+
+        scan_illegal_save_btn = (Button) findViewById(R.id.scan_illegal_save_btn);
+
+		scan_illegal_image_1.setOnClickListener(this);
+		scan_illegal_image_2.setOnClickListener(this);
+
+        scan_illegal_save_btn.setOnClickListener(this);
+
 //        imageView_animation1.setBackgroundResource(R.drawable.gif);
      // 获取AnimationDrawable对象 
 //        animationDrawable = (AnimationDrawable)imageView_animation1.getBackground();
@@ -274,14 +297,15 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         
         //新增加数据库和联网查询部分
         myDbHelper = new MyDbHelper(this, "db_car_number", 1);
-        carNumberInfoDao = new CarNumberInfoDao(myDbHelper.getWritableDatabase());//得到dao
+        carIllegalInfoDao = new CarIllegalInfoDao(myDbHelper.getWritableDatabase());//得到dao
         sp = this.getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
         
         networkPrefs = this.getSharedPreferences("network_set", Activity.MODE_PRIVATE);
         
-        soundPool= new SoundPool(2,AudioManager.STREAM_SYSTEM,5);//第二行将soundPool实例化，第一个参数为soundPool可以支持的声音数量，这决定了Android为其开设多大的缓冲区，第二个参数为声音类型，在这里标识为系统声音，除此之外还有AudioManager.STREAM_RING以及AudioManager.STREAM_MUSIC等，系统会根据不同的声音为其标志不同的优先级和缓冲区，最后参数为声音品质，品质越高，声音效果越好，但耗费更多的系统资源。
-        soundPool.load(this,R.raw.illegal,1);//系统为soundPool加载声音，第一个参数为上下文参数，第二个参数为声音的id，一般我们将声音信息保存在res的raw文件夹下，如下图所示。
-
+        //soundPool= new SoundPool(2,AudioManager.STREAM_SYSTEM,5);//第二行将soundPool实例化，第一个参数为soundPool可以支持的声音数量，这决定了Android为其开设多大的缓冲区，第二个参数为声音类型，在这里标识为系统声音，除此之外还有AudioManager.STREAM_RING以及AudioManager.STREAM_MUSIC等，系统会根据不同的声音为其标志不同的优先级和缓冲区，最后参数为声音品质，品质越高，声音效果越好，但耗费更多的系统资源。
+        //soundPool.load(this,R.raw.illegal,1);//系统为soundPool加载声音，第一个参数为上下文参数，第二个参数为声音的id，一般我们将声音信息保存在res的raw文件夹下，如下图所示。
+        defaultAddressSp =  getSharedPreferences("default_address",MODE_PRIVATE);
+        default_address.setText(sp.getString("default_address","广东深圳市福田区默认地址"));
 
         initDatas();
         //得到控件
@@ -291,7 +315,8 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         //设置布局管理器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        linearLayoutManager.scrollToPosition(3);
+        selectSp = getSharedPreferences("illegal_action",MODE_PRIVATE);
+        linearLayoutManager.scrollToPosition(sp.getInt("select",0) + 1);
         mRecyclerView.setLayoutManager(linearLayoutManager);
 
         //设置适配器
@@ -300,7 +325,11 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         mAdapter.setOnItemClickLitener(new OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
-                //Toast.makeText(ScanIllegalActivity.this, position + "", Toast.LENGTH_SHORT).show();
+                if (scan_illegal_image_1.getDrawable() != null && scan_illegal_image_2.getDrawable() != null ){
+                    Toast.makeText(ScanIllegalActivity.this, "请先点击对应的图片进行删除", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                    //Toast.makeText(ScanIllegalActivity.this, position + "", Toast.LENGTH_SHORT).show();
 				//保存图片功能
                 mCameraPreview.takePhoto();
             }
@@ -321,22 +350,28 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 
     public void showPicture(String imagePath){
         //String imagePath =  mCameraPreview.takePhoto();
-        Log.e("-xiaomo-","imagePath="+imagePath);
+        //Log.e("-xiaomo-","imagePath="+imagePath);
+        m_bShowPopupResult = false;
+        m_scanHandler.sendEmptyMessage(R.id.restart_preview);
+
         if (scan_illegal_image_1.getDrawable() == null) {
             scan_illegal_image_1.setImageBitmap(
                     (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
             );
+            images[0] = imagePath;
         }else if (scan_illegal_image_2.getDrawable() == null){
             scan_illegal_image_2.setImageBitmap(
                     (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
             );
+            images[1] = imagePath;
         }else{
             Toast.makeText(ScanIllegalActivity.this, "请先点击对应的图片进行删除", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void initDatas() {
-        mDatas = new LinkedList<String>(Arrays.asList("开始","中间1","中间2","中间3","中间4","中间5","中间6","结束"));
+        mDatas = new LinkedList<String>(Arrays.asList("不可选择_开始","高速公路逆向行驶_4602","占用应急车道行驶_4608","违反禁令标志提示_1344"
+                ,"不按规定车道行驶_1355","违反禁止标线指示_1230","不按规定倒车_4601","违反警告标志指示_1090","不可选择_结束"));
     }
 
     @SuppressLint("HandlerLeak")
@@ -897,7 +932,31 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
     		m_PopupResult.hide();
     		m_scanHandler.sendEmptyMessage(R.id.restart_preview);
 //    		Log.i("-xiaomo-", "m_PopupResult.hide()");
+    	}else if (v.equals(scan_illegal_save_btn))
+    	{
+            // TODO 单击了保存按钮的
+            if (TextUtils.isEmpty(record_car_number.getText())){
+                Toast.makeText(this,"请识别车牌号",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (images[0] == null || images[1] == null){
+                Toast.makeText(this,"请拍摄两张照片",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            carIllegalInfo.carNumber = record_car_number.getText().toString();
+            carIllegalInfo = new CarIllegalInfo();
+//    		Log.i("-xiaomo-", "m_PopupResult.hide()");
     	}
+    	else if(v.equals(scan_illegal_image_1)  ){
+                //Log.i("-xiaomo-", "else if (v.equals(m_PopupResult.scan_illegal_image_1/2)");
+                ((ImageView)v).setImageResource(0);
+                images[0] = null;
+            }
+            else if(v.equals(scan_illegal_image_2) ){
+
+                ((ImageView)v).setImageResource(0);
+                images[1] = null;
+            }
 //		if(mCameraPreview != null){
 //    		mCameraPreview.autoCameraFocuse();
 //    	}
@@ -920,9 +979,6 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
     	{
     		Toast.makeText(this, "key is not inputed,", Toast.LENGTH_SHORT).show();
     		m_PopupPassword.hide();
-    	}else if(v.equals(scan_illegal_image_1) || v.equals(scan_illegal_image_2) ){
-    		Log.i("-xiaomo-", "else if (v.equals(m_PopupResult.scan_illegal_image_1/2)");
-    		((ImageView)v).setImageDrawable(null);
     	}
 	}
 	

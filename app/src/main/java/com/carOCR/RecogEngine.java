@@ -48,6 +48,7 @@ public class RecogEngine{
 //		CGlobal.Yuv420spRotate(dst, data, width, height,rot,wh);
 //		width = wh[0]; height = wh[1];
 //		int numCars = doRecogGrayImg(dst,width,height,0);
+		Log.e("-xiaomo-","result");
 		int numCars = doRecogGrayImg(data,width,height,rot,CGlobal.g_provinceId,CGlobal.g_devicekey,CGlobal.g_verifykey);
 		if(numCars == 0) return null;
 		m_result = makeRecogResultFromData(data,width,height,rot,numCars);
