@@ -14,8 +14,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -50,14 +48,16 @@ import com.xiaomo.chcarappnew.adapt.GalleryAdapter.OnItemClickLitener;
 import com.xiaomo.chcarappnew.view.MyRecyclerView;
 import com.xiaomo.chcarappnew.view.MyRecyclerView.OnItemScrollChangeListener;
 import com.xiaomo.db.dao.CarIllegalInfoDao;
-import com.xiaomo.db.dao.CarNumberInfoDao;
 import com.xiaomo.db.model.CarIllegalInfo;
 import com.xiaomo.util.BitmapThumb;
 import com.xiaomo.util.MyDbHelper;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 public class ScanIllegalActivity extends Activity implements SensorEventListener,View.OnClickListener, OnTouchListener
 {
@@ -177,6 +177,8 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
     private GalleryAdapter mAdapter;
     private List<String> mDatas;
 
+    private String illegal;
+
 	private Button scan_illegal_save_btn;
     private String[] images = new String[2];
 
@@ -194,9 +196,9 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         Window window = getWindow();
 		window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setContentView(R.layout.activity_scan_illegal);
-		
+
 		OptionActivity.loadOptionData(this);
-		
+
         bIsAvailable 		= true;
         mHomeLayout = (RelativeLayout) findViewById(R.id.previewLayout);
         mTxtViewPreviewSize = (TextView)findViewById(R.id.txtViewPreviewSize);
@@ -214,7 +216,6 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 
         scan_illegal_image_1.setOnClickListener(this);
 		scan_illegal_image_2.setOnClickListener(this);
-
         scan_illegal_save_btn.setOnClickListener(this);
 
 //        imageView_animation1.setBackgroundResource(R.drawable.gif);
@@ -266,7 +267,6 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 			
 			@Override
 			public void onDismiss() {
-				// TODO Auto-generated method stub
 				m_PopupResult.hide();
 				m_scanHandler.sendEmptyMessage(R.id.restart_preview);
 			}
@@ -341,6 +341,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
             public void onChange(View view, int position) {
                 //mImg.setImageResource(mDatas.get(position + 1));
                 //id_show_title.setText(mDatas.get(position + 1));
+                illegal = mDatas.get(position + 1);
             }
 
             ;
@@ -948,6 +949,17 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
             carIllegalInfo = new CarIllegalInfo();
             carIllegalInfo.carNumber = record_car_number.getText().toString();
             carIllegalInfo.address = default_address.getText().toString();
+            carIllegalInfo.img1 = images[0];
+            carIllegalInfo.img2 = images[1];
+            carIllegalInfo.createTime =
+                    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(new Date());
+            String[] illegal_str =  illegal.split("_");
+            carIllegalInfo.illegalId = illegal_str[0];
+            carIllegalInfo.illegalInfo = illegal_str[1];
+            carIllegalInfo.isReported = 0;//现在设置为0，后面再改成已经上传的
+            carIllegalInfoDao.insert(carIllegalInfo);
+
+
             //carIllegalInfo.illegalId
             Toast.makeText(this,"罚单信息保存成功",Toast.LENGTH_SHORT).show();
             images[0] = null;
@@ -955,6 +967,8 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
             record_car_number.setText("");
             scan_illegal_image_1.setImageResource(0);
             scan_illegal_image_2.setImageResource(0);
+
+
 
 //    		Log.i("-xiaomo-", "m_PopupResult.hide()");
     	}

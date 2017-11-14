@@ -1,5 +1,32 @@
 package com.xiaomo.chcarappnew.activity;
 
+import android.app.ActionBar;
+import android.app.ActionBar.LayoutParams;
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+
+import com.szOCR.general.CGlobal;
+import com.xiaomo.chcarappnew.R;
+import com.xiaomo.chcarappnew.adapt.CarHistoryResultInfoAdapter;
+import com.xiaomo.db.dao.CarNumberInfoDao;
+import com.xiaomo.db.model.CarHistoryResultInfo;
+import com.xiaomo.db.model.CarNumberInfo;
+import com.xiaomo.db.model.PiePojo;
+import com.xiaomo.util.MyDbHelper;
+import com.xiaomo.util.PageBean;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,30 +41,6 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
-import android.app.ActionBar;
-import android.app.ActionBar.LayoutParams;
-import android.content.Intent;
-import android.app.Activity;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.Gravity;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ProgressBar;
-
-import com.xiaomo.chcarappnew.R;
-import com.xiaomo.chcarappnew.adapt.CarHistoryResultInfoAdapter;
-import com.xiaomo.db.dao.CarNumberInfoDao;
-import com.xiaomo.db.model.CarHistoryResultInfo;
-import com.xiaomo.db.model.CarNumberInfo;
-import com.xiaomo.db.model.PiePojo;
-import com.xiaomo.util.MyDbHelper;
-import com.xiaomo.util.PageBean;
 
 public class StaticActivity  extends Activity {
 	
@@ -127,6 +130,7 @@ public class StaticActivity  extends Activity {
 		nChAdaper = new CarHistoryResultInfoAdapter(nCarBean, this);
 		static_listview.setAdapter(nChAdaper);
 		static_listview.setVisibility(View.VISIBLE);
+        static_listview.setOnItemClickListener(new MyOnItemClickListener());
 		if (allCount > pageSize) {
 			static_listview.addFooterView(linearLayout);//要在listView.setAdapter(adapter);之前添加数据信息
 			static_listview.setOnScrollListener(new MyOnScrollListener());
@@ -311,7 +315,27 @@ public class StaticActivity  extends Activity {
             }
         }
     }
-	
+
+
+    public class MyOnItemClickListener implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view,
+                                int position, long id) {
+            // TODO Auto-generated method stub
+			/*	Toast.makeText(mMainActivity, nCarBean.get(position).toString(),
+						Toast.LENGTH_SHORT).show();*/
+            //TODO 需要增加跳转到对应的id中的数据
+//				globalStr.setCarString(nCarBean.get(position).toString());
+
+            CGlobal.chriId = nCarBean.get(position).get_id();
+            Intent intent = new Intent(StaticActivity.this,CarCheckResultActivity.class);
+            startActivity(intent);
+
+        }
+
+    }
+
 	public class MyOnScrollListener implements OnScrollListener{
 
 		@Override 

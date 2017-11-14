@@ -3,7 +3,6 @@ package com.xiaomo.db.dao;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.xiaomo.db.model.CarIllegalInfo;
-import com.xiaomo.db.model.CarNumberRaidInfo;
 import com.xiaomo.util.PageBean;
 
 public class CarIllegalInfoDao {
@@ -29,7 +28,7 @@ public class CarIllegalInfoDao {
 		this.db = db;
 	}
 	
-	@Deprecated
+
 	public void insert(CarIllegalInfo illegalInfo){
 		String sql = "insert into t_illegal_info values ( null, ?, ? , ?, ? ,?, ? , ?, ? ,? ,?)";
 		Object[] args = new Object[]{
@@ -41,7 +40,7 @@ public class CarIllegalInfoDao {
 				,illegalInfo.img1
 				,illegalInfo.img2
                 ,illegalInfo.isReported
-                ,illegalInfo.serverCarid
+                ,illegalInfo.serverCarId
                 ,illegalInfo.createTime
         };
 		db.execSQL(sql,args);

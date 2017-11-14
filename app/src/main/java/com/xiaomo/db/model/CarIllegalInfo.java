@@ -1,7 +1,5 @@
 package com.xiaomo.db.model;
 
-import android.content.Intent;
-
 public class CarIllegalInfo {
 
 
@@ -14,8 +12,8 @@ public class CarIllegalInfo {
 	public String address;
 	public String img1;
     public String img2;
-	public String isReported;
-	public Integer serverCarid;
+	public Integer isReported;
+	public Integer serverCarId;
     public String createTime;
 
     /*
@@ -34,7 +32,7 @@ public class CarIllegalInfo {
      */
 
     public CarIllegalInfo(Integer _id, String carNumber, String type, String illegalId, String illegalInfo,
-                          String address, String img1, String img2 , String isReported, Integer serverCarid , String createTime) {
+                          String address, String img1, String img2 , Integer isReported, Integer serverCarId , String createTime) {
         this._id = _id;
         this.carNumber = carNumber;
         this.type = type;
@@ -45,7 +43,7 @@ public class CarIllegalInfo {
         this.img2 = img2;
         this.createTime = createTime;
         this.isReported = isReported;
-        this.serverCarid = serverCarid;
+        this.serverCarId = serverCarId;
     }
 
     public CarIllegalInfo() {
