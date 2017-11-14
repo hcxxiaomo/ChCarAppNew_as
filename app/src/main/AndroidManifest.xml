@@ -61,6 +61,9 @@
         <activity android:name="com.xiaomo.chcarappnew.activity.IllegalActionActivity"
              android:theme="@style/AppBaseTheme">
        </activity>
+        <activity android:name="com.xiaomo.chcarappnew.activity.CarCheckResultActivity"
+             android:theme="@style/AppBaseTheme">
+       </activity>
         <activity android:name="com.xiaomo.chcarappnew.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
        </activity>
