@@ -907,6 +907,8 @@ public class ScanActivity extends Activity implements SensorEventListener,View.O
 				cni.setType(response.optString("typeClxh"));
 				cni.setVin(response.optString("vinClsbdh"));
 				cni.setCarType(response.optString("carType"));
+				cni.setOwner(response.optString("ownerSyr"));
+                cni.setOwnerId(response.optString("ownerId"));
 				
 				StringBuilder sb = new StringBuilder();
 				
@@ -979,7 +981,7 @@ public class ScanActivity extends Activity implements SensorEventListener,View.O
 					car_illegal.setTextColor(Color.BLACK);
 				}
 				cni.setServerCarId(response.optLong("serverCarId"));
-				cni.setIsReported(1);
+				cni.setIsReported(0);
 				Log.i("-xiaomo-", cni.toString());
 				
 				//把数据保存到数据库中去

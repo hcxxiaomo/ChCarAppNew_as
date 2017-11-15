@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_static_tab"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!--定义一个头布局-->
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="40.0dip"
+        >
+
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="@string/car_check"
+            android:textColor="#000000"
+            android:textSize="20.0dip" />
+
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1.0"
+            android:gravity="center"
+            android:text="@string/car_illegal"
+            android:textColor="#000000"
+            android:textSize="20.0dip" />
+
+
+    </LinearLayout>
+
+    <!-- 底部的指示器 -->
+
+ <!--存放fragment的容器 -->
+     <LinearLayout
+         android:layout_width="fill_parent"
+         android:layout_height="fill_parent"
+         android:id="@+id/content_layout"
+         android:orientation="vertical"
+         >
+
+     </LinearLayout>
+ </LinearLayout>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/tab1_layout">
+
+    <Button
+        android:id="@+id/check_car_type"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/linearlayout_boder"
+        android:gravity="center"
+        android:text="@string/check_car_type" />
+
+    <lecho.lib.hellocharts.view.LineChartView
+        android:id="@+id/chart"
+        android:layout_width="match_parent"
+        android:layout_height="200sp" />
+
+
+    <ListView
+        android:paddingTop="5sp"
+        android:id="@+id/static_listview"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@color/divider_color"
+        android:dividerHeight="1dip" >
+    </ListView>
+
+</LinearLayout>

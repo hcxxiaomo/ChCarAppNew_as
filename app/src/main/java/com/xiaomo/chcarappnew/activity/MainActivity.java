@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 if (position == 3) {
-                    intent = new Intent(MainActivity.this, StaticActivity.class);
+                    intent = new Intent(MainActivity.this, StaticTabActivity.class);
                     startActivity(intent);
                 }else if(position == 0){
                     intent = new Intent(MainActivity.this, ScanActivity.class);

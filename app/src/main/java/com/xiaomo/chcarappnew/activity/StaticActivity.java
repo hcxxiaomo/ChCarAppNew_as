@@ -42,6 +42,7 @@ import lecho.lib.hellocharts.model.ValueShape;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
+@Deprecated
 public class StaticActivity  extends Activity {
 	
 	

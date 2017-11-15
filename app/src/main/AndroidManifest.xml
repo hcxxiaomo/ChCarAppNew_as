@@ -52,8 +52,8 @@
              android:windowSoftInputMode="adjustUnspecified|stateHidden"
              android:theme="@style/AppBaseTheme">
        </activity>
-         <activity android:name="com.xiaomo.chcarappnew.activity.StaticActivity"
-             android:theme="@style/AppBaseTheme">
+         <activity android:name="com.xiaomo.chcarappnew.activity.StaticTabActivity"
+             android:theme="@style/Theme.AppCompat.Light">
        </activity>
         <activity android:name="com.xiaomo.chcarappnew.activity.StaticConditionActivity"
              android:theme="@style/AppBaseTheme">

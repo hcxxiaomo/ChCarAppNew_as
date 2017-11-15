@@ -24,6 +24,7 @@ public class CarNumberInfoDao {
 		this.db = db;
 	}
 
+	//select last_insert_rowid() --需要返回一下自增的信息
     public void insertCarNumber( CarNumberInfo cni,String policeId,String policeName){
         String sql = "insert into t_carnumber_info values ( null, ?, ?, ?, ?, ?, ?, ?, ? , ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? , ?, ? ,?)";
         Object[] args = new Object[]{
