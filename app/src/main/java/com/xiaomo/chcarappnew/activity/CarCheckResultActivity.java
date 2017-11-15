@@ -31,6 +31,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+@Deprecated
 public class CarCheckResultActivity extends Activity {
 
 

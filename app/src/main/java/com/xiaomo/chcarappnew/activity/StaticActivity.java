@@ -322,15 +322,15 @@ public class StaticActivity  extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view,
                                 int position, long id) {
-            // TODO Auto-generated method stub
-			/*	Toast.makeText(mMainActivity, nCarBean.get(position).toString(),
-						Toast.LENGTH_SHORT).show();*/
             //TODO 需要增加跳转到对应的id中的数据
 //				globalStr.setCarString(nCarBean.get(position).toString());
 
             CGlobal.chriId = nCarBean.get(position).get_id();
-            Intent intent = new Intent(StaticActivity.this,CarCheckResultActivity.class);
-            startActivity(intent);
+
+			PopupWindowCarCheckResultInfo bpw = new PopupWindowCarCheckResultInfo(StaticActivity.this);
+			bpw.showAtLocation(StaticActivity.this.findViewById(R.id.check_car_type), Gravity.TOP | Gravity.START, 0, 0);
+           /* Intent intent = new Intent(StaticActivity.this,CarCheckResultActivity.class);
+            startActivity(intent);*/
 
         }
 

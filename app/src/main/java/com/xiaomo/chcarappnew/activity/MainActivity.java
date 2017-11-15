@@ -1,16 +1,15 @@
 package com.xiaomo.chcarappnew.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +28,8 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
     private TextView mTextView;
+    private TextView tvNickName;
+    private TextView tvRealName;
     private ImageView mImageView;
     private  DrawerLayout drawer;
 
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity
 
     private Intent intent = null;
     private SharedPreferences preference = null;
+
+    private SharedPreferences sp ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,12 +57,19 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);
 
+        sp = getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
+
         Menu menu = navigationView.getMenu();
         preference = this.getSharedPreferences("NavigationView",MODE_PRIVATE);
         menu.findItem(R.id.action_delete_img).setChecked( preference.getBoolean("auto_delete_image",true));
         mTextView = (TextView) findViewById(R.id.textView);
         mImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.ivAvatar);
+        tvNickName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvNickName);
+        tvRealName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.tvRealName);
         mImageView.setOnClickListener(this);
+
+        tvNickName.setText(sp.getString("name", "警官")+" "+sp.getString("jobTitle", "职称"));//姓名   职称  您好！
+        tvRealName.setText(sp.getString("unit", "单位")+" "+sp.getString("depart", "部门"));
 
         //ButterKnife.bind(this);
         gridview= (MyGridView) findViewById(R.id.gridview);
