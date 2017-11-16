@@ -79,7 +79,7 @@ public class CarNumberInfoDao {
         }
 
         if (carNumber != null && carNumber.trim().length() > 1) {
-            sbInner.append("and car_number = " + carNumber);
+			sbInner.append("and car_number like '%").append(carNumber).append("%' ");
         }
 
         if ("未上报".equals(isReported)) {
@@ -267,7 +267,7 @@ public class CarNumberInfoDao {
 			sbInner.append("and is_reported = 1 ");
 		}
 		if (carNumber != null && carNumber.trim().length() > 1) {
-			sbInner.append("and car_number = " + carNumber);
+			sbInner.append("and car_number like '%").append(carNumber).append("%' ");
 		}
 		if (startedDate != null && !"开始时间".equals(startedDate)) {
 			sbInner.append("and create_time >= '").append(startedDate).append(" 00:00:00' ");
