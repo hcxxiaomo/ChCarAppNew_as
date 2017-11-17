@@ -4,7 +4,7 @@ public class CarIllegalInfo {
 
 
 
-	public Integer _id;
+	public Long _id;
 	public String carNumber;
 	public String type;
 	public String illegalId;
@@ -13,7 +13,7 @@ public class CarIllegalInfo {
 	public String img1;
     public String img2;
 	public Integer isReported;
-	public Integer serverCarId;
+	public Long serverCarId;
     public String createTime;
 
     /*
@@ -31,8 +31,8 @@ public class CarIllegalInfo {
 
      */
 
-    public CarIllegalInfo(Integer _id, String carNumber, String type, String illegalId, String illegalInfo,
-                          String address, String img1, String img2 , Integer isReported, Integer serverCarId , String createTime) {
+    public CarIllegalInfo(Long _id, String carNumber, String type, String illegalId, String illegalInfo,
+                          String address, String img1, String img2 , Integer isReported, Long serverCarId , String createTime) {
         this._id = _id;
         this.carNumber = carNumber;
         this.type = type;

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+       android:paddingTop="30sp"
+       android:orientation="vertical"
+       android:background="@color/background_white_color"
+     >
+    
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/compare_result"
+        android:textSize="18sp"
+        android:textColor="@color/white_color"
+        android:background="@color/main_color"
+        android:gravity="center"
+        android:paddingBottom="8sp"
+        />
+    <!--  <LinearLayout 
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+     </LinearLayout> -->
+     
+      <TextView 
+	                 android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	         android:gravity="center_horizontal"
+		  android:layout_gravity="center_horizontal"
+	        android:text="识别时间：2017-04-23 12:12:12 "
+	        android:background="@color/back_ground"
+	        android:id="@+id/history_result_time_illegal"
+	        android:textSize="11sp"
+	         
+	                />
+    
+    <LinearLayout 
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_marginTop="16sp"
+        >
+     <!-- 查询结果显示区域 -->
+           <ImageView
+               android:id="@+id/car_info_pic_image_id_illegal_1"
+        android:layout_width="120sp"
+        android:layout_height="160sp"
+        android:paddingLeft="5sp"
+        android:contentDescription="@string/hello_world"
+        android:src="@drawable/ic_launcher"
+         />
+  <ImageView
+               android:id="@+id/car_info_pic_image_id_illegal_2"
+        android:layout_width="120sp"
+        android:layout_height="160sp"
+        android:paddingLeft="5sp"
+        android:contentDescription="@string/hello_world"
+        android:src="@drawable/ic_launcher"
+         />
+
+
+       </LinearLayout>
+
+    <!-- 车牌号 -->
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/compare_car_number"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/history_result_car_number_illegal"
+        android:text=""
+        />
+</LinearLayout>
+       
+      <!-- 比对结果 -->
+	     <LinearLayout 
+	            android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:layout_marginTop="16sp"
+	        android:layout_marginLeft="5sp"
+	        android:layout_marginRight="5sp"
+	      android:background="@color/back_ground"
+	         >
+	        <TextView 
+	        android:layout_width="240sp"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/history_result_str_illegal"
+	        android:text="比对结果："
+	        android:textColor="@color/red_color"
+	        android:lineSpacingMultiplier="1.5"
+	            />
+
+
+
+	     </LinearLayout>
+
+	           
+	       <LinearLayout
+	           android:layout_width="wrap_content"
+	           android:layout_height="wrap_content"
+	           android:orientation="horizontal"
+	            android:layout_marginTop="14sp"
+	        android:layout_marginLeft="5sp"
+	        android:layout_marginRight="5sp"
+	            >
+			<Button 
+			    android:id="@+id/show_car_need_upload_btn_illegal"
+			      android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:paddingLeft="10sp"
+	        android:paddingRight="10sp"
+	            android:background="@drawable/linearlayout_boder"
+	        android:text="@string/compare_need_upload_info"
+			    />
+			
+			<TextView 
+			     android:id="@+id/show_car_had_upload_txt_illegal"
+			     android:layout_width="wrap_content"
+	          android:layout_height="40dp"
+	           android:textSize="20sp"
+	           android:visibility="gone"
+	            android:gravity="center_vertical"
+	           android:text="@string/compare_had_upload_info"
+			    />
+			
+
+
+			</LinearLayout>
+    <LinearLayout
+android:layout_width="match_parent"
+android:layout_height="0dp"
+android:layout_gravity="bottom"
+android:layout_weight="0.1"
+android:gravity="bottom"
+android:orientation="vertical" >
+			<Button
+            android:id="@+id/compare_button_ok"
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:background="@color/blue_color"
+            android:textColor="@android:color/white"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:text="@string/ok" />
+</LinearLayout>
+          
+</LinearLayout>

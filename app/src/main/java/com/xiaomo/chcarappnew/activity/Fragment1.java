@@ -2,7 +2,6 @@ package com.xiaomo.chcarappnew.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -88,7 +86,7 @@ public class Fragment1 extends Fragment {
     private Button button_fragment1;
     private View newsLayout;
 
-    private Handler mHandler;
+    public Handler mHandler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -103,7 +101,19 @@ public class Fragment1 extends Fragment {
                 switch (msg.what) {
                     case 10086:
                         Bundle bd = msg.getData();
-                        Log.e("-xiaomo-",bd.getString("keysl"));
+                        /*
+                         data.putString("car_number",et_static_condition_carnumber.getText().toString());
+                data.putString("upload",sn_static_condition_upload.getSelectedItem().toString());
+                data.putString("started_date",bt_static_condition_starttime.getText().toString());
+                data.putString("end_date",bt_static_condition_endtime.getText().toString());
+                         */
+                        car_number = bd.getString("car_number");
+                        upload = bd.getString("upload");
+                        started_date = bd.getString("started_date");
+                        end_date = bd.getString("end_date");
+                        Log.e("-xiaomo-",car_number+upload+started_date+end_date);
+                        //得到查询条件之后再进行查询
+                        getDataFromSelect();
                         break;
                 }
             }
@@ -135,7 +145,9 @@ public class Fragment1 extends Fragment {
         end_date = intent.getStringExtra("end_date");*/
 
         //list数据查询功能
-        nCarBean = changeCniToChri(carNumberInfoDao.findCarNumberInfo(
+        //初始数据时进行查询
+        getDataFromSelect();
+      /*  nCarBean = changeCniToChri(carNumberInfoDao.findCarNumberInfo(
                 type,
                 car_number,
                 upload,
@@ -158,7 +170,7 @@ public class Fragment1 extends Fragment {
             static_listview.setOnScrollListener(new Fragment1.MyOnScrollListener());
         }
 
-        totalPage = (allCount-1) / pageSize +1;
+        totalPage = (allCount-1) / pageSize +1;*/
 
         getAxisXLables();//获取x轴的标注
         getAxisPoints();//获取坐标点
@@ -167,6 +179,34 @@ public class Fragment1 extends Fragment {
         return newsLayout;
     }
 
+
+    private void getDataFromSelect(){
+        nCarBean = changeCniToChri(carNumberInfoDao.findCarNumberInfo(
+                type,
+                car_number,
+                upload,
+                started_date,
+                end_date,
+                new PageBean(currentPage, pageSize)));
+        allCount = carNumberInfoDao.getCount(
+                type,
+                car_number,
+                upload,
+                started_date,
+                end_date
+        );
+        nChAdaper = new CarHistoryResultInfoAdapter(nCarBean, mActivity);
+        static_listview.setAdapter(nChAdaper);
+        static_listview.setVisibility(View.VISIBLE);
+        if (allCount > pageSize) {
+            static_listview.addFooterView(linearLayout);//要在listView.setAdapter(adapter);之前添加数据信息
+            static_listview.setOnScrollListener(new MyOnScrollListener());
+        }
+
+        totalPage = (allCount-1) / pageSize +1;
+
+        Log.i("-xiaomo-", "---->"+totalPage);
+    }
 
     /**
      * 设置X 轴的显示
@@ -320,6 +360,8 @@ public class Fragment1 extends Fragment {
 
         @Override
         public void onClick(View v) {
+
+            //弹出一个弹窗，选择查询条件，然后传回来
            /* if (R.id.check_car_type == v.getId()){
                 Intent i = new Intent(Fragment1.this.mActivity,StaticConditionActivity.class);
                 startActivity(i);
