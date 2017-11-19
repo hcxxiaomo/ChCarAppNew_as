@@ -54,7 +54,11 @@ public class CarIllegalHistoryResultInfoAdapter extends BaseAdapter {
 		raid_carnumber.setText(ci.carNumber);
 		
 		raid_illegalstring.setText(ci.illegalId.concat("-").concat(ci.illegalInfo));
-		raid_isreport.setText(ci.isReported);
+		if (ci.isReported == 1){
+            raid_isreport.setText("已上报");
+        }else {
+            raid_isreport.setText("未上报");
+        }
 		raid_time.setText(ci.createTime);
 		return convertView;
 	}

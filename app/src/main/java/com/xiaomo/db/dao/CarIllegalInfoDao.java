@@ -124,7 +124,7 @@ public class CarIllegalInfoDao {
         //sb.append("select _id,car_number,type,illegal_id,illegal_info,address,img1,img2,is_reported,").append("server_carid,create_time  from t_illegal_info  ");
         for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
             carIllegalInfo = new CarIllegalInfo();
-            carIllegalInfo._id = result.getInt(0);
+            carIllegalInfo._id = result.getLong(0);
             carIllegalInfo.carNumber = result.getString(1);
             carIllegalInfo.type = result.getString(2);
             carIllegalInfo.illegalId = result.getString(3);
@@ -133,7 +133,7 @@ public class CarIllegalInfoDao {
             carIllegalInfo.img1 = result.getString(6);
             carIllegalInfo.img2 = result.getString(7);
             carIllegalInfo.isReported = result.getInt(8);
-            carIllegalInfo.serverCarId = result.getInt(9);
+            carIllegalInfo.serverCarId = result.getLong(9);
             carIllegalInfo.createTime = result.getString(10);
             listCarIllegalInfo.add(carIllegalInfo);
         }
@@ -187,7 +187,7 @@ public class CarIllegalInfoDao {
         Cursor result =  db.rawQuery(sql, args);
         CarIllegalInfo carIllegalInfo = new CarIllegalInfo();
         for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
-            carIllegalInfo._id = result.getInt(0);
+            carIllegalInfo._id = result.getLong(0);
             carIllegalInfo.carNumber = result.getString(1);
             carIllegalInfo.type = result.getString(2);
             carIllegalInfo.illegalId = result.getString(3);
@@ -196,7 +196,7 @@ public class CarIllegalInfoDao {
             carIllegalInfo.img1 = result.getString(6);
             carIllegalInfo.img2 = result.getString(7);
             carIllegalInfo.isReported = result.getInt(8);
-            carIllegalInfo.serverCarId = result.getInt(9);
+            carIllegalInfo.serverCarId = result.getLong(9);
             carIllegalInfo.createTime = result.getString(10);
         }
         return  carIllegalInfo;

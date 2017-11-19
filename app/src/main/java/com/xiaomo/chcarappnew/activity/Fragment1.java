@@ -198,6 +198,7 @@ public class Fragment1 extends Fragment {
         nChAdaper = new CarHistoryResultInfoAdapter(nCarBean, mActivity);
         static_listview.setAdapter(nChAdaper);
         static_listview.setVisibility(View.VISIBLE);
+        static_listview.setOnItemClickListener(new Fragment1.MyOnItemClickListener());
         if (allCount > pageSize) {
             static_listview.addFooterView(linearLayout);//要在listView.setAdapter(adapter);之前添加数据信息
             static_listview.setOnScrollListener(new MyOnScrollListener());

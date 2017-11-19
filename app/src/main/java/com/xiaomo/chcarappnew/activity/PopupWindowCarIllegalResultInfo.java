@@ -188,7 +188,7 @@ public class PopupWindowCarIllegalResultInfo extends PopupWindow {
 				});
 			}
 		});
-	ImageView image2=(ImageView)contentView.findViewById(R.id.car_info_pic_image_id_illegal_1);
+	ImageView image2=(ImageView)contentView.findViewById(R.id.car_info_pic_image_id_illegal_2);
 		image2.setImageBitmap(BitmapFactory.decodeFile(ci.img2));
 		image2.setOnClickListener(new OnClickListener() { // 点击放大
 			public void onClick(View paramView) {
