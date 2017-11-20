@@ -38,6 +38,8 @@ import android.widget.Toast;
 
 import com.carOCR.RecogEngine;
 import com.carOCR.RecogResult;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 import com.szOCR.camera.CameraIllegalPreview;
 import com.szOCR.camera.ScanIllegalHandler;
 import com.szOCR.camera.ViewfinderView;
@@ -51,7 +53,13 @@ import com.xiaomo.db.dao.CarIllegalInfoDao;
 import com.xiaomo.db.model.CarIllegalInfo;
 import com.xiaomo.util.BitmapThumb;
 import com.xiaomo.util.MyDbHelper;
+import com.xiaomo.util.RestClient;
 
+import org.apache.http.Header;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -697,13 +705,6 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 				//保存图片到本地去
 //				CGlobal.carPath =  CGlobal.SaveRecogBitmap("", CGlobal.myEngine.getRecgBitmap());
 				
-				//调用接口查询车辆信息
-				//保存到数据库中
-				getCarInfoAndSave();
-				
-			
-			
-			
 //			m_PopupResult.showAtLocation(mViewfinderView, 0, 0);
 //			m_PopupResult.showAtLocation(mViewfinderView, 0, 0);
 		}
@@ -957,8 +958,10 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
             carIllegalInfo.illegalId = illegal_str[0];
             carIllegalInfo.illegalInfo = illegal_str[1];
             carIllegalInfo.isReported = 0;//现在设置为0，后面再改成已经上传的
+            //保存到数据库中
             carIllegalInfoDao.insert(carIllegalInfo);
-
+            //传到服务器上
+            saveInfoToServer();
 
             //carIllegalInfo.illegalId
             Toast.makeText(this,"罚单信息保存成功",Toast.LENGTH_SHORT).show();
@@ -1023,113 +1026,62 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 	  
 	  return false;  
 	 }  
-	
+
+
+
+	private void saveInfoToServer(){
+
+        //联网保存数据信息
+        RequestParams params = new RequestParams();
+
+        try {
+            File img1 = new File(carIllegalInfo.img1);
+            params.put("img1", img1);
+            File img2 = new File(carIllegalInfo.img2);
+            params.put("img2", img2);
+        } catch (FileNotFoundException e) {
+            Toast.makeText(ScanIllegalActivity.this, "图片不存在，操作停止！", Toast.LENGTH_LONG).show();
+            Log.e("-xiaomo-", "FileNotFoundException e",e);
+            return ;
+        }
+
+        params.put("carNumber", carIllegalInfo.carNumber);
+        params.put("address", carIllegalInfo.address);
+        params.put("illegalId", carIllegalInfo.illegalId);
+        params.put("illegalInfo", carIllegalInfo.illegalInfo);
+        params.put("reportPoliceId", sp.getString("policeId", "001"));
+        params.put("reportPoliceName", sp.getString("name", "姓名"));
+        //params.put("type", sp.getString("name", "姓名"));
+        params.put("createTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.CHINA).format(new Date()));
+        RestClient.post(
+                networkPrefs.getString("server", "117.27.138.166")
+                ,networkPrefs.getString("port", "8080")
+                ,networkPrefs.getString("dir", "carplatenumber")
+                ,"carplatenumber/carNumber/uploadCarIllegalImageAll", params, new JsonHttpResponseHandler(){
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers,
+                                          JSONObject response) {
+                        Log.i("-xiaomo-", response.toString());
+
+                        Log.e("-xiaomo-", "getCarInfoAndSave end");
+                    }
+
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers,
+                                          String responseString, Throwable throwable) {
+                        super.onFailure(statusCode, headers, responseString, throwable);
+                    }
+
+
+                });
+
+    }
+
 	private void getCarInfoAndSave(){
-		 //联网开始查询数据信息
-		
-/*        RequestParams params = new RequestParams();
-		params.put("carNumberHpzm", CGlobal.g_RecogResult.m_szRecogTxt[0]);
-		params.put("reportPoliceId", sp.getString("policeId", "001"));
-		params.put("reportPoliceName", sp.getString("name", "姓名"));
-		params.put("createTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.CHINA).format(new Date()));
-		RestClient.post(
-				networkPrefs.getString("server", "117.27.138.166")
-				,networkPrefs.getString("port", "8080")
-				,networkPrefs.getString("dir", "carplatenumber")
-				,"carplatenumber/carNumber/getCarInfoWithoutType", params, new JsonHttpResponseHandler(){
 
-			@Override
-			public void onSuccess(int statusCode, Header[] headers,
-					JSONObject response) {
-				Log.i("-xiaomo-", response.toString());
-				CarNumberInfo cni = new CarNumberInfo();
-				//识别时间：2017-04-23 12:12:12    比对时间：2017-04-23 12:13:15
-				cni.setCreateTime(response.optString("createTime"));
-				cni.setCompareTime(response.optString("compareTime"));
-				cni.setCarColor(response.optString("colorCsys"));
-				cni.setCarNumber(CGlobal.g_RecogResult.m_szRecogTxt[0]);
-				cni.setEngineNo(response.optString("engineNumberFdjh"));
-				cni.setImg(CGlobal.carPath);
-				cni.setMaker(response.optString("brandClpp1"));
-				cni.setType(response.optString("typeClxh"));
-				cni.setVin(response.optString("vinClsbdh"));
-				cni.setCarType(response.optString("carType"));
-				
-				StringBuilder sb = new StringBuilder();
-				
-				boolean is_leage = false;//正常车辆
-				if (response.optInt("isYellowCar") == 1) {
-					sb.append("黄标车  ");
-					cni.setIsBlackListCar(1);
-					is_leage = true;
-				}
-				if (response.optInt("isBlackListCar") == 1) {
-					sb.append("布控车  ");
-					cni.setIsBlackListCar(1);
-					is_leage = true;
-				}
-				if (response.optInt("isSeizedCar") == 1) {
-					sb.append("查封车  ");
-					cni.setIsSeizedCar(1);
-					is_leage = true;
-				}
-				if (response.optInt("isCheckOkCar") == 1) {
-					sb.append("逾期未年审车  ");
-					cni.setIsCheckOkCar(1);
-					is_leage = true;
-				}
-				if (response.optInt("isScrappedCar") == 1) {
-					sb.append("报废车  ");
-					is_leage = true;
-				}
-				if (response.optInt("legalNumber") >= 1) {
-					sb.append("有");
-					sb.append(String.valueOf(response.optInt("legalNumber")));
-					sb.append("次违法未处理");
-					cni.setIsLegalCar(1);
-					cni.setLegalNumber(response.optInt("legalNumber"));
-					is_leage = true;
-				}
-				if (is_leage) {
-					soundPool.play(1,1, 1, 0, 0, 1); //播放了，第一个参数为id，id即为放入到soundPool中的顺序，比如现在collide.wav是第一个，因此它的id就是1。第二个和第三个参数为左右声道的音量控制。第四个参数为优先级，由于只有这一个声音，因此优先级在这里并不重要。第五个参数为是否循环播放，0为不循环，-1为循环。最后一个参数为播放比率，从0.5到2，一般为1，表示正常播放。
-					car_illegal.setText(sb.toString());
-					
-					imageView_animation1.setVisibility(View.VISIBLE);
-//			        // 动画是否正在运行  
-//			        if(animationDrawable.isRunning()){  
-//			            //停止动画播放  
-//			            animationDrawable.stop();  
-//			        }  
-//			            //开始或者继续动画播放  
-//			            animationDrawable.start();  
-					
-				}else{
-					imageView_animation1.setVisibility(View.INVISIBLE);
-//					// 动画是否正在运行  
-//			        if(animationDrawable.isRunning()){  
-//			            //停止动画播放  
-//			            animationDrawable.stop();  
-//			        }  
-					car_illegal.setText("正常车辆");
-					car_illegal.setTextColor(Color.BLACK);
-				}
-				cni.setServerCarId(response.optLong("serverCarId"));
-				cni.setIsReported(1);
-				Log.i("-xiaomo-", cni.toString());
-				
-				//把数据保存到数据库中去
-				carNumberInfoDao.insertCarNumber(cni, sp.getString("policeId", "001"), sp.getString("name", "姓名"));
-			Log.e("-xiaomo-", "getCarInfoAndSave end");
-			}
 
-			@Override
-			public void onFailure(int statusCode, Header[] headers,
-					String responseString, Throwable throwable) {
-				super.onFailure(statusCode, headers, responseString, throwable);
-			}
-			
-			
-		});*/
+
 //		Log.i("-xiaomo-", "end--RestClient.post");
 	}
 	

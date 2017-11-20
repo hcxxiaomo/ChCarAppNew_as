@@ -1,7 +1,5 @@
 package com.xiaomo.chcarappnew.activity;
 
-import java.util.Calendar;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -20,6 +18,9 @@ import android.widget.Spinner;
 import com.xiaomo.chcarappnew.R;
 import com.xiaomo.chcarappnew.adapt.SpinnerAdapter;
 
+import java.util.Calendar;
+
+@Deprecated
 public class StaticConditionActivity  extends Activity {
 	
 	private Spinner sn_static_condition_action;
