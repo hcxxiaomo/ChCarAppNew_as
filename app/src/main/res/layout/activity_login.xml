@@ -147,7 +147,7 @@
              android:background="@drawable/linearlayout_boder"
             android:gravity="center"
             android:text="@string/login" />
-        <Button
+        <!--<Button
             android:id="@+id/login_error"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -167,9 +167,9 @@
             android:gravity="left|center_vertical"
             android:text="@string/register"
             android:textSize="16sp"            
-            android:visibility="gone" />
+            android:visibility="gone" />-->
     </RelativeLayout>
-    <RelativeLayout
+   <!-- <RelativeLayout
         android:id="@+id/remember_layout000"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -188,5 +188,5 @@
             android:textSize="13sp"
             android:textColor="#210058"
             android:visibility="visible" />
-    </RelativeLayout>
+    </RelativeLayout>-->
 </RelativeLayout>

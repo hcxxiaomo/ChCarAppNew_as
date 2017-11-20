@@ -36,7 +36,7 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 
 	// 声明控件对象
 	private EditText et_name, et_pass;
-	private Button mLoginButton,mLoginError,mRegister,ONLYTEST;
+	private Button mLoginButton; //,mLoginError,mRegister,ONLYTEST
 	int selectIndex=1;
 	int tempSelect=selectIndex;
 	boolean isReLogin=false;
@@ -100,14 +100,14 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 		et_pass.addTextChangedListener(password_watcher);
 
 		mLoginButton = (Button) findViewById(R.id.login);
-		mLoginError  = (Button) findViewById(R.id.login_error);
+		/*mLoginError  = (Button) findViewById(R.id.login_error);
 		mRegister    = (Button) findViewById(R.id.register);
-		ONLYTEST     = (Button) findViewById(R.id.registfer);
-		ONLYTEST.setOnClickListener(this);
-		ONLYTEST.setOnLongClickListener((OnLongClickListener) this);
+		ONLYTEST     = (Button) findViewById(R.id.registfer);*/
+		/*ONLYTEST.setOnClickListener(this);
+		ONLYTEST.setOnLongClickListener((OnLongClickListener) this);*/
 		mLoginButton.setOnClickListener(this);
-		mLoginError.setOnClickListener(this);
-		mRegister.setOnClickListener(this);
+		/*mLoginError.setOnClickListener(this);
+		mRegister.setOnClickListener(this);*/
 
 		SharedPreferences sp =  this.getSharedPreferences("userInfo", Activity.MODE_PRIVATE);
 		et_name.setText(sp.getString("user", ""));
@@ -162,7 +162,7 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 			case R.id.login:  //登陆
 				login();
 				break;
-			case R.id.login_error: //无法登陆(忘记密码了吧)
+			/*case R.id.login_error: //无法登陆(忘记密码了吧)
 				//   Intent login_error_intent=new Intent();
 				//   login_error_intent.setClass(LoginActivity.this, ForgetCodeActivity.class);
 				//   startActivity(login_error_intent);
@@ -179,7 +179,7 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 					Toast.makeText(this, "[内部测试--谨慎操作]", Toast.LENGTH_SHORT).show();
 				}
 				SERVER_FLAG++;
-				break;
+				break;*/
 			case R.id.bt_username_clear:
 				et_name.setText("");
 				et_pass.setText("");
@@ -254,12 +254,12 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 	public boolean onLongClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-			case R.id.registfer:
+			/*case R.id.registfer:
 				if(SERVER_FLAG>9){
 
-				}
+				}*/
 				//   SERVER_FLAG++;
-				break;
+				//break;
 		}
 		return true;
 	}

@@ -955,8 +955,8 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
             carIllegalInfo.createTime =
                     new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(new Date());
             String[] illegal_str =  illegal.split("_");
-            carIllegalInfo.illegalId = illegal_str[0];
-            carIllegalInfo.illegalInfo = illegal_str[1];
+            carIllegalInfo.illegalId = illegal_str[1];
+            carIllegalInfo.illegalInfo = illegal_str[0];
             carIllegalInfo.isReported = 0;//现在设置为0，后面再改成已经上传的
             //保存到数据库中
             carIllegalInfoDao.insert(carIllegalInfo);
