@@ -1,4 +1,4 @@
-package com.xiaomo.chcarappnew.activity;
+package com.xiaomo.chcarappnew.popup;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -19,6 +19,7 @@ import android.widget.RelativeLayout.LayoutParams;
 import android.widget.Spinner;
 
 import com.xiaomo.chcarappnew.R;
+import com.xiaomo.chcarappnew.activity.Fragment1;
 import com.xiaomo.chcarappnew.adapt.SpinnerAdapter;
 
 import java.util.Calendar;
@@ -44,7 +45,7 @@ public class PopupWindowSelectCarCheck extends PopupWindow {
 	public PopupWindowSelectCarCheck(final Activity context,final Fragment1 fragment1){
         mActivity = context;
 		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		contentView = inflater.inflate(R.layout.activity_static_condition, null);
+		contentView = inflater.inflate(R.layout.activity_static_carnumber_condition, null);
 		//int h = context.getWindowManager().getDefaultDisplay().getHeight();
 		int w = context.getWindowManager().getDefaultDisplay().getWidth();
 		// 设置SelectPicPopupWindow的View

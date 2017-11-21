@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import com.szOCR.general.CGlobal;
 import com.xiaomo.chcarappnew.R;
 import com.xiaomo.chcarappnew.adapt.CarHistoryResultInfoAdapter;
+import com.xiaomo.chcarappnew.popup.PopupWindowCarCheckResultInfo;
 import com.xiaomo.db.dao.CarNumberInfoDao;
 import com.xiaomo.db.model.CarHistoryResultInfo;
 import com.xiaomo.db.model.CarNumberInfo;

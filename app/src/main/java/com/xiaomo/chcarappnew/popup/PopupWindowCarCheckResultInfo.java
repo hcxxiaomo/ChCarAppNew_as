@@ -1,4 +1,4 @@
-package com.xiaomo.chcarappnew.activity;
+package com.xiaomo.chcarappnew.popup;
 
 import android.app.Activity;
 import android.app.AlertDialog;

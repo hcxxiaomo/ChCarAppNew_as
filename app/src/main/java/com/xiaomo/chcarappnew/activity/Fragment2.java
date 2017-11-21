@@ -22,6 +22,7 @@ import android.widget.ProgressBar;
 import com.szOCR.general.CGlobal;
 import com.xiaomo.chcarappnew.R;
 import com.xiaomo.chcarappnew.adapt.CarIllegalHistoryResultInfoAdapter;
+import com.xiaomo.chcarappnew.popup.PopupWindowCarIllegalResultInfo;
 import com.xiaomo.db.dao.CarIllegalInfoDao;
 import com.xiaomo.db.model.CarIllegalInfo;
 import com.xiaomo.db.model.PiePojo;

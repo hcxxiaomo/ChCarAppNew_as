@@ -18,7 +18,7 @@ public class StaticTabActivity  extends AppCompatActivity implements View.OnClic
 	private LinearLayout tab1Layout, tab2Layout;
 	private TextView text1, text2;
 	// 默认选中第一个tab
-	private int index = 1;
+	//private int index = 1;
 	// fragment管理类
 	private FragmentManager fragmentManager;
 	// 三个fragment
@@ -86,7 +86,7 @@ public class StaticTabActivity  extends AppCompatActivity implements View.OnClic
 
 	@Override
 	public void onClick(View view) {
-		clearStatus();
+		//clearStatus();
 		switch (view.getId()) {
 			case R.id.text1:
 				if (tab1Fragment == null) {
@@ -94,7 +94,9 @@ public class StaticTabActivity  extends AppCompatActivity implements View.OnClic
 				}
 				replaceFragment(tab1Fragment);
 				//tab1Layout.setBackgroundColor(Color.BLUE);
-				index = 1;
+				text1.setBackgroundResource(R.drawable.textview_sharp);
+				text2.setBackgroundResource(0);
+				//index = 1;
 				break;
 			case R.id.text2:
 				if (tab2Fragment == null) {
@@ -102,7 +104,9 @@ public class StaticTabActivity  extends AppCompatActivity implements View.OnClic
 				}
 				replaceFragment(tab2Fragment);
 				//tab2Layout.setBackgroundColor(Color.RED);
-				index = 2;
+				text2.setBackgroundResource(R.drawable.textview_sharp);
+				text1.setBackgroundResource(0);
+				//index = 2;
 				break;
 		}
 

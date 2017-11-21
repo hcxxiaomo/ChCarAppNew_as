@@ -38,7 +38,7 @@ public class StaticConditionActivity  extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_static_condition);
+		setContentView(R.layout.activity_static_carnumber_condition);
 		sn_static_condition_action = (Spinner) findViewById(R.id.sn_static_condition_action);
 		sn_static_condition_upload = (Spinner) findViewById(R.id.sn_static_condition_upload);
 		et_static_condition_carnumber = (EditText) findViewById(R.id.et_static_condition_carnumber);
