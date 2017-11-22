@@ -24,7 +24,7 @@ import com.xiaomo.chcarappnew.adapt.SpinnerAdapter;
 
 import java.util.Calendar;
 
-public class PopupWindowSelectCarCheck extends PopupWindow {
+public class PopupWindowSelectCarIllegalCheck extends PopupWindow {
 
 	private Spinner sn_static_condition_action;
 	private Spinner sn_static_condition_upload;
@@ -42,10 +42,10 @@ public class PopupWindowSelectCarCheck extends PopupWindow {
 
     private Activity mActivity;
 
-	public PopupWindowSelectCarCheck(final Activity context,final Fragment1 fragment1){
+	public PopupWindowSelectCarIllegalCheck(final Activity context, final Fragment1 fragment1){
         mActivity = context;
 		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		contentView = inflater.inflate(R.layout.activity_static_carnumber_condition, null);
+		contentView = inflater.inflate(R.layout.activity_static_carillegal_condition, null);
 		//int h = context.getWindowManager().getDefaultDisplay().getHeight();
 		int w = context.getWindowManager().getDefaultDisplay().getWidth();
 		// 设置SelectPicPopupWindow的View
@@ -128,7 +128,7 @@ public class PopupWindowSelectCarCheck extends PopupWindow {
                 msg.setData(data);
                 msg.what = 10086;
                 fragment1.mHandler.sendMessage(msg);
-                PopupWindowSelectCarCheck.this.dismiss();
+                PopupWindowSelectCarIllegalCheck.this.dismiss();
                 /*
                 type = intent.getStringExtra("type");
    		car_number = intent.getStringExtra("car_number");

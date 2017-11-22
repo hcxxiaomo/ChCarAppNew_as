@@ -23,7 +23,7 @@ import com.szOCR.general.CGlobal;
 import com.xiaomo.chcarappnew.R;
 import com.xiaomo.chcarappnew.adapt.CarHistoryResultInfoAdapter;
 import com.xiaomo.chcarappnew.popup.PopupWindowCarCheckResultInfo;
-import com.xiaomo.chcarappnew.popup.PopupWindowSelectCarCheck;
+import com.xiaomo.chcarappnew.popup.PopupWindowSelectCarNumberCheck;
 import com.xiaomo.db.dao.CarNumberInfoDao;
 import com.xiaomo.db.model.CarHistoryResultInfo;
 import com.xiaomo.db.model.CarNumberInfo;
@@ -365,7 +365,7 @@ public class Fragment1 extends Fragment {
         public void onClick(View v) {
 
             //弹出一个弹窗，选择查询条件，然后传回来
-            PopupWindowSelectCarCheck pscc = new PopupWindowSelectCarCheck(Fragment1.this.mActivity,Fragment1.this);
+            PopupWindowSelectCarNumberCheck pscc = new PopupWindowSelectCarNumberCheck(Fragment1.this.mActivity,Fragment1.this);
             pscc.showAtLocation(Fragment1.this.mActivity.findViewById(R.id.check_car_type), Gravity.TOP | Gravity.START, 0, 0);
 
            /* if (R.id.check_car_type == v.getId()){
