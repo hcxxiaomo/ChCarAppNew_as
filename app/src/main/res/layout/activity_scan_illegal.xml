@@ -127,7 +127,25 @@
                 android:textColor="@color/color_yellow"
                 android:textSize="19sp" />
 
+            <ProgressBar
+                android:id="@+id/scan_car_illegal_process_bar"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:max="120"
+                android:progress="0"
+                android:visibility="gone"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"/>
+
             <TextView
+                android:id="@+id/scan_car_illegal_tv_progress"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:visibility="gone"
+                />
+
+           <!-- <TextView
                 android:id="@+id/record_car_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,7 +154,7 @@
                 android:gravity="center_horizontal"
                 android:lineSpacingMultiplier="1.1"
                 android:textColor="@color/color_blue"
-                android:textSize="19sp" />
+                android:textSize="19sp" />-->
 
             <!--<Button
                 android:id="@+id/scan_illegal_save_btn"

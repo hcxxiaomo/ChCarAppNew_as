@@ -99,7 +99,20 @@ public class Fragment2 extends Fragment {
                 switch (msg.what) {
                     case 10010:
                         Bundle bd = msg.getData();
-                        Log.e("-xiaomo-",bd.getString("keysl"));
+                        /*
+                         data.putString("car_number",et_static_condition_carnumber.getText().toString());
+                data.putString("upload",sn_static_condition_upload.getSelectedItem().toString());
+                data.putString("started_date",bt_static_condition_starttime.getText().toString());
+                data.putString("end_date",bt_static_condition_endtime.getText().toString());
+                         */
+                        car_number = bd.getString("car_number");
+                        upload = bd.getString("upload");
+                        started_date = bd.getString("started_date");
+                        end_date = bd.getString("end_date");
+                        type = bd.getString("type");
+                        Log.e("-xiaomo-",car_number+upload+started_date+end_date+type);
+                        //得到查询条件之后再进行查询
+                        getDataFromSelect();
                         break;
                 }
             }
@@ -129,7 +142,16 @@ public class Fragment2 extends Fragment {
         upload = intent.getStringExtra("upload");
         started_date = intent.getStringExtra("started_date");
         end_date = intent.getStringExtra("end_date");*/
+        getDataFromSelect();
 
+
+        getAxisXLables();//获取x轴的标注
+        getAxisPoints();//获取坐标点
+        initLineChart();//初始化
+        return newsLayout;
+    }
+
+    private void getDataFromSelect() {
         //list数据查询功能
         nCarBean = carIllegalInfoDao.findCarNumberRaidInfo(
                 type,
@@ -148,18 +170,13 @@ public class Fragment2 extends Fragment {
         nChAdaper = new CarIllegalHistoryResultInfoAdapter(nCarBean, mActivity);
         static_listview.setAdapter(nChAdaper);
         static_listview.setVisibility(View.VISIBLE);
-        static_listview.setOnItemClickListener(new Fragment2.MyOnItemClickListener());
+        static_listview.setOnItemClickListener(new MyOnItemClickListener());
         if (allCount > pageSize) {
             static_listview.addFooterView(linearLayout);//要在listView.setAdapter(adapter);之前添加数据信息
-            static_listview.setOnScrollListener(new Fragment2.MyOnScrollListener());
+            static_listview.setOnScrollListener(new MyOnScrollListener());
         }
 
         totalPage = (allCount-1) / pageSize +1;
-
-        getAxisXLables();//获取x轴的标注
-        getAxisPoints();//获取坐标点
-        initLineChart();//初始化
-        return newsLayout;
     }
 
 
@@ -245,54 +262,6 @@ public class Fragment2 extends Fragment {
         v.right= 9;
         lineChart.setCurrentViewport(v);
     }
-
- /*   private List<CarHistoryResultInfo> changeCniToChri( List<CarNumberInfo> listCni){
-        List<CarHistoryResultInfo>  listChri = new LinkedList<CarHistoryResultInfo>();
-        CarHistoryResultInfo chri = null;
-        if (listCni != null && listCni.size() >=1) {
-            for (CarNumberInfo carNumberInfo : listCni) {
-                StringBuilder sb = new StringBuilder();
-                chri = new CarHistoryResultInfo();
-                if (carNumberInfo.getIsYellowCar() == 1) {
-                    sb.append("黄标车  ");
-                }
-                if (carNumberInfo.getIsBlackListCar() == 1) {
-                    sb.append("布控车  ");
-                }
-                if (carNumberInfo.getIsSeizedCar() == 1) {
-                    sb.append("查封车  ");
-                }
-                if (carNumberInfo.getIsCheckOkCar() == 1) {
-                    sb.append("逾期未年审车  ");
-                }
-                if (carNumberInfo.getIsScrappedCar() == 1) {
-                    sb.append("报废车  ");
-                }
-                if (carNumberInfo.getLegalNumber() >= 1) {
-                    sb.append("有");
-                    sb.append(String.valueOf(carNumberInfo.getLegalNumber()));
-                    sb.append("次违法未处理");
-                }
-                if (sb.length() > 0) {
-                    chri.setCompareResult(sb.toString());
-                }
-                if (carNumberInfo.getIsReported() == 1) {
-                    chri.setUpload("已上传");
-                }else{
-                    chri.setUpload("未上传");
-                }
-                chri.set_id(carNumberInfo.getCarId());
-                chri.setCarNumber(carNumberInfo.getCarNumber());
-                chri.setImg(carNumberInfo.getImg());
-                chri.setRecordFile(carNumberInfo.getVideo());
-                chri.setTime(carNumberInfo.getCreateTime());
-//				chri.setTime(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.CHINA).format(carNumberInfo.getCreateTime()));
-                listChri.add(chri);
-            }
-        }
-        return listChri;
-    }*/
-
 
     private void appendData(){
         carIllegalInfoDao = new CarIllegalInfoDao(myDbHelper.getReadableDatabase());//得到dao
@@ -382,11 +351,5 @@ public class Fragment2 extends Fragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-    View.OnClickListener myOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-          /*  MyPopupWindows bpw = new MyPopupWindows(mActivity,mHandler);
-            bpw.showAtLocation(newsLayout, Gravity.TOP | Gravity.START, 0, 0);*/
-        }
-    };
+
 }

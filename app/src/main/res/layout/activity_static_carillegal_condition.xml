@@ -17,11 +17,17 @@
     android:text="@string/static_condition_action"
         />
     
-    <Spinner 
-        android:id="@+id/sn_static_condition_action"
+   <!-- <Spinner
+        android:id="@+id/sn_static_condition_action_illegal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        />-->
+        <Button
+            android:id="@+id/bt_static_condition_action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/static_condition_action"
+            />
     </LinearLayout>
     <LinearLayout 
         android:layout_width="wrap_content"
@@ -35,7 +41,7 @@
         />
     
     <EditText
-        android:id="@+id/et_static_condition_carnumber"
+        android:id="@+id/et_static_condition_carnumber_illegal"
            android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:inputType="text"
@@ -53,7 +59,7 @@
         />
     
     <Button
-        android:id="@+id/bt_static_condition_starttime"
+        android:id="@+id/bt_static_condition_starttime_illegal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/static_condition_starttime" 
@@ -71,7 +77,7 @@
         />
     
     <Button
-         android:id="@+id/bt_static_condition_endtime"
+         android:id="@+id/bt_static_condition_endtime_illegal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/static_condition_endtime" />
@@ -89,7 +95,7 @@
         />
     
     <Spinner 
-        android:id="@+id/sn_static_condition_upload"
+        android:id="@+id/sn_static_condition_upload_illegal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />
@@ -100,7 +106,7 @@
     
     
     <Button 
-        android:id="@+id/bt_choose_condition"
+        android:id="@+id/bt_choose_condition_illegal"
 		 android:layout_width="match_parent"
          android:layout_height="40sp"
         android:layout_marginTop="40sp"

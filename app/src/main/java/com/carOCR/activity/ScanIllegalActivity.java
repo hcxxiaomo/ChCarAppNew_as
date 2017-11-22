@@ -8,6 +8,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
 import android.hardware.Sensor;
@@ -32,6 +33,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -191,6 +193,9 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
     private String[] images = new String[2];
 
     private TextView default_address;
+
+    private ProgressBar progressBar;
+    private TextView tv_progress;
 
     public void onCreate(Bundle savedInstanceState) 
     {
@@ -356,6 +361,9 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         });
 
         mRecyclerView.setAdapter(mAdapter);
+
+        progressBar  = (ProgressBar) findViewById(R.id.scan_car_illegal_process_bar);
+        tv_progress = (TextView) findViewById(R.id.scan_car_illegal_tv_progress);
         
     }
 
@@ -964,12 +972,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
             saveInfoToServer();
 
             //carIllegalInfo.illegalId
-            Toast.makeText(this,"罚单信息保存成功",Toast.LENGTH_SHORT).show();
-            images[0] = null;
-            images[1] = null;
-            record_car_number.setText("");
-            scan_illegal_image_1.setImageResource(0);
-            scan_illegal_image_2.setImageResource(0);
+
 
 
 
@@ -1009,8 +1012,19 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
     		m_PopupPassword.hide();
     	}
 	}
-	
-	public void showOption(int iOptionPage)
+
+    private void clearUploadStatus() {
+        Toast.makeText(this,"罚单信息保存成功",Toast.LENGTH_SHORT).show();
+        images[0] = null;
+        images[1] = null;
+        record_car_number.setText("");
+        scan_illegal_image_1.setImageResource(0);
+        scan_illegal_image_2.setImageResource(0);
+        scan_illegal_save_btn.setClickable(true);
+        scan_illegal_save_btn.setVisibility(View.VISIBLE);
+    }
+
+    public void showOption(int iOptionPage)
 	{
 		Intent m = new Intent(this, OptionActivity.class);
 		m.putExtra("OptionPage", iOptionPage);
@@ -1053,6 +1067,12 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         params.put("reportPoliceName", sp.getString("name", "姓名"));
         //params.put("type", sp.getString("name", "姓名"));
         params.put("createTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.CHINA).format(new Date()));
+
+        progressBar.setVisibility(View.VISIBLE);
+        tv_progress.setVisibility(View.VISIBLE);
+        scan_illegal_save_btn.setClickable(false);
+        scan_illegal_save_btn.setVisibility(View.INVISIBLE);
+
         RestClient.post(
                 networkPrefs.getString("server", "117.27.138.166")
                 ,networkPrefs.getString("port", "8080")
@@ -1062,14 +1082,38 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
                     @Override
                     public void onSuccess(int statusCode, Header[] headers,
                                           JSONObject response) {
-                        Log.i("-xiaomo-", response.toString());
+                        Log.e("-xiaomo-", response.toString());
 
-                        Log.e("-xiaomo-", "getCarInfoAndSave end");
+                        if (response.optInt("upload") == 1) {//上传成功-- 数据库状态修改
+//   						carNumberInfoDao.updateIsReported(serverCarId);
+                            Toast.makeText(ScanIllegalActivity.this, "数据上传平台存储成功！", Toast.LENGTH_SHORT).show();
+                            clearUploadStatus();
+                        }else{
+                            Toast.makeText(ScanIllegalActivity.this, "网络问题，图片上传平台存储失败", Toast.LENGTH_SHORT).show();
+                        }
+                        progressBar.setVisibility(View.GONE);
+                        tv_progress.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onProgress(long bytesWritten, long totalSize) {
+                        super.onProgress(bytesWritten, totalSize);
+                        int count = (int) ((bytesWritten * 1.0 / totalSize) * 100);
+                        // 上传进度显示
+                        progressBar.setProgress(count);
+                        tv_progress.setText("正在上传图片....."+count+"%");
+                        tv_progress.setTextColor(Color.RED);
+//					               Log.i("上传 Progress>>>>>", "count="+count+"--"+bytesWritten + " / " + totalSize);
                     }
 
                     @Override
                     public void onFailure(int statusCode, Header[] headers,
                                           String responseString, Throwable throwable) {
+                        progressBar.setVisibility(View.GONE);
+                        tv_progress.setVisibility(View.GONE);
+                        Toast.makeText(ScanIllegalActivity.this, "网络问题，图片上传平台存储失败", Toast.LENGTH_SHORT).show();
+                        scan_illegal_save_btn.setClickable(true);
+                        scan_illegal_save_btn.setVisibility(View.VISIBLE);
                         super.onFailure(statusCode, headers, responseString, throwable);
                     }
 

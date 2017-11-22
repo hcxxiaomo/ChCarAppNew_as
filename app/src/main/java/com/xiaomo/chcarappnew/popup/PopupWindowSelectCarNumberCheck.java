@@ -79,8 +79,8 @@ public class PopupWindowSelectCarNumberCheck extends PopupWindow {
         actionBar.setDisplayHomeAsUpEnabled(true);*/
         //actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer); //修改actionbar左上角返回按钮的图标
 
-        final String[] illeagl_item = {"全部","逾期未年审","报废车","黄标车","布控车","违法未处理" };
-        final String[] illeagl_upload_item = {"全部","未上报","已上报" };
+        final String[] illegal_item = {"全部","逾期未年审","报废车","黄标车","布控车","违法未处理" };
+        final String[] illegal_upload_item = {"全部","未上报","已上报" };
         //初始化Calendar日历对象
         Calendar mycalendar=Calendar.getInstance();
         year=mycalendar.get(Calendar.YEAR); //获取Calendar对象中的年
@@ -89,10 +89,10 @@ public class PopupWindowSelectCarNumberCheck extends PopupWindow {
 
 
         SpinnerAdapter adapter = new SpinnerAdapter(mActivity,
-                android.R.layout.simple_spinner_dropdown_item, illeagl_item);
+                android.R.layout.simple_spinner_dropdown_item, illegal_item);
         sn_static_condition_action.setAdapter(adapter);
         SpinnerAdapter adapter_upload = new SpinnerAdapter(mActivity,
-                android.R.layout.simple_spinner_dropdown_item, illeagl_upload_item);
+                android.R.layout.simple_spinner_dropdown_item, illegal_upload_item);
         sn_static_condition_upload.setAdapter(adapter_upload);
 
         bt_static_condition_starttime.setOnClickListener(new OnClickListener(){

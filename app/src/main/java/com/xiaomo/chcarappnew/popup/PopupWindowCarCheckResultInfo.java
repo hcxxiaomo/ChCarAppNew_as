@@ -3,6 +3,7 @@ package com.xiaomo.chcarappnew.popup;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -13,6 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,8 +60,15 @@ public class PopupWindowCarCheckResultInfo extends PopupWindow {
 	private MyDbHelper myDbHelper;
 	private CarNumberInfoDao carNumberInfoDao;
 
+    private SharedPreferences networkPrefs;
+    private ProgressBar progressBar;
+    private TextView tv_progress;
+
 	public PopupWindowCarCheckResultInfo(final Activity context){
-		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        networkPrefs = context.getSharedPreferences("network_set", Activity.MODE_PRIVATE);
+
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		contentView = inflater.inflate(R.layout.page_car_check_result_info, null);
 		//int h = context.getWindowManager().getDefaultDisplay().getHeight();
 		int w = context.getWindowManager().getDefaultDisplay().getWidth();
@@ -98,6 +107,9 @@ public class PopupWindowCarCheckResultInfo extends PopupWindow {
 		ok = (Button) contentView.findViewById(R.id.compare_button_ok);
 		show_car_owner_info_btn = (Button) contentView.findViewById(R.id.show_car_owner_info_btn);
 		show_car_need_upload_btn = (Button) contentView.findViewById(R.id.show_car_need_upload_btn);
+
+        progressBar  = (ProgressBar)contentView.findViewById(R.id.car_check_process_bar);
+        tv_progress = (TextView) contentView.findViewById(R.id.car_check_tv_progress);
 
 		myDbHelper = new MyDbHelper(context, "db_car_number", 1);
 		carNumberInfoDao = new CarNumberInfoDao(myDbHelper.getReadableDatabase());//得到dao
@@ -181,24 +193,55 @@ public class PopupWindowCarCheckResultInfo extends PopupWindow {
 						return ;
 					}
 					params.put("serverCarId", String.valueOf(serverCarId));
-					RestClient.post("carplatenumber/carNumber/uploadImageNew", params, new JsonHttpResponseHandler(){
 
+                    progressBar.setVisibility(View.VISIBLE);
+                    tv_progress.setVisibility(View.VISIBLE);
+                    /*four_pic_upload.setClickable(false);
+                    four_pic_upload.setVisibility(View.INVISIBLE);*/
 
-						public void onSuccess(int statusCode, Header[] headers,
-											  JSONObject response) {
-							Log.i("-xiaomo-", "uploadImage-success:"+response);
-							if (response.optInt("upload") == 1) {//上传成功-- 数据库状态修改
-								carNumberInfoDao.updateIsReported(serverCarId);
-								Toast.makeText(context, "图片上传平台存储成功！", Toast.LENGTH_LONG).show();
-								show_car_need_upload_btn.setClickable(false);
-							}
-						}
+					RestClient.post(
+							networkPrefs.getString("server", "117.27.138.166")
+							,networkPrefs.getString("port", "8080")
+							,networkPrefs.getString("dir", "carplatenumber")
+							,"carplatenumber/carNumber/uploadImageNew", params, new JsonHttpResponseHandler(){
+
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers,
+                                          JSONObject response) {
+                        Log.i("-xiaomo-", "uploadImage-success:"+response);
+                        if (response.optInt("upload") == 1) {//上传成功-- 数据库状态修改
+                            carNumberInfoDao.updateIsReported(serverCarId);
+                            Toast.makeText(context, "图片上传平台存储成功！", Toast.LENGTH_LONG).show();
+                            show_car_need_upload_btn.setClickable(false);
+                            show_car_need_upload_btn.setVisibility(View.INVISIBLE);
+                        }else {
+                            Toast.makeText(context, "网络问题，图片上传平台存储失败", Toast.LENGTH_LONG).show();
+                        }
+
+                        progressBar.setVisibility(View.GONE);
+                        tv_progress.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onProgress(long bytesWritten, long totalSize) {
+                        super.onProgress(bytesWritten, totalSize);
+                        int count = (int) ((bytesWritten * 1.0 / totalSize) * 100);
+                        // 上传进度显示
+                        progressBar.setProgress(count);
+                        tv_progress.setText("正在上传图片....."+count+"%");
+                        tv_progress.setTextColor(Color.RED);
+//					               Log.i("上传 Progress>>>>>", "count="+count+"--"+bytesWritten + " / " + totalSize);
+                    }
 
 
 						@Override
 						public void onFailure(int statusCode, Header[] headers,
 											  String responseString, Throwable throwable) {
-							super.onFailure(statusCode, headers, responseString, throwable);
+                            progressBar.setVisibility(View.GONE);
+                            tv_progress.setVisibility(View.GONE);
+                            Toast.makeText(context, "网络问题，图片上传平台存储失败", Toast.LENGTH_LONG).show();
+                            super.onFailure(statusCode, headers, responseString, throwable);
+
 						}
 
 					});

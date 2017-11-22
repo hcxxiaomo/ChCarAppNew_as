@@ -1,8 +1,10 @@
 package com.xiaomo.chcarappnew.popup;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -26,11 +28,13 @@ import java.util.Calendar;
 
 public class PopupWindowSelectCarIllegalCheck extends PopupWindow {
 
-	private Spinner sn_static_condition_action;
+	//private Spinner sn_static_condition_action;
 	private Spinner sn_static_condition_upload;
 	private EditText et_static_condition_carnumber;
 	private Button bt_static_condition_starttime;
 	private Button bt_static_condition_endtime;
+	private Button bt_static_condition_upload;
+	private Button bt_static_condition_action;
 
 	private int year;
 	private int month;
@@ -67,11 +71,12 @@ public class PopupWindowSelectCarIllegalCheck extends PopupWindow {
 		//this.setAnimationStyle(android.R.style.Animation_Dialog);
 		// 设置popWindow的显示和消失动画
 		this.setAnimationStyle(R.style.mypopwindow_anim_style);
-        sn_static_condition_action = (Spinner) contentView.findViewById(R.id.sn_static_condition_action);
-        sn_static_condition_upload = (Spinner) contentView.findViewById(R.id.sn_static_condition_upload);
-        et_static_condition_carnumber = (EditText) contentView.findViewById(R.id.et_static_condition_carnumber);
-        bt_static_condition_starttime = (Button) contentView.findViewById(R.id.bt_static_condition_starttime);
-        bt_static_condition_endtime = (Button) contentView.findViewById(R.id.bt_static_condition_endtime);
+        //sn_static_condition_action = (Spinner) contentView.findViewById(R.id.sn_static_condition_action_illegal);
+        sn_static_condition_upload = (Spinner) contentView.findViewById(R.id.sn_static_condition_upload_illegal);
+        et_static_condition_carnumber = (EditText) contentView.findViewById(R.id.et_static_condition_carnumber_illegal);
+        bt_static_condition_starttime = (Button) contentView.findViewById(R.id.bt_static_condition_starttime_illegal);
+        bt_static_condition_endtime = (Button) contentView.findViewById(R.id.bt_static_condition_endtime_illegal);
+        bt_static_condition_action = (Button) contentView.findViewById(R.id.bt_static_condition_action);
 
         bt_choose_condition = (Button) contentView.findViewById(R.id.bt_choose_condition);
 
@@ -79,7 +84,9 @@ public class PopupWindowSelectCarIllegalCheck extends PopupWindow {
         actionBar.setDisplayHomeAsUpEnabled(true);*/
         //actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer); //修改actionbar左上角返回按钮的图标
 
-        final String[] illeagl_item = {"全部","逾期未年审","报废车","黄标车","布控车","违法未处理" };
+        final String[] illeagl_item = {"高速公路逆向行驶_4602","占用应急车道行驶_4608","违反禁令标志提示_1344"
+                ,"不按规定车道行驶_1355","违反禁止标线指示_1230","不按规定倒车_4601","违反警告标志指示_1090"};
+        final String[] illeagl_id = {"4602","4608","1344" ,"1355","1230","4601" ,"1090"};
         final String[] illeagl_upload_item = {"全部","未上报","已上报" };
         //初始化Calendar日历对象
         Calendar mycalendar=Calendar.getInstance();
@@ -88,9 +95,9 @@ public class PopupWindowSelectCarIllegalCheck extends PopupWindow {
         day=mycalendar.get(Calendar.DAY_OF_MONTH);//获取这个月的第几天
 
 
-        SpinnerAdapter adapter = new SpinnerAdapter(mActivity,
+        /*SpinnerAdapter adapter = new SpinnerAdapter(mActivity,
                 android.R.layout.simple_spinner_dropdown_item, illeagl_item);
-        sn_static_condition_action.setAdapter(adapter);
+        sn_static_condition_action.setAdapter(adapter);*/
         SpinnerAdapter adapter_upload = new SpinnerAdapter(mActivity,
                 android.R.layout.simple_spinner_dropdown_item, illeagl_upload_item);
         sn_static_condition_upload.setAdapter(adapter_upload);
@@ -114,6 +121,26 @@ public class PopupWindowSelectCarIllegalCheck extends PopupWindow {
             }
         });
 
+
+        bt_static_condition_action.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(mActivity)
+                        .setTitle("请选择查询的违法类型")
+                        .setItems(illeagl_item, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                bt_static_condition_action.setText(illeagl_id[which]);
+                                //illeagl_spinner_id.setTextColor(Color.BLUE);
+                            }
+                        })
+                        .setPositiveButton("确定", null)
+                        .setNegativeButton("取消", null)
+                        .create()
+                        .show();
+            }
+        });
+
         bt_choose_condition.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,6 +152,7 @@ public class PopupWindowSelectCarIllegalCheck extends PopupWindow {
                 data.putString("upload",sn_static_condition_upload.getSelectedItem().toString());
                 data.putString("started_date",bt_static_condition_starttime.getText().toString());
                 data.putString("end_date",bt_static_condition_endtime.getText().toString());
+                data.putString("type",bt_static_condition_action.getText().toString());
                 msg.setData(data);
                 msg.what = 10086;
                 fragment1.mHandler.sendMessage(msg);
