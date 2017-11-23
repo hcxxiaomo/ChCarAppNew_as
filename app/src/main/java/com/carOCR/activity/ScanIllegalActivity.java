@@ -88,7 +88,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 	private TextView		mTxtViewPreviewSize;
 	private TextView		mTxtViewRecogTime;
 	private TextView		record_car_number;
-	private TextView		record_car_address;
+	//private TextView		record_car_address;
 
 //	public  RelativeLayout 	car_number_layout;
 //	private TextView		car_number;
@@ -217,7 +217,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         mTxtViewPreviewSize = (TextView)findViewById(R.id.txtViewPreviewSize);
         mTxtViewRecogTime = (TextView)findViewById(R.id.txtViewRecogTime);
         record_car_number = (TextView)findViewById(R.id.record_car_number);
-        record_car_address = (TextView)findViewById(R.id.record_car_address);
+        //record_car_address = (TextView)findViewById(R.id.record_car_address);
 
         imageView_animation1 = (ImageView) findViewById(R.id.imageView_animation1);
         scan_illegal_image_1 = (ImageView) findViewById(R.id.scan_illegal_image_1);
