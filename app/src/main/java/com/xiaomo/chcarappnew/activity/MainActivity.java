@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,6 +24,7 @@ import com.carOCR.activity.ScanIllegalActivity;
 import com.xiaomo.chcarappnew.R;
 import com.xiaomo.chcarappnew.adapt.MyGridViewAdapt;
 import com.xiaomo.chcarappnew.view.MyGridView;
+import com.xiaomo.util.PermissionUtils;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
@@ -94,9 +96,47 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
+        PermissionUtils.requestMultiPermissions(this,mPermissionGrant);
 
     }
+
+    private PermissionUtils.PermissionGrant mPermissionGrant = new PermissionUtils.PermissionGrant() {
+        @Override
+        public void onPermissionGranted(int requestCode) {
+            switch (requestCode) {
+                case PermissionUtils.CODE_RECORD_AUDIO:
+                    Toast.makeText(MainActivity.this, "获取声音权限", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_GET_ACCOUNTS:
+                    Toast.makeText(MainActivity.this, "获取用户权限", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_READ_PHONE_STATE:
+                    Toast.makeText(MainActivity.this, "读取手机状态权限", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_CALL_PHONE:
+                    Toast.makeText(MainActivity.this, "获取打电话权限", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_CAMERA:
+                    Toast.makeText(MainActivity.this, "获取打开相机权限", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_ACCESS_FINE_LOCATION:
+                    Toast.makeText(MainActivity.this, "获取准确定位权限", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_ACCESS_COARSE_LOCATION:
+                    Toast.makeText(MainActivity.this, "获取普通定位权限", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_READ_EXTERNAL_STORAGE:
+                    Toast.makeText(MainActivity.this, "获取读存储卡权限", Toast.LENGTH_SHORT).show();
+                    break;
+                case PermissionUtils.CODE_WRITE_EXTERNAL_STORAGE:
+                    Toast.makeText(MainActivity.this, "获取写存储卡权限", Toast.LENGTH_SHORT).show();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
 
     @Override
     public void onBackPressed() {
@@ -188,4 +228,12 @@ public class MainActivity extends AppCompatActivity
     void goToSnackbar(){
         startActivity(new Intent(this,SnackBarActivity.class));
     }*/
+
+    @Override
+    public void onRequestPermissionsResult(final int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        PermissionUtils.requestPermissionsResult(this, requestCode, permissions, grantResults, mPermissionGrant);
+
+    }
+
 }
