@@ -79,7 +79,7 @@ public class CarNumberInfoDao {
         }
 
         if (carNumber != null && carNumber.trim().length() >= 1) {
-			sbInner.append("and car_number like '%").append(carNumber).append("%' ");
+			sbInner.append("and car_number like '%").append(carNumber.trim()).append("%' ");
         }
 
         if ("未上报".equals(isReported)) {
