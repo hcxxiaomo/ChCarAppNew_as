@@ -17,7 +17,7 @@ public class MyDbHelper extends SQLiteOpenHelper {
 //					 + ") ";
 			"CREATE TABLE t_carnumber_info (" 
 					 + "  _id integer  primary key," 
-					 + "  car_number varchar(20) UNIQUE," 
+					 + "  car_number varchar(20),"
 					 + "  color varchar(5) ,"
 					 + "  maker varchar(20) ,"
 					 + "  type varchar(50) ," 

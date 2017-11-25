@@ -78,7 +78,7 @@ public class CarNumberInfoDao {
             sbInner.append("and is_legal_car = 1 ");
         }
 
-        if (carNumber != null && carNumber.trim().length() > 1) {
+        if (carNumber != null && carNumber.trim().length() >= 1) {
 			sbInner.append("and car_number like '%").append(carNumber).append("%' ");
         }
 
