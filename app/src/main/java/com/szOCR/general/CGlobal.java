@@ -43,6 +43,7 @@ public class CGlobal
 	
 	public static 	int 			g_provinceId = 0;
 	public static 	int 			g_runMode = Defines.RUNMODE_NONRECORD;
+	public static 	int 			g_keyMode = Defines.KEY_USE;
 	
 	
 	public static 	int				g_iFrameRotation=0;

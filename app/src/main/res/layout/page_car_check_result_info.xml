@@ -1,316 +1,318 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-       android:paddingTop="30sp"
-       android:orientation="vertical"
-       android:background="@color/background_white_color"
-     >
-    
-    <TextView 
+    android:layout_height="match_parent"
+    android:background="@color/background_white_color"
+    android:orientation="vertical"
+    android:paddingTop="10sp">
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="@string/compare_result"
-        android:textSize="18sp"
-        android:textColor="@color/white_color"
         android:background="@color/main_color"
         android:gravity="center"
         android:paddingBottom="8sp"
-        />
+        android:text="@string/compare_result"
+        android:textColor="@color/white_color"
+        android:textSize="18sp" />
     <!--  <LinearLayout 
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         >
      </LinearLayout> -->
-     
-      <TextView 
-	                 android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	         android:gravity="center_horizontal"
-	        android:text="识别时间：2017-04-23 12:12:12    比对时间：2017-04-23 12:13:15"
-	        android:background="@color/back_ground"
-	        android:id="@+id/history_result_time"
-	        android:textSize="11sp"
-	         
-	                />
-    
-    <LinearLayout 
-        android:orientation="horizontal"
+
+    <TextView
+        android:id="@+id/history_result_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/back_ground"
+        android:gravity="center_horizontal"
+        android:text=""
+        android:textSize="14sp"
+        />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20sp"
         android:layout_marginTop="16sp"
-        >
-     <!-- 查询结果显示区域 -->
-           <ImageView
-               android:id="@+id/car_info_pic_image_id"
-        android:layout_width="120sp"
-        android:layout_height="160sp"
-        android:paddingLeft="5sp"
-        android:contentDescription="@string/hello_world"
-        android:src="@drawable/ic_launcher"
-         />
+        android:orientation="horizontal">
+        <!-- 查询结果显示区域 -->
+        <ImageView
+            android:id="@+id/car_info_pic_image_id"
+            android:layout_width="280sp"
+            android:layout_height="200sp"
+            android:contentDescription="@string/hello_world"
+            android:padding="5sp"
+            android:src="@drawable/ic_launcher" />
 
-           <!-- 右边文字 -->
-	    <LinearLayout
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="vertical"
-	        android:paddingLeft="8sp" >
-	        
-	        <!-- 车牌号 -->
-	        <LinearLayout 
-	            android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	            >
-	            <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/compare_car_number"
-	                />
-	             <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:id="@+id/history_result_number"
-	        android:text=""
-	                />
-	        </LinearLayout>
-	         <!-- 车辆类型 -->
-	        <LinearLayout 
-	            android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	         android:paddingTop="8sp"
-	            >
-	            <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/compare_car_carType"
-	                />
-	             <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	         android:textColor="@color/color_black"
-	         android:id="@+id/history_result_carType"
-	        android:text=""
-	                />
-	        </LinearLayout>
-	        <!-- 车身颜色 -->
-	        <LinearLayout 
-	            android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	         android:paddingTop="8sp"
-	            >
-	            <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/compare_car_color"
-	                />
-	             <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:id="@+id/history_result_color"
-	        android:text=""
-	                />
-	        </LinearLayout>
-	        <!-- 制造厂商 -->
-	        <LinearLayout 
-	            android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	         android:paddingTop="8sp"
-	            >
-	            <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/compare_car_maker"
-	       
-	                />
-	             <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	         android:id="@+id/history_result_maker"
-	        android:text=""
-	                />
-	        </LinearLayout>
-	        <!-- 车辆型号 -->
-	        <LinearLayout 
-	            android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	         android:paddingTop="8sp"
-	            >
-	            <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/compare_car_type"
-	                />
-	             <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:id="@+id/history_result_type"
-	        android:text=""
-	                />
-	        </LinearLayout>
-	        <!-- 车架号 -->
-	        <LinearLayout 
-	            android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	         android:paddingTop="8sp"
-	            >
-	            <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/compare_car_vin"
-	                />
-	             <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:id="@+id/history_result_vin"
-	        android:text=""
-	                />
-	        </LinearLayout>
-	        <!-- 发动机号 -->
-	        <LinearLayout 
-	            android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	         android:paddingTop="8sp"
-	            >
-	            <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/compare_car_engine"
-	                />
-	             <TextView 
-	                 android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:id="@+id/history_result_engine"
-	        android:text=""
-	                />
-	        </LinearLayout>
+        <!-- 右边文字 -->
+        <LinearLayout
+            android:layout_width="280sp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20sp"
+            android:paddingTop="20sp">
+
+            <!-- 车牌号 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/compare_car_number" />
+
+                <TextView
+                    android:id="@+id/history_result_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_black"
+                    android:text="" />
+            </LinearLayout>
+            <!-- 车辆类型 -->
+             <LinearLayout
+                 android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+              android:paddingTop="12sp"
+                 >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/compare_car_carType" />
+
+            <TextView
+                android:id="@+id/history_result_carType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textColor="@color/color_black" />
+            </LinearLayout>
+            <!-- 车身颜色 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="12sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/compare_car_color" />
+
+                <TextView
+                    android:id="@+id/history_result_color"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_black"
+                    android:text="" />
+            </LinearLayout>
+            <!-- 制造厂商 -->
+             <LinearLayout
+                 android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+              android:paddingTop="12sp"
+                 >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/compare_car_maker"
+
+                />
+
+            <TextView
+                android:id="@+id/history_result_maker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:text="" />
+             </LinearLayout>
+            <!-- 车辆型号 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="12sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/compare_car_type" />
+
+                <TextView
+                    android:id="@+id/history_result_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_black"
+                    android:text="" />
+            </LinearLayout>
+            <!-- 车架号 -->
+             <LinearLayout
+                 android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:orientation="horizontal"
+              android:paddingTop="12sp"
+                 >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/compare_car_vin" />
+
+            <TextView
+                android:id="@+id/history_result_vin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_black"
+                android:text="" />
+             </LinearLayout>
+            <!-- 发动机号 -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="12sp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/compare_car_engine" />
+
+                <TextView
+                    android:id="@+id/history_result_engine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_black"
+                    android:text="" />
+            </LinearLayout>
         </LinearLayout>
-       </LinearLayout>
-       
-      <!-- 比对结果 -->
-	     <LinearLayout 
-	            android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	        android:layout_marginTop="16sp"
-	        android:layout_marginLeft="5sp"
-	        android:layout_marginRight="5sp"
-	      android:background="@color/back_ground"
-	         >
-	        <TextView 
-	        android:layout_width="240sp"
-	        android:layout_height="wrap_content"
-	        android:id="@+id/history_result_str"
-	        android:text="比对结果："
-	        android:textColor="@color/red_color"
-	        android:lineSpacingMultiplier="1.5"
-	            />
 
-	        <Button
-	            android:layout_width="90sp"
-	            android:layout_height="30sp"
-	            android:layout_marginLeft="10sp"
-	            android:id="@+id/show_car_owner_info_btn"
-	            android:gravity="center_horizontal"
-	            android:layout_gravity="center_vertical"
-	            android:textSize="10sp"
-	            android:background="@drawable/linearlayout_boder"
-	            android:text="@string/show_car_owner_info" />
 
-	     </LinearLayout>
-	       <TextView 
-	           android:visibility="invisible"
-	           android:id="@+id/show_car_owner_info_txt"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="16sp"
-	        android:layout_marginLeft="5sp"
-	        android:layout_marginRight="5sp"
-	        android:padding="5sp"
-	        android:lineSpacingMultiplier="1.5"
-	        android:background="@drawable/textview_border_without_backcolor"
-	        android:text="车主姓名：XXXX   \n 身份证号：XXXX"
-	           />
-
-	<ProgressBar
-		android:id="@+id/car_check_process_bar"
-		style="@android:style/Widget.ProgressBar.Horizontal"
-		android:max="120"
-		android:progress="0"
-		android:visibility="gone"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"/>
-
-	<TextView
-		android:id="@+id/car_check_tv_progress"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center_horizontal"
-		android:gravity="center_horizontal"
-		android:visibility="gone"
-		/>
-	           
-	       <LinearLayout
-	           android:layout_width="wrap_content"
-	           android:layout_height="wrap_content"
-	           android:orientation="horizontal"
-	            android:layout_marginTop="14sp"
-	        android:layout_marginLeft="5sp"
-	        android:layout_marginRight="5sp"
-	            >
-			<Button 
-			    android:id="@+id/show_car_need_upload_btn"
-			      android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:paddingLeft="10sp"
-	        android:paddingRight="10sp"
-	            android:background="@drawable/linearlayout_boder"
-	        android:text="@string/compare_need_upload_info"
-			    />
-			
-			<TextView 
-			     android:id="@+id/show_car_had_upload_txt"
-			     android:layout_width="wrap_content"
-	          android:layout_height="40dp"
-	           android:textSize="20sp"
-	           android:visibility="gone"
-	            android:gravity="center_vertical"
-	           android:text="@string/compare_had_upload_info"
-			    />
-			
-			<ImageView
-			    android:layout_width="40dp"
-			    android:layout_height="40dp"
-			    android:layout_marginLeft="60sp"
-			    android:layout_marginTop="4sp"
-			    android:src="@drawable/icon_play_video" />
-			<TextView 
-			     android:layout_width="wrap_content"
-	           android:id="@+id/show_car_record_has"
-	           android:layout_height="40dp"
-	            android:gravity="center_vertical"
-	            android:textSize="20sp"
-	           android:text="@string/compare_record_no"
-			    />
-
-			</LinearLayout>
+    <!-- 比对结果 -->
     <LinearLayout
-android:layout_width="match_parent"
-android:layout_height="0dp"
-android:layout_gravity="bottom"
-android:layout_weight="0.1"
-android:gravity="bottom"
-android:orientation="vertical" >
-			<Button
+        android:layout_width="280sp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="5sp"
+        android:layout_marginTop="16sp"
+        android:layout_marginLeft="20sp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/history_result_str"
+            android:layout_width="240sp"
+            android:layout_height="wrap_content"
+            android:lineSpacingMultiplier="1.5"
+            android:text="比对结果："
+            android:textColor="@color/red_color" />
+
+        <!--<Button
+            android:id="@+id/show_car_owner_info_btn"
+            android:layout_width="90sp"
+            android:layout_height="30sp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10sp"
+            android:background="@drawable/linearlayout_boder"
+            android:gravity="center_horizontal"
+            android:text="@string/show_car_owner_info"
+            android:textSize="10sp" />-->
+
+        <TextView
+            android:id="@+id/show_car_owner_info_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20sp"
+            android:layout_marginRight="5sp"
+            android:layout_marginTop="10sp"
+            android:background="@drawable/textview_border_without_backcolor"
+            android:lineSpacingMultiplier="1.5"
+            android:padding="20sp"
+            android:text=""
+             />
+
+    </LinearLayout>
+
+
+   <LinearLayout
+       android:layout_width="280sp"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+    <ProgressBar
+        android:id="@+id/car_check_process_bar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:max="120"
+        android:progress="0"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/car_check_tv_progress"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5sp"
+        android:layout_marginRight="5sp"
+        android:layout_marginTop="14sp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/show_car_need_upload_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/linearlayout_boder"
+            android:paddingLeft="10sp"
+            android:paddingRight="10sp"
+            android:text="@string/compare_need_upload_info" />
+
+        <TextView
+            android:id="@+id/show_car_had_upload_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:text="@string/compare_had_upload_info"
+            android:textSize="20sp"
+            android:visibility="gone" />
+
+        <!--<ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="60sp"
+            android:layout_marginTop="4sp"
+            android:src="@drawable/icon_play_video" />
+        <TextView
+             android:layout_width="wrap_content"
+           android:id="@+id/show_car_record_has"
+           android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:textSize="20sp"
+           android:text="@string/compare_record_no"
+            />-->
+
+    </LinearLayout>
+
+   </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom"
+        android:layout_weight="0.1"
+        android:gravity="bottom"
+        android:orientation="vertical" >
+        <Button
             android:id="@+id/compare_button_ok"
             android:layout_width="fill_parent"
             android:layout_height="40dp"
@@ -319,6 +321,6 @@ android:orientation="vertical" >
             android:layout_gravity="bottom"
             android:gravity="center"
             android:text="@string/ok" />
-</LinearLayout>
-          
+    </LinearLayout>
+
 </LinearLayout>

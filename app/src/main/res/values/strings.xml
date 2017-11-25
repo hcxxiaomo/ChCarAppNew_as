@@ -40,7 +40,7 @@
     <string name="illegal_action_title_7">违反警告标志指示 1090</string>
 
     <string name="address_et_input">请输入详细地址信息</string>
-    <string name="check_car_type">查车方式</string>
+    <string name="check_car_type">查询条件</string>
     <string name="choose_addrss">请单击此处选择地区</string>
     <string name="car_check">车辆缉查</string>
     <string name="car_illegal">违法抓拍</string>

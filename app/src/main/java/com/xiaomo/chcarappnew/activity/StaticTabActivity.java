@@ -38,13 +38,13 @@ public class StaticTabActivity  extends AppCompatActivity implements View.OnClic
 	 */
 	private void init() {
 		text1 = (TextView) findViewById(R.id.text1);
-		text2 = (TextView) findViewById(R.id.text2);
+		//text2 = (TextView) findViewById(R.id.text2);
 
 		tab1Layout = (LinearLayout) findViewById(R.id.tab1_layout);
 		tab2Layout = (LinearLayout) findViewById(R.id.tab2_layout);
 
 		text1.setOnClickListener(this);
-		text2.setOnClickListener(this);
+		//text2.setOnClickListener(this);
 		//
 		setDefaultFragment();
 	}
@@ -94,11 +94,11 @@ public class StaticTabActivity  extends AppCompatActivity implements View.OnClic
 				}
 				replaceFragment(tab1Fragment);
 				//tab1Layout.setBackgroundColor(Color.BLUE);
-				text1.setBackgroundResource(R.drawable.textview_sharp);
-				text2.setBackgroundResource(0);
+				/*text1.setBackgroundResource(R.drawable.textview_sharp);
+				text2.setBackgroundResource(0);*/
 				//index = 1;
 				break;
-			case R.id.text2:
+			/*case R.id.text2:
 				if (tab2Fragment == null) {
 					tab2Fragment = new Fragment2();
 				}
@@ -107,7 +107,7 @@ public class StaticTabActivity  extends AppCompatActivity implements View.OnClic
 				text2.setBackgroundResource(R.drawable.textview_sharp);
 				text1.setBackgroundResource(0);
 				//index = 2;
-				break;
+				break;*/
 		}
 
 	}

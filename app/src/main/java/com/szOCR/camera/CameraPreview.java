@@ -38,6 +38,10 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     private static final String CAMERA_PARAM_ORIENTATION = "orientation";
     private static final String CAMERA_PARAM_LANDSCAPE = "landscape";
     private static final String CAMERA_PARAM_PORTRAIT = "portrait";
+    private static final int MIN_PREVIEW_PIXELS = 640*480; // normal screen
+    private static final int MAX_PREVIEW_PIXELS = 1440*1080; // normal screen
+    private static final int REQ_PREVIEW_PIXELS = 800*600; // normal screen
+
     //protected Activity mActivity;
     protected ScanActivity mActivity;
     
@@ -307,7 +311,6 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 	    // Start the autofocus operation
 	}
     /**
-     * @param cameraParams
      * @param portrait
      * @param reqWidth must be the value of the parameter passed in surfaceChanged
      * @param reqHeight must be the value of the parameter passed in surfaceChanged
@@ -341,15 +344,21 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
         }
 
         // Adjust surface size with the closest aspect-ratio
-       double reqRatio =((double) 1280);//800);//640);//reqPreviewWidth);// ((double) reqPreviewWidth) / reqPreviewHeight;
-       double curRatio, deltaRatio;
-        double deltaRatioMin = Float.MAX_VALUE;
+       //double reqRatio =((double) 1280);//800);//640);//reqPreviewWidth);// ((double) reqPreviewWidth) / reqPreviewHeight;
+        float reqRatio = ((float) reqPreviewWidth) / reqPreviewHeight;
+        float curRatio, deltaRatio;
+        float deltaRatioMin = Float.MAX_VALUE;
+        int pixelnum;
         Camera.Size retSize = null;
         for (Camera.Size size : mPreviewSizeList) 
         {
             //curRatio = ((double) size.width) / size.height;
             //deltaRatio = Math.abs(reqRatio - curRatio);
-        	curRatio = ((double) size.width);
+            pixelnum = size.width*size.height;
+            if(pixelnum<=MIN_PREVIEW_PIXELS || pixelnum>=MAX_PREVIEW_PIXELS) continue;
+
+        	//curRatio = ((double) size.width);
+            curRatio = ((float) size.width) / size.height;
             deltaRatio = Math.abs(reqRatio - curRatio);
             if (deltaRatio < deltaRatioMin) 
             {
@@ -518,8 +527,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
     		{ // back-facing
     			resultAngle = (info.orientation - degrees + 360) % 360;
     		}
-    		mCamera.setDisplayOrientation(resultAngle);
-    		CGlobal.g_iFrameRotation = resultAngle;
+    		/*mCamera.setDisplayOrientation(resultAngle);
+    		CGlobal.g_iFrameRotation = resultAngle;*/
             Log.v(LOG_TAG, "angle: " + resultAngle);
 
         }
@@ -732,8 +741,8 @@ public class CameraPreview extends SurfaceView implements SurfaceHolder.Callback
 		if (rawResult != null) 
 		{		
 			//save recoged image;
-			Bitmap recogBitmap = CGlobal.getColorOrgBitmap(data, width, height);
-			Bitmap rotateBitmap = CGlobal.RotateBitmap(recogBitmap,(float)rot);
+			/*Bitmap recogBitmap = CGlobal.getColorOrgBitmap(data, width, height);
+			Bitmap rotateBitmap = CGlobal.RotateBitmap(recogBitmap,(float)rot);*/
 //			CGlobal.SaveRecogBitmap("", rotateBitmap);
 			
 			//notify recog success to activity

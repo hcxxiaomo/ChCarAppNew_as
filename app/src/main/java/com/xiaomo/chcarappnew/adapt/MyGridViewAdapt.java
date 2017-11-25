@@ -20,8 +20,8 @@ public class MyGridViewAdapt extends BaseAdapter {
 		this.mContext = mContext;
 	}
 
-	private String[] img_text = {"车辆缉查","违法抓拍取证","白名单","统计","车载"};
-	private int[] imgs = {R.drawable.icon_new_2,R.drawable.icon_new_1,R.drawable.icon_new_3,R.drawable.icon_new_4,R.drawable.icon_new_5};
+	private String[] img_text = {"车辆缉查","白名单","统计","车载"};
+	private int[] imgs = {R.drawable.icon_new_2,R.drawable.icon_new_3,R.drawable.icon_new_4,R.drawable.icon_new_5};
 	
 	@Override
 	public int getCount() {

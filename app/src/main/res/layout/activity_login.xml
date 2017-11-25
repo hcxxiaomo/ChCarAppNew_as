@@ -6,25 +6,25 @@
     android:fitsSystemWindows="true"
     android:background="@drawable/login_bg" >
    
-     <RelativeLayout
+    <!-- <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="120dp"
-        
+        android:visibility="gone"
          >
         <ImageView 
             android:layout_width="120sp"
         android:layout_height="120sp"
         android:src="@drawable/china_police_icon"
             />
-        </RelativeLayout>
+        </RelativeLayout>-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="70dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
          >
@@ -41,7 +41,7 @@
     </RelativeLayout>
     <RelativeLayout
         android:background="@color/gray_ground_color"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="110dp"
         android:id="@+id/login_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

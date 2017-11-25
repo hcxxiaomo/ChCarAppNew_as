@@ -82,15 +82,15 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                if (position == 3) {
+                if (position == 2) {
                     intent = new Intent(MainActivity.this, StaticTabActivity.class);
                     startActivity(intent);
                 }else if(position == 0){
                     intent = new Intent(MainActivity.this, ScanActivity.class);
                     startActivity(intent);
-                } else if(position == 1){
+               /* } else if(position == 1){
                     intent = new Intent(MainActivity.this, ScanIllegalActivity.class);
-                    startActivity(intent);
+                    startActivity(intent);*/
                 }
 
             }

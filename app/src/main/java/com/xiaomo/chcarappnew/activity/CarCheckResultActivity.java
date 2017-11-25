@@ -39,7 +39,7 @@ public class CarCheckResultActivity extends Activity {
 	private Long serverCarId;
 
 	private Button ok;
-	private Button show_car_owner_info_btn;
+	//private Button show_car_owner_info_btn;
 	private Button show_car_need_upload_btn;
 	private TextView show_car_owner_info_txt;
 
@@ -53,7 +53,7 @@ public class CarCheckResultActivity extends Activity {
 	private TextView history_result_str;
 	private TextView history_result_carType;
 	private TextView show_car_had_upload_txt;
-	private TextView show_car_record_has;
+	//private TextView show_car_record_has;
 
 	private MyDbHelper myDbHelper;
 	private CarNumberInfoDao carNumberInfoDao;
@@ -77,10 +77,10 @@ public class CarCheckResultActivity extends Activity {
         history_result_str =  (TextView) findViewById(R.id.history_result_str);
         history_result_carType =  (TextView) findViewById(R.id.history_result_carType);
         show_car_had_upload_txt =  (TextView) findViewById(R.id.show_car_had_upload_txt);
-        show_car_record_has =  (TextView) findViewById(R.id.show_car_record_has);
+        //show_car_record_has =  (TextView) findViewById(R.id.show_car_record_has);
 
         ok = (Button) findViewById(R.id.compare_button_ok);
-        show_car_owner_info_btn = (Button) findViewById(R.id.show_car_owner_info_btn);
+        //show_car_owner_info_btn = (Button) findViewById(R.id.show_car_owner_info_btn);
         show_car_need_upload_btn = (Button) findViewById(R.id.show_car_need_upload_btn);
 
         myDbHelper = new MyDbHelper(this, "db_car_number", 1);
@@ -95,12 +95,12 @@ public class CarCheckResultActivity extends Activity {
             }
         });
 
-        show_car_owner_info_btn.setOnClickListener(new OnClickListener() {
+       /* show_car_owner_info_btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 show_car_owner_info_txt.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
 
         //从数据库中查询到数据
         final CarNumberInfo ci =  carNumberInfoDao.query(CGlobal.chriId);
@@ -188,10 +188,10 @@ public class CarCheckResultActivity extends Activity {
                     });
                 }});
         }
-        if (ci.getVideo() != null){
+       /* if (ci.getVideo() != null){
             show_car_record_has.setText(R.string.compare_record_play);
             show_car_record_has.setTextColor(Color.RED);
-        }
+        }*/
         //车主信息部分
         StringBuilder sb = new StringBuilder();
         sb.append("车主姓名：")
