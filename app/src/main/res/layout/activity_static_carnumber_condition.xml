@@ -21,6 +21,7 @@
         android:id="@+id/sn_static_condition_action"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:spinnerMode="dialog"
         />
     </LinearLayout>
     <LinearLayout 
@@ -36,7 +37,7 @@
     
     <EditText
         android:id="@+id/et_static_condition_carnumber"
-           android:layout_width="match_parent"
+           android:layout_width="240sp"
     android:layout_height="wrap_content"
     android:inputType="text"
         />
@@ -92,6 +93,7 @@
         android:id="@+id/sn_static_condition_upload"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:spinnerMode="dialog"
         />
 
     </LinearLayout>
