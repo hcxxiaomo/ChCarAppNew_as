@@ -320,7 +320,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         //soundPool= new SoundPool(2,AudioManager.STREAM_SYSTEM,5);//第二行将soundPool实例化，第一个参数为soundPool可以支持的声音数量，这决定了Android为其开设多大的缓冲区，第二个参数为声音类型，在这里标识为系统声音，除此之外还有AudioManager.STREAM_RING以及AudioManager.STREAM_MUSIC等，系统会根据不同的声音为其标志不同的优先级和缓冲区，最后参数为声音品质，品质越高，声音效果越好，但耗费更多的系统资源。
         //soundPool.load(this,R.raw.illegal,1);//系统为soundPool加载声音，第一个参数为上下文参数，第二个参数为声音的id，一般我们将声音信息保存在res的raw文件夹下，如下图所示。
         defaultAddressSp =  getSharedPreferences("default_address",MODE_PRIVATE);
-        default_address.setText(sp.getString("default_address","广东深圳市福田区默认地址"));
+        default_address.setText(defaultAddressSp.getString("default_address","广东深圳市福田区默认地址"));
 
         initDatas();
         //得到控件

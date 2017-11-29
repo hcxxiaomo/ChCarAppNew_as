@@ -1,8 +1,5 @@
 package com.xiaomo.chcarappnew.adapt;
 
-import com.xiaomo.chcarappnew.R;
-import com.xiaomo.chcarappnew.util.BaseViewHolder;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.xiaomo.chcarappnew.R;
+import com.xiaomo.chcarappnew.util.BaseViewHolder;
 
 public class MyGridViewAdapt extends BaseAdapter {
 
@@ -20,8 +20,8 @@ public class MyGridViewAdapt extends BaseAdapter {
 		this.mContext = mContext;
 	}
 
-	private String[] img_text = {"车辆缉查","违法抓拍取证","白名单","统计","车载"};
-	private int[] imgs = {R.drawable.icon_new_2,R.drawable.icon_new_1,R.drawable.icon_new_3,R.drawable.icon_new_4,R.drawable.icon_new_5};
+	private String[] img_text = {"车辆缉查","违法抓拍取证","白名单","统计"};
+	private int[] imgs = {R.drawable.icon_new_2,R.drawable.icon_new_1,R.drawable.icon_new_3,R.drawable.icon_new_4};
 	
 	@Override
 	public int getCount() {
