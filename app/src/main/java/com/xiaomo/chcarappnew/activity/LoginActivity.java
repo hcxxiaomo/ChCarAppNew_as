@@ -1,26 +1,16 @@
 package com.xiaomo.chcarappnew.activity;
 
-import org.apache.http.Header;
-import org.json.JSONObject;
-
-
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import com.xiaomo.chcarappnew.R;
-import com.xiaomo.util.RestClient;
-
-
 import android.app.Activity;
-import android.os.Bundle;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +20,8 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.xiaomo.chcarappnew.R;
 
 
 public class LoginActivity  extends Activity  implements OnClickListener,OnLongClickListener {
@@ -49,7 +41,7 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 	public final static int PASS_ERROR=0x03;      //注册完毕了
 	public final static int NAME_ERROR=0x04;      //注册完毕了
 
-    private SharedPreferences 	networkPrefs;
+    //private SharedPreferences 	networkPrefs;
 
 	final Handler UiMangerHandler = new Handler(){
 		@Override
@@ -120,7 +112,7 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 		//  coutryName.setText(coutry_name_array[selectIndex]);    //默认为1
 		//  coutry_phone_sn.setText("+"+coutry_phone_sn_array[selectIndex]);
 
-        networkPrefs = this.getSharedPreferences("network_set", Activity.MODE_PRIVATE);
+        //networkPrefs = this.getSharedPreferences("network_set", Activity.MODE_PRIVATE);
 
 	}
 	/**
@@ -204,7 +196,12 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 	 */
 	private void login() {
 
-		Toast.makeText(this, "正在联网登录中...", Toast.LENGTH_SHORT).show();
+
+		if(TextUtils.isEmpty(et_name.getText())){
+            Toast.makeText(this, "请输入警员编号", Toast.LENGTH_SHORT).show();
+            return;
+        }
+		/*Toast.makeText(this, "正在联网登录中...", Toast.LENGTH_SHORT).show();
 		//连接网络得到数据
 		RequestParams params = new RequestParams();
 		params.put("policeId", et_name.getText().toString());
@@ -220,22 +217,22 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 								  JSONObject response) {
 				Log.i("-xiaomo-", "noticePage--->:"+response);
 				if ("success".equals(response.optString("login"))) {
-					JSONObject policeInfo = response.optJSONObject("policeInfo");
+					JSONObject policeInfo = response.optJSONObject("policeInfo");*/
 					Editor edit = LoginActivity.this.getSharedPreferences("userInfo", Activity.MODE_PRIVATE).edit();
-					edit.putString("policeId", policeInfo.optString("policeId"));
-					edit.putString("name", policeInfo.optString("name"));
-					edit.putString("position", policeInfo.optString("position"));
-					edit.putString("jobTitle", policeInfo.optString("jobTitle"));
-					edit.putString("depart", policeInfo.optString("depart"));
-					edit.putString("unit", policeInfo.optString("unit"));
-					edit.putString("telephone", policeInfo.optString("telephone"));
+					edit.putString("policeId", et_name.getText().toString());
+					edit.putString("name", et_name.getText().toString());
+					edit.putString("position", "职位");
+					edit.putString("jobTitle", "jobTitle");
+					edit.putString("depart", "depart");
+					edit.putString("unit", "unit");
+					edit.putString("telephone", "telephone");
 					edit.putString("user", et_name.getText().toString());
 					edit.putString("pass", et_pass.getText().toString());
 					edit.commit();
 					Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 					LoginActivity.this.startActivity(intent);
 					LoginActivity.this.finish();
-				}else{
+				/*}else{
 					Toast.makeText(LoginActivity.this, "用户或密码错误，请重新输入！", Toast.LENGTH_LONG).show();
 				}
 			}
@@ -247,7 +244,7 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 				Toast.makeText(LoginActivity.this, "网络连接错误，请检查网络连接！", Toast.LENGTH_LONG).show();
 			}
 
-		});
+		});*/
 
 	}
 	@Override
