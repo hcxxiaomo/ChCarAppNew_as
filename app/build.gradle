@@ -26,6 +26,7 @@ dependencies {
     //compile files('libs/android-support-v7-recyclerview.jar')
     compile 'com.zxy.android:recovery:0.1.4'
     compile 'com.android.support:design:23.1.1'
+    compile 'com.qmuiteam:qmui:1.0.4'
     //compile 'com.jakewharton:butterknife:7.0.1'
     compile 'org.apache.httpcomponents:httpcore:4.4.2'
     compile files('libs/android-async-http-1.4.8.jar')
@@ -34,4 +35,5 @@ dependencies {
     compile files('libs/libs.jar')
     compile files('libs/ormlite-android-5.0.jar')
     compile files('libs/ormlite-core-5.0.jar')
+
 }
