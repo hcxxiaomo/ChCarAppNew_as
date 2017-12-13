@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.hardware.Camera;
@@ -26,6 +27,7 @@ import com.szOCR.general.Defines;
 import com.szOCR.general.ImageProcessing;
 import com.szOCR.general.VideoEncoderFromBuffer;
 import com.xiaomo.chcarappnew.R;
+import com.xiaomo.util.ImageUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -856,6 +858,8 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
             Matrix matrix = new Matrix();
             matrix.preRotate(90);
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            //TODO 给图片增加水印功能
+            bitmap = ImageUtil.drawTextsToLeftBottom(mActivity, bitmap, new String[]{"时间：2017","地点：深圳南山区","人物：涛歌","事件：什么事情发生了？"}, 26, Color.WHITE, 0, 30);
             // 创建并保存图片文件
             File dir = new File(Environment.getExternalStorageDirectory().toString(), "/aCarImage/PreviewImages/");
             String szFileName =  CGlobal.getCurTimeString()+".jpg";
@@ -871,7 +875,7 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
             path = pictureFile.getAbsolutePath();
             Log.e("-xiaomo-",path);
             takePicMessage = new Message();
-            takePicMessage.what = R.id.id_recyclerview_horizontal;
+            takePicMessage.what = R.id.timeBtn;
             takePicMessage.obj = path;
             mActivity.getHandler().sendMessage(takePicMessage);
             try {

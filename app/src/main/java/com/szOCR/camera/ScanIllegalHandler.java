@@ -87,7 +87,7 @@ public final class ScanIllegalHandler extends Handler {
 				intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 				mActivity.startActivity(intent);
 				break;
-			case R.id.id_recyclerview_horizontal:
+			case R.id.timeBtn:
 				Log.d(TAG, "保存照片功能");
 				String picturePath = (String) message.obj;
 				mActivity.showPicture(picturePath);

@@ -20,7 +20,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
 import android.os.Vibrator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -46,11 +45,9 @@ import com.szOCR.camera.CameraIllegalPreview;
 import com.szOCR.camera.ScanIllegalHandler;
 import com.szOCR.camera.ViewfinderView;
 import com.szOCR.general.CGlobal;
+import com.xiaomo.button.CountDownTimerButton;
+import com.xiaomo.button.OnButtonFinishListener;
 import com.xiaomo.chcarappnew.R;
-import com.xiaomo.chcarappnew.adapt.GalleryAdapter;
-import com.xiaomo.chcarappnew.adapt.GalleryAdapter.OnItemClickLitener;
-import com.xiaomo.chcarappnew.view.MyRecyclerView;
-import com.xiaomo.chcarappnew.view.MyRecyclerView.OnItemScrollChangeListener;
 import com.xiaomo.db.dao.CarIllegalInfoDao;
 import com.xiaomo.db.model.CarIllegalInfo;
 import com.xiaomo.util.BitmapThumb;
@@ -63,10 +60,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Locale;
 
 public class ScanIllegalActivity extends Activity implements SensorEventListener,View.OnClickListener, OnTouchListener
@@ -183,9 +177,9 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 	int mCameraId;// =2
 
 	//横向ListView选择违法数据信息
-    private MyRecyclerView mRecyclerView;
+    /*private MyRecyclerView mRecyclerView;
     private GalleryAdapter mAdapter;
-    private List<String> mDatas;
+    private List<String> mDatas;*/
 
     private String illegal;
 
@@ -196,6 +190,8 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 
     private ProgressBar progressBar;
     private TextView tv_progress;
+
+	private CountDownTimerButton timeBtn;
 
     public void onCreate(Bundle savedInstanceState) 
     {
@@ -324,20 +320,20 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 
         initDatas();
         //得到控件
-        mRecyclerView = (MyRecyclerView) findViewById(R.id.id_recyclerview_horizontal);
+        //mRecyclerView = (MyRecyclerView) findViewById(R.id.id_recyclerview_horizontal);
         //id_show_title = (TextView) findViewById(R.id.id_show_title);
         //mImg = (ImageView) findViewById(R.id.id_content);
         //设置布局管理器
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        /*LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         selectSp = getSharedPreferences("illegal_action",MODE_PRIVATE);
-        linearLayoutManager.scrollToPosition(sp.getInt("select",0) + 1);
-        mRecyclerView.setLayoutManager(linearLayoutManager);
+        linearLayoutManager.scrollToPosition(sp.getInt("select",0) + 1);*/
+        //mRecyclerView.setLayoutManager(linearLayoutManager);
 
         //设置适配器
-        mAdapter = new GalleryAdapter(this, mDatas);
+        //mAdapter = new GalleryAdapter(this, mDatas);
         //在主Activity中设置监听
-        mAdapter.setOnItemClickLitener(new OnItemClickLitener() {
+        /*mAdapter.setOnItemClickLitener(new OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
                 if (scan_illegal_image_1.getDrawable() != null && scan_illegal_image_2.getDrawable() != null ){
@@ -360,11 +356,27 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
             ;
         });
 
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(mAdapter);*/
 
         progressBar  = (ProgressBar) findViewById(R.id.scan_car_illegal_process_bar);
         tv_progress = (TextView) findViewById(R.id.scan_car_illegal_tv_progress);
-        
+
+
+        timeBtn = (CountDownTimerButton) findViewById(R.id.timeBtn);
+        timeBtn.setDuration(6000);//自动拍照时间间隔
+        timeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(ScanIllegalActivity.this, "倒计时开始", Toast.LENGTH_SHORT).show();
+            }
+        });
+        timeBtn.setOnFinishListener(new OnButtonFinishListener() {
+            @Override
+            public void finishAction() {
+                Toast.makeText(ScanIllegalActivity.this, "结束了", Toast.LENGTH_SHORT).show();
+                //tv_test.setText("修改了数据信息呢");
+            }
+        });
     }
 
     public void showPicture(String imagePath){
@@ -389,8 +401,8 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
     }
 
     private void initDatas() {
-        mDatas = new LinkedList<String>(Arrays.asList("不可选择_开始","高速公路逆向行驶_4602","占用应急车道行驶_4608","违反禁令标志提示_1344"
-                ,"不按规定车道行驶_1355","违反禁止标线指示_1230","不按规定倒车_4601","违反警告标志指示_1090","不可选择_结束"));
+        /*mDatas = new LinkedList<String>(Arrays.asList("不可选择_开始","高速公路逆向行驶_4602","占用应急车道行驶_4608","违反禁令标志提示_1344"
+                ,"不按规定车道行驶_1355","违反禁止标线指示_1230","不按规定倒车_4601","违反警告标志指示_1090","不可选择_结束"));*/
     }
 
     @SuppressLint("HandlerLeak")
