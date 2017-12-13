@@ -859,7 +859,7 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
             matrix.preRotate(90);
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
             //TODO 给图片增加水印功能
-            bitmap = ImageUtil.drawTextsToLeftBottom(mActivity, bitmap, new String[]{"时间：2017","地点：深圳南山区","人物：涛歌","事件：什么事情发生了？"}, 26, Color.WHITE, 0, 30);
+            bitmap = ImageUtil.drawTextsToLeftBottom(mActivity, bitmap, new String[]{"时间：2017","地点：深圳南山区","人物：涛歌","事件：什么事情发生了？"}, 12, Color.WHITE, 0, 15);
             // 创建并保存图片文件
             File dir = new File(Environment.getExternalStorageDirectory().toString(), "/aCarImage/PreviewImages/");
             String szFileName =  CGlobal.getCurTimeString()+".jpg";

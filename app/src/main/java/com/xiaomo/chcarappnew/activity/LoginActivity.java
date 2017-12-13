@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.smarttop.library.utils.LogUtil;
 import com.xiaomo.chcarappnew.R;
 
 
@@ -195,10 +196,10 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 	 * 登陆
 	 */
 	private void login() {
+		LogUtil.e("-xiaomo-","et_name.getText()="+et_name.getText());
 
-
-		if(TextUtils.isEmpty(et_name.getText())){
-            Toast.makeText(this, "请输入警员编号", Toast.LENGTH_SHORT).show();
+		if(TextUtils.isEmpty(et_name.getText()) || !"110".equals(et_name.getText().toString())){
+            Toast.makeText(this, "请输入正确的警员编号", Toast.LENGTH_SHORT).show();
             return;
         }
 		/*Toast.makeText(this, "正在联网登录中...", Toast.LENGTH_SHORT).show();

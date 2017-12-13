@@ -104,7 +104,8 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 	private ImageView		imageView_animation1;
 	private ImageView		scan_illegal_image_1;
 	private ImageView		scan_illegal_image_2;
-	
+	private ImageView		scan_illegal_image_3;
+
 	//private SoundPool soundPool;
 //	private AnimationDrawable animationDrawable;
 	
@@ -184,7 +185,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
     private String illegal;
 
 	private Button scan_illegal_save_btn;
-    private String[] images = new String[2];
+    private String[] images = new String[3];
 
     private TextView default_address;
 
@@ -218,13 +219,14 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         imageView_animation1 = (ImageView) findViewById(R.id.imageView_animation1);
         scan_illegal_image_1 = (ImageView) findViewById(R.id.scan_illegal_image_1);
         scan_illegal_image_2 = (ImageView) findViewById(R.id.scan_illegal_image_2);
+        scan_illegal_image_3 = (ImageView) findViewById(R.id.scan_illegal_image_3);
 
         scan_illegal_save_btn = (Button) findViewById(R.id.scan_illegal_save_btn);
 
         default_address = (TextView) findViewById(R.id.default_address);
 
-        scan_illegal_image_1.setOnClickListener(this);
-		scan_illegal_image_2.setOnClickListener(this);
+       /* scan_illegal_image_1.setOnClickListener(this);
+		scan_illegal_image_2.setOnClickListener(this);*/
         scan_illegal_save_btn.setOnClickListener(this);
 
 //        imageView_animation1.setBackgroundResource(R.drawable.gif);
@@ -367,13 +369,14 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         timeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(ScanIllegalActivity.this, "倒计时开始", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ScanIllegalActivity.this, "开始拍照", Toast.LENGTH_SHORT).show();
             }
         });
         timeBtn.setOnFinishListener(new OnButtonFinishListener() {
             @Override
             public void finishAction() {
-                Toast.makeText(ScanIllegalActivity.this, "结束了", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ScanIllegalActivity.this, "3张照片已经完成", Toast.LENGTH_SHORT).show();
+                mCameraPreview.takePhoto();
                 //tv_test.setText("修改了数据信息呢");
             }
         });
@@ -395,8 +398,13 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
                     (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
             );
             images[1] = imagePath;
+        }else if (scan_illegal_image_3.getDrawable() == null){
+            scan_illegal_image_3.setImageBitmap(
+                    (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
+            );
+            images[3] = imagePath;
         }else{
-            Toast.makeText(ScanIllegalActivity.this, "请先点击对应的图片进行删除", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ScanIllegalActivity.this, "请先点击对应的图片进行删除", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -704,7 +712,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 			m_scanHandler.sendEmptyMessage(R.id.restart_preview);
 			if (result.m_szRecogTxt[0].equals(lastCarNumber)) {
 				try {
-					Thread.sleep(1500);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
