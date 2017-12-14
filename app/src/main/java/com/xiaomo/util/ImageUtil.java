@@ -7,6 +7,8 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import java.util.List;
+
 
 /**
  * Created by Stefan on 17/11/20.
@@ -69,6 +71,41 @@ public class ImageUtil {
         for(int i = 0 , len = texts.length;i < len ; i++){
 
             canvas.drawText(texts[i], dp2px(context, paddingLeft),
+                    bitmap.getHeight() - (dp2px(context, paddingBottom) * (i)), paint);
+        }
+        return bitmap;
+    }
+
+/**
+     * 绘制多文字到左下方
+     * @param context
+     * @param bitmap
+     * @param texts
+     * @param size
+     * @param color
+     * @param paddingLeft
+     * @param paddingBottom
+     * @return
+     */
+    public static Bitmap drawTextsToLeftBottom(Context context, Bitmap bitmap, List<String> texts,
+                                               int size, int color, int paddingLeft, int paddingBottom) {
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(color);
+        paint.setTextSize(dp2px(context, size));
+        Rect bounds = new Rect();
+        //paint.getTextBounds(texts[0], 0, texts[0].length(), bounds);
+        android.graphics.Bitmap.Config bitmapConfig = bitmap.getConfig();
+
+        paint.setDither(true); // 获取更清晰的图像采样
+        paint.setFilterBitmap(true);// 过滤一些
+        if (bitmapConfig == null) {
+            bitmapConfig = android.graphics.Bitmap.Config.ARGB_8888;
+        }
+        bitmap = bitmap.copy(bitmapConfig, true);
+        Canvas canvas = new Canvas(bitmap);
+        for(int i = 0 , len = texts.size();i < len ; i++){
+
+            canvas.drawText(texts.get(i), dp2px(context, paddingLeft),
                     bitmap.getHeight() - (dp2px(context, paddingBottom) * (i)), paint);
         }
         return bitmap;

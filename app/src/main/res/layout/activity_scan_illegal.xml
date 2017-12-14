@@ -188,6 +188,7 @@
                 android:background="@drawable/linearlayout_boder"
                 android:gravity="center"
                 android:textColor="@color/color_black"
+                android:visibility="gone"
                 android:text="@string/scan_illegal_save"/>
 
 

@@ -12,6 +12,7 @@ public class CarIllegalInfo {
 	public String address;
 	public String img1;
     public String img2;
+    public String img3;
 	public Integer isReported;
 	public Long serverCarId;
     public String createTime;
@@ -32,7 +33,7 @@ public class CarIllegalInfo {
      */
 
     public CarIllegalInfo(Long _id, String carNumber, String type, String illegalId, String illegalInfo,
-                          String address, String img1, String img2 , Integer isReported, Long serverCarId , String createTime) {
+                          String address, String img1, String img2 ,String img3 ,  Integer isReported, Long serverCarId , String createTime) {
         this._id = _id;
         this.carNumber = carNumber;
         this.type = type;
@@ -41,6 +42,7 @@ public class CarIllegalInfo {
         this.address = address;
         this.img1 = img1;
         this.img2 = img2;
+        this.img3 = img3;
         this.createTime = createTime;
         this.isReported = isReported;
         this.serverCarId = serverCarId;

@@ -54,8 +54,8 @@ public class StaticTabActivity  extends AppCompatActivity implements View.OnClic
 	 */
 	private void setDefaultFragment() {
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
-		tab1Fragment = new Fragment1();
-		transaction.replace(R.id.content_layout, tab1Fragment);
+		tab2Fragment = new Fragment2();
+		transaction.replace(R.id.content_layout, tab2Fragment);
 		transaction.commit();
 	}
 

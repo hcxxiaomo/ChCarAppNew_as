@@ -36,7 +36,7 @@ public class CarIllegalInfoDao {
 	
 
 	public void insert(CarIllegalInfo illegalInfo){
-		String sql = "insert into t_illegal_info values ( null, ?, ? , ?, ? ,?, ? , ?, ? ,? ,?)";
+		String sql = "insert into t_illegal_info values ( null, ?, ? , ?, ? ,?, ? , ? , ?, ? ,? ,?)";
 		Object[] args = new Object[]{
 				illegalInfo.carNumber
 				,illegalInfo.type
@@ -45,6 +45,7 @@ public class CarIllegalInfoDao {
 				,illegalInfo.address
 				,illegalInfo.img1
 				,illegalInfo.img2
+				,illegalInfo.img3
                 ,illegalInfo.isReported
                 ,illegalInfo.serverCarId
                 ,illegalInfo.createTime
@@ -84,7 +85,7 @@ public class CarIllegalInfoDao {
 
 		List<CarIllegalInfo> listCarIllegalInfo = new LinkedList<CarIllegalInfo>();
 		StringBuilder sb = new StringBuilder();
-		sb.append("select _id,car_number,type,illegal_id,illegal_info,address,img1,img2,is_reported,")
+		sb.append("select _id,car_number,type,illegal_id,illegal_info,address,img1,img2,img3,is_reported,")
 				.append("server_carid,create_time  from t_illegal_info  ");
 //		String[] illeagl_item = {"全部","逾期未年审","报废车","黄标车","布控车","违法未处理" };
 //		String[] illeagl_upload_item = {"全部","未上报","已上报" };
@@ -132,9 +133,10 @@ public class CarIllegalInfoDao {
             carIllegalInfo.address = result.getString(5);
             carIllegalInfo.img1 = result.getString(6);
             carIllegalInfo.img2 = result.getString(7);
-            carIllegalInfo.isReported = result.getInt(8);
-            carIllegalInfo.serverCarId = result.getLong(9);
-            carIllegalInfo.createTime = result.getString(10);
+            carIllegalInfo.img3 = result.getString(8);
+            carIllegalInfo.isReported = result.getInt(9);
+            carIllegalInfo.serverCarId = result.getLong(10);
+            carIllegalInfo.createTime = result.getString(11);
             listCarIllegalInfo.add(carIllegalInfo);
         }
         Log.i("-xiaomo-", "-----out----"+listCarIllegalInfo.size());
@@ -180,7 +182,7 @@ public class CarIllegalInfoDao {
     }
 
     public CarIllegalInfo query(Long _id){
-        String sql = "select _id,car_number,type,illegal_id,illegal_info,address,img1,img2,is_reported,server_carid,create_time  from t_illegal_info   where _id = ?";
+        String sql = "select _id,car_number,type,illegal_id,illegal_info,address,img1,img2,img3,is_reported,server_carid,create_time  from t_illegal_info   where _id = ?";
         String[] args = new String[]{
                 String.valueOf(_id)
         };
@@ -195,9 +197,10 @@ public class CarIllegalInfoDao {
             carIllegalInfo.address = result.getString(5);
             carIllegalInfo.img1 = result.getString(6);
             carIllegalInfo.img2 = result.getString(7);
-            carIllegalInfo.isReported = result.getInt(8);
-            carIllegalInfo.serverCarId = result.getLong(9);
-            carIllegalInfo.createTime = result.getString(10);
+            carIllegalInfo.img3 = result.getString(8);
+            carIllegalInfo.isReported = result.getInt(9);
+            carIllegalInfo.serverCarId = result.getLong(10);
+            carIllegalInfo.createTime = result.getString(11);
         }
         return  carIllegalInfo;
     }
