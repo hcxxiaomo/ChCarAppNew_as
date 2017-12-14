@@ -25,7 +25,7 @@ import com.smarttop.library.utils.LogUtil;
 import com.xiaomo.chcarappnew.R;
 
 
-public class LoginActivity  extends Activity  implements OnClickListener,OnLongClickListener {
+public class LoginActivity  extends Activity  implements OnClickListener {
 
 	// 声明控件对象
 	private EditText et_name, et_pass;
@@ -44,7 +44,7 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 
     //private SharedPreferences 	networkPrefs;
 
-	final Handler UiMangerHandler = new Handler(){
+	/*final Handler UiMangerHandler = new Handler(){
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
@@ -64,7 +64,7 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 			}
 			super.handleMessage(msg);
 		}
-	};
+	};*/
 	private Button bt_username_clear;
 	private Button bt_pwd_clear;
 	private Button bt_pwd_eye;
@@ -248,19 +248,19 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 		});*/
 
 	}
-	@Override
+	/*@Override
 	public boolean onLongClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-			/*case R.id.registfer:
+			*//*case R.id.registfer:
 				if(SERVER_FLAG>9){
 
-				}*/
+				}*//*
 				//   SERVER_FLAG++;
 				//break;
 		}
 		return true;
-	}
+	}*/
 
 
 	/**
@@ -270,7 +270,7 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 	 * 在此处返回false,所以会继续传播该事件.
 	 * 在具体项目中此处的返回值视情况而定.
 	 */
-	@Override
+	/*@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if ((keyCode == KeyEvent.KEYCODE_BACK)) {
 			if(isReLogin){
@@ -286,5 +286,5 @@ public class LoginActivity  extends Activity  implements OnClickListener,OnLongC
 		}else {
 			return super.onKeyDown(keyCode, event);
 		}
-	}
+	}*/
 }

@@ -30,6 +30,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -77,7 +78,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
     public  RelativeLayout 	mHomeLayout;
     private Vibrator 		vibrator;
     
-    private RelativeLayout 	mResultLayout;
+    private LinearLayout mResultLayout;
 	private TextView		mTxtViewPreviewSize;
 	private TextView		mTxtViewRecogTime;
 	private TextView		record_car_number;
@@ -247,7 +248,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 //    	car_number =  (TextView)findViewById(R.id.car_number);
 //    	car_illegal =  (TextView)findViewById(R.id.car_illegal);
     	
-        mResultLayout = (RelativeLayout)findViewById(R.id.layoutResult);
+        mResultLayout = (LinearLayout)findViewById(R.id.layoutResult);
         mViewfinderView = (ViewfinderView)findViewById(R.id.viewfinder_view);
         mViewfinderView.setOnTouchListener(this);
         //mResultLayout.setVisibility(View.GONE);
@@ -381,7 +382,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
                 }else {
                     Toast.makeText(ScanIllegalActivity.this, "3张照片已经完成，正在保存", Toast.LENGTH_SHORT).show();
                     //保存到本地数据库
-                    seveInfoToDB();
+					saveInfoToDB();
                     //清除历史数据信息
                     clearUploadStatus();
                 }
@@ -398,8 +399,8 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         设备编号
          */
         waterMarks = new String[5];
-        waterMarks[4] = "设备编号:".concat(CGlobal.g_devicekey);
-        waterMarks[3] = "违法行为:违法停车";
+        waterMarks[0] = "设备编号:".concat(CGlobal.g_devicekey);
+        waterMarks[1] = "违法行为:违法停车";
         waterMarks[2] = "违法地点:".concat(default_address.getText().toString());
     }
 
@@ -410,20 +411,20 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         m_scanHandler.sendEmptyMessage(R.id.restart_preview);
 
         if (scan_illegal_image_1.getDrawable() == null) {
-            scan_illegal_image_1.setImageBitmap(
+			images[0] = imagePath;
+			scan_illegal_image_1.setImageBitmap(
                     (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
             );
-            images[0] = imagePath;
         }else if (scan_illegal_image_2.getDrawable() == null){
-            scan_illegal_image_2.setImageBitmap(
+			images[1] = imagePath;
+			scan_illegal_image_2.setImageBitmap(
                     (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
             );
-            images[1] = imagePath;
         }else if (scan_illegal_image_3.getDrawable() == null){
-            scan_illegal_image_3.setImageBitmap(
+			images[2] = imagePath;
+			scan_illegal_image_3.setImageBitmap(
                     (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
             );
-            images[2] = imagePath;
         }else{
             //Toast.makeText(ScanIllegalActivity.this, "请先点击对应的图片进行删除", Toast.LENGTH_SHORT).show();
         }
@@ -745,8 +746,8 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 
 //			m_bShowPopupResult = true;
 			Log.e("-xiaomo-", "result.m_szRecogTxt[0]="+result.m_szRecogTxt[0]+"lastCarNumber="+lastCarNumber);
-				waterMarks[0] = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(new Date());
-				waterMarks[1] = "违停王("+result.m_szRecogTxt[0]+(")");
+				//waterMarks[4] = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(new Date());
+				waterMarks[3] = "违停王("+result.m_szRecogTxt[0]+(")");
 				if (vibrator != null)
 					vibrator.vibrate(200L);
 				CGlobal.g_RecogResult = result;
@@ -1094,16 +1095,16 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 	  return false;  
 	 }  
 
-    private void seveInfoToDB(){
+    private void saveInfoToDB(){
         carIllegalInfo = new CarIllegalInfo();
         carIllegalInfo.carNumber = record_car_number.getText().toString();
         carIllegalInfo.address = default_address.getText().toString();
         carIllegalInfo.img1 = images[0];
         carIllegalInfo.img2 = images[1];
-        carIllegalInfo.img3 = images[3];
+        carIllegalInfo.img3 = images[2];
         carIllegalInfo.createTime =
                 new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(new Date());
-        String[] illegal_str =  illegal.split("_");
+        //String[] illegal_str =  illegal.split("_");
         carIllegalInfo.illegalId = "110";
         carIllegalInfo.illegalInfo = "违法停车";
         carIllegalInfo.isReported = 0;//现在设置为0，后面再改成已经上传的

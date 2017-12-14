@@ -32,8 +32,11 @@ import com.xiaomo.util.ImageUtil;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * This class assumes the parent layout is RelativeLayout.LayoutParams.
@@ -859,6 +862,7 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
             matrix.preRotate(90);
             bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
             //TODO 给图片增加水印功能
+            mActivity.waterMarks[4] = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(new Date());
             bitmap = ImageUtil.drawTextsToLeftBottom(mActivity, bitmap, mActivity.waterMarks, 12, Color.WHITE, 0, 15);
             // 创建并保存图片文件
             File dir = new File(Environment.getExternalStorageDirectory().toString(), "/aCarImage/PreviewImages/");

@@ -208,6 +208,26 @@ public class PopupWindowCarIllegalResultInfo extends PopupWindow {
 				});
 			}
 		});
+ImageView image3=(ImageView)contentView.findViewById(R.id.car_info_pic_image_id_illegal_3);
+		image3.setImageBitmap(BitmapFactory.decodeFile(ci.img3));
+		image3.setOnClickListener(new OnClickListener() { // 点击放大
+			public void onClick(View paramView) {
+				LayoutInflater inflater = LayoutInflater.from(context);
+				View imgEntryView = inflater.inflate(R.layout.dialog_photo_entry, null); // 加载自定义的布局文件
+				final AlertDialog dialog = new AlertDialog.Builder(context).create();
+				ImageView img = (ImageView)imgEntryView.findViewById(R.id.large_image);
+				img.setImageBitmap(BitmapFactory.decodeFile(ci.img3));
+				//	        imageDownloader.download("图片地址"),img); // 这个是加载网络图片的，可以是自己的图片设置方法
+				dialog.setView(imgEntryView); // 自定义dialog
+				dialog.show();
+				// 点击布局文件（也可以理解为点击大图）后关闭dialog，这里的dialog不需要按钮
+				imgEntryView.setOnClickListener(new OnClickListener() {
+					public void onClick(View paramView) {
+						dialog.cancel();
+					}
+				});
+			}
+		});
 
 
 	}

@@ -35,36 +35,42 @@
 	        android:textSize="11sp"
 	         
 	                />
-    
-    <LinearLayout 
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20sp"
-        android:layout_marginTop="16sp"
-        >
-     <!-- 查询结果显示区域 -->
-           <ImageView
-               android:id="@+id/car_info_pic_image_id_illegal_1"
-        android:layout_width="120sp"
-        android:layout_height="160sp"
-        android:paddingLeft="5sp"
-        android:contentDescription="@string/hello_world"
-        android:src="@drawable/ic_launcher"
-         />
-  <ImageView
-               android:id="@+id/car_info_pic_image_id_illegal_2"
-        android:layout_width="120sp"
-        android:layout_height="160sp"
-        android:paddingLeft="5sp"
-        android:contentDescription="@string/hello_world"
-        android:src="@drawable/ic_launcher"
-         />
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="15sp"
+		android:layout_marginTop="16sp"
+		android:orientation="horizontal">
+		<!-- 查询结果显示区域 -->
+		<ImageView
+			android:id="@+id/car_info_pic_image_id_illegal_1"
+			android:layout_width="120sp"
+			android:layout_height="160sp"
+			android:contentDescription="@string/hello_world"
+			android:paddingLeft="5sp"
+			android:src="@drawable/ic_launcher" />
+
+		<ImageView
+			android:id="@+id/car_info_pic_image_id_illegal_2"
+			android:layout_width="120sp"
+			android:layout_height="160sp"
+			android:contentDescription="@string/hello_world"
+			android:paddingLeft="5sp"
+			android:src="@drawable/ic_launcher" />
+
+<ImageView
+			android:id="@+id/car_info_pic_image_id_illegal_3"
+			android:layout_width="120sp"
+			android:layout_height="160sp"
+			android:contentDescription="@string/hello_world"
+			android:paddingLeft="5sp"
+			android:src="@drawable/ic_launcher" />
 
 
-       </LinearLayout>
+	</LinearLayout>
 
-    <!-- 车牌号 -->
+	<!-- 车牌号 -->
     <LinearLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
