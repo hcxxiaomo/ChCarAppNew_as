@@ -377,6 +377,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
             @Override
             public void finishAction() {
                 mCameraPreview.takePhoto();
+                Log.e("-xiaomo-","timeBtn.setOnFinishListener.images="+images);
                 if (images[0] == null || images[1] == null || images[2] == null){
                     timeBtn.performClick();
                 }else {
@@ -406,9 +407,9 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 
     public void showPicture(String imagePath){
         //String imagePath =  mCameraPreview.takePhoto();
-        //Log.e("-xiaomo-","imagePath="+imagePath);
-        m_bShowPopupResult = false;
-        m_scanHandler.sendEmptyMessage(R.id.restart_preview);
+        Log.e("-xiaomo-","showPicture.images="+images);
+        //m_bShowPopupResult = false;
+        //m_scanHandler.sendEmptyMessage(R.id.restart_preview);
 
         if (scan_illegal_image_1.getDrawable() == null) {
 			images[0] = imagePath;
@@ -1075,7 +1076,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         //完成之后调用允许查车功能
         m_bShowPopupResult = false;
         m_bShowResultDialog = true;
-		m_scanHandler.sendEmptyMessage(R.id.restart_preview);
+		//m_scanHandler.sendEmptyMessage(R.id.restart_preview);
     }
 
     public void showOption(int iOptionPage)
@@ -1112,9 +1113,6 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         carIllegalInfoDao.insert(carIllegalInfo);
     }
 
-    private void clearStatus(){
-
-    }
 
 	private void saveInfoToServer(){
 
@@ -1194,14 +1192,5 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
                 });
 
     }
-
-	private void getCarInfoAndSave(){
-
-
-
-//		Log.i("-xiaomo-", "end--RestClient.post");
-	}
-	
-	
 
 }

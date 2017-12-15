@@ -49,7 +49,7 @@ public final class ScanIllegalHandler extends Handler {
 				m_CameraPreview.autoCameraFocuse();
 				break;
 			case R.id.force_focus:
-				//m_CameraPreview.forceCameraFocuse();
+				m_CameraPreview.forceCameraFocuse();
 				break;
 			case R.id.restart_preview:
 				Log.d(TAG, "Got restart preview message");
