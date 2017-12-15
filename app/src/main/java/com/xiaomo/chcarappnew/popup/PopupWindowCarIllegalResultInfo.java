@@ -124,16 +124,16 @@ public class PopupWindowCarIllegalResultInfo extends PopupWindow {
 
 		history_result_str_illegal.setTextColor(Color.RED);
 
-		history_result_str_illegal.append(ci.illegalId.concat("-").concat(ci.illegalInfo));
+		history_result_str_illegal.append((ci.illegalInfo));
 
-		if (ci.isReported == 1) {
-			show_car_had_upload_txt_illegal.setVisibility(View.VISIBLE);
+		/*if (ci.isReported == 1) {*/
+			show_car_had_upload_txt_illegal.setVisibility(View.INVISIBLE);
 			show_car_need_upload_btn_illegal.setVisibility(View.GONE);
-		}else{
+		/*}else{
 			show_car_need_upload_btn_illegal.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {//上报服务器为isRepored
-					/*RequestParams params = new RequestParams();
+					*//*RequestParams params = new RequestParams();
 					try {
 						File file = new File(ci.img1);
 						params.put("image", file);
@@ -163,9 +163,9 @@ public class PopupWindowCarIllegalResultInfo extends PopupWindow {
 							super.onFailure(statusCode, headers, responseString, throwable);
 						}
 
-					});*/
+					});*//*
 				}});
-		}
+		}*/
 
 		//图片缩略图
 		ImageView image1=(ImageView)contentView.findViewById(R.id.car_info_pic_image_id_illegal_1);

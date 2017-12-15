@@ -23,6 +23,8 @@ import com.szOCR.general.CGlobal;
 import com.xiaomo.chcarappnew.R;
 import com.xiaomo.chcarappnew.adapt.CarIllegalHistoryResultInfoAdapter;
 import com.xiaomo.chcarappnew.popup.PopupWindowCarIllegalResultInfo;
+import com.xiaomo.chcarappnew.popup.PopupWindowSelectCarIllegalCheck;
+import com.xiaomo.chcarappnew.popup.PopupWindowSelectCarNumberCheck;
 import com.xiaomo.db.dao.CarIllegalInfoDao;
 import com.xiaomo.db.model.CarIllegalInfo;
 import com.xiaomo.db.model.PiePojo;
@@ -86,7 +88,7 @@ public class Fragment2 extends Fragment {
     private Button button_fragment1;
     private View newsLayout;
 
-    private Handler mHandler;
+    public Handler mHandler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -282,11 +284,11 @@ public class Fragment2 extends Fragment {
 
         @Override
         public void onClick(View v) {
-           /* if (R.id.check_car_type == v.getId()){
-                Intent i = new Intent(Fragment1.this.mActivity,StaticConditionActivity.class);
-                startActivity(i);
-                StaticActivity.this.finish();
-            }*/
+            if (R.id.check_car_type == v.getId()){
+                //弹出一个弹窗，选择查询条件，然后传回来
+                PopupWindowSelectCarIllegalCheck pscc = new PopupWindowSelectCarIllegalCheck(Fragment2.this.mActivity,Fragment2.this);
+                pscc.showAtLocation(Fragment2.this.mActivity.findViewById(R.id.check_car_type), Gravity.TOP | Gravity.START, 0, 0);
+            }
         }
     }
 

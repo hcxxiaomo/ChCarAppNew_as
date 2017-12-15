@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         />-->
         <Button
-            android:id="@+id/bt_static_condition_action"
+            android:id="@+id/bt_static_condition_action_illegal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/static_condition_action"
@@ -42,7 +42,7 @@
     
     <EditText
         android:id="@+id/et_static_condition_carnumber_illegal"
-           android:layout_width="match_parent"
+           android:layout_width="240sp"
     android:layout_height="wrap_content"
     android:inputType="text"
         />

@@ -88,7 +88,7 @@ public final class ScanIllegalHandler extends Handler {
 				mActivity.startActivity(intent);
 				break;
 			case R.id.timeBtn:
-				Log.d(TAG, "保存照片功能");
+				//Log.d(TAG, "保存照片功能");
 				String picturePath = (String) message.obj;
 				mActivity.showPicture(picturePath);
 				m_CameraPreview.setPreviewCallback(m_CameraPreview);

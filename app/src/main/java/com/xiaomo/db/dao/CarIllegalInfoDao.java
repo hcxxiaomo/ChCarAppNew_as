@@ -90,9 +90,9 @@ public class CarIllegalInfoDao {
 //		String[] illeagl_item = {"全部","逾期未年审","报废车","黄标车","布控车","违法未处理" };
 //		String[] illeagl_upload_item = {"全部","未上报","已上报" };
 		StringBuilder sbInner = new StringBuilder();
-		if (legalType != null && legalType.trim().length() > 1){
+		/*if (legalType != null && legalType.trim().length() > 1){
             sbInner.append("and illegal_id = " + legalType);
-        }
+        }*/
 
 		if (carNumber != null && carNumber.trim().length() >= 1) {
             sbInner.append("and car_number like '%").append(carNumber.trim()).append("%' ");
@@ -150,9 +150,9 @@ public class CarIllegalInfoDao {
 //		String[] illeagl_item = {"全部","逾期未年审","报废车","黄标车","布控车","违法未处理" };
 //		String[] illeagl_upload_item = {"全部","未上报","已上报" };
         StringBuilder sbInner = new StringBuilder();
-        if (legalType != null && legalType.trim().length() > 1){
+       /* if (legalType != null && legalType.trim().length() > 1){
             sbInner.append("and illegal_id = " + legalType);
-        }
+        }*/
 
         if (carNumber != null && carNumber.trim().length() > 1) {
             sbInner.append("and car_number like '%").append(carNumber).append("%' ");

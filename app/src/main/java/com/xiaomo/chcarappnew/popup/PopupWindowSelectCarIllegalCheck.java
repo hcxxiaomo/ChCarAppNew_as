@@ -22,6 +22,7 @@ import android.widget.Spinner;
 
 import com.xiaomo.chcarappnew.R;
 import com.xiaomo.chcarappnew.activity.Fragment1;
+import com.xiaomo.chcarappnew.activity.Fragment2;
 import com.xiaomo.chcarappnew.adapt.SpinnerAdapter;
 
 import java.util.Calendar;
@@ -46,7 +47,7 @@ public class PopupWindowSelectCarIllegalCheck extends PopupWindow {
 
     private Activity mActivity;
 
-	public PopupWindowSelectCarIllegalCheck(final Activity context, final Fragment1 fragment1){
+	public PopupWindowSelectCarIllegalCheck(final Activity context, final Fragment2 fragment2){
         mActivity = context;
 		LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		contentView = inflater.inflate(R.layout.activity_static_carillegal_condition, null);
@@ -76,18 +77,19 @@ public class PopupWindowSelectCarIllegalCheck extends PopupWindow {
         et_static_condition_carnumber = (EditText) contentView.findViewById(R.id.et_static_condition_carnumber_illegal);
         bt_static_condition_starttime = (Button) contentView.findViewById(R.id.bt_static_condition_starttime_illegal);
         bt_static_condition_endtime = (Button) contentView.findViewById(R.id.bt_static_condition_endtime_illegal);
-        bt_static_condition_action = (Button) contentView.findViewById(R.id.bt_static_condition_action);
+        bt_static_condition_action = (Button) contentView.findViewById(R.id.bt_static_condition_action_illegal);
 
-        bt_choose_condition = (Button) contentView.findViewById(R.id.bt_choose_condition);
+        bt_choose_condition = (Button) contentView.findViewById(R.id.bt_choose_condition_illegal);
 
       /*  ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);*/
         //actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer); //修改actionbar左上角返回按钮的图标
 
-        final String[] illeagl_item = {"高速公路逆向行驶_4602","占用应急车道行驶_4608","违反禁令标志提示_1344"
-                ,"不按规定车道行驶_1355","违反禁止标线指示_1230","不按规定倒车_4601","违反警告标志指示_1090"};
-        final String[] illeagl_id = {"4602","4608","1344" ,"1355","1230","4601" ,"1090"};
-        final String[] illeagl_upload_item = {"全部","未上报","已上报" };
+       /* final String[] illeagl_item = {"高速公路逆向行驶_4602","占用应急车道行驶_4608","违反禁令标志提示_1344"
+                ,"不按规定车道行驶_1355","违反禁止标线指示_1230","不按规定倒车_4601","违反警告标志指示_1090"};*/
+        final String[] illeagl_item = {"违法停车_110"};
+        final String[] illeagl_id = {"110"};
+        final String[] illeagl_upload_item = {"全部"};
         //初始化Calendar日历对象
         Calendar mycalendar=Calendar.getInstance();
         year=mycalendar.get(Calendar.YEAR); //获取Calendar对象中的年
@@ -154,8 +156,8 @@ public class PopupWindowSelectCarIllegalCheck extends PopupWindow {
                 data.putString("end_date",bt_static_condition_endtime.getText().toString());
                 data.putString("type",bt_static_condition_action.getText().toString());
                 msg.setData(data);
-                msg.what = 10086;
-                fragment1.mHandler.sendMessage(msg);
+                msg.what = 10010;
+                fragment2.mHandler.sendMessage(msg);
                 PopupWindowSelectCarIllegalCheck.this.dismiss();
                 /*
                 type = intent.getStringExtra("type");

@@ -7,7 +7,9 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.hardware.Camera;
 import android.hardware.Camera.Parameters;
@@ -60,6 +62,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
@@ -377,18 +380,9 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
             @Override
             public void finishAction() {
                 mCameraPreview.takePhoto();
-                Log.e("-xiaomo-","timeBtn.setOnFinishListener.images="+images);
-                if (images[0] == null || images[1] == null || images[2] == null){
-                    timeBtn.performClick();
-                }else {
-                    Toast.makeText(ScanIllegalActivity.this, "3张照片已经完成，正在保存", Toast.LENGTH_SHORT).show();
-                    //保存到本地数据库
-					saveInfoToDB();
-                    //清除历史数据信息
-                    clearUploadStatus();
-                }
-
-                //tv_test.setText("修改了数据信息呢");
+                //showPicture(takeScreenShoot());
+                Log.e("-xiaomo-","timeBtn.setOnFinishListener.images="+ Arrays.toString(images));
+                                //tv_test.setText("修改了数据信息呢");
             }
         });
 
@@ -407,7 +401,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 
     public void showPicture(String imagePath){
         //String imagePath =  mCameraPreview.takePhoto();
-        Log.e("-xiaomo-","showPicture.images="+images);
+        Log.e("-xiaomo-","showPicture.images="+Arrays.toString(images));
         //m_bShowPopupResult = false;
         //m_scanHandler.sendEmptyMessage(R.id.restart_preview);
 
@@ -426,9 +420,21 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 			scan_illegal_image_3.setImageBitmap(
                     (BitmapThumb.extractMiniThumb(BitmapFactory.decodeFile(imagePath), 120, 160, true))
             );
-        }else{
+        //}else{
             //Toast.makeText(ScanIllegalActivity.this, "请先点击对应的图片进行删除", Toast.LENGTH_SHORT).show();
         }
+        if (images[0] == null || images[1] == null || images[2] == null) {
+            timeBtn.performClick();
+        }else {
+            //if (images[0] != null && images[1] != null && images[2] != null){
+                Toast.makeText(ScanIllegalActivity.this, "3张照片已经完成，正在保存", Toast.LENGTH_SHORT).show();
+                //保存到本地数据库
+                saveInfoToDB();
+                //清除历史数据信息
+                clearUploadStatus();
+            //}
+        }
+
     }
 
     private void initDatas() {
@@ -726,25 +732,25 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 	public void returnRecogedData(RecogResult result)//,Bitmap bmImage)
     {
 		//playBeepSoundAndVibrate();
-//		Log.e("-xiaomo-", "m_bShowResultDialog="+m_bShowResultDialog+"-----m_bShowPopupResult="+m_bShowPopupResult);
+		Log.e("-xiaomo-", "returnRecogedData.m_bShowResultDialog="+m_bShowResultDialog+"-----m_bShowPopupResult="+m_bShowPopupResult);
 		//允许拍照功能
-		if(m_bShowResultDialog == true)
+		if(m_bShowResultDialog)
 		{
 			//下面这两行代码是允许查车时调用的代码
 			/*m_bShowPopupResult = false;//TODO 不允许弹出车牌识别窗口，只进行拍照
 			m_scanHandler.sendEmptyMessage(R.id.restart_preview);*/
             //下面是不允许查车时调用的代码
-            m_bShowPopupResult = true;
-            m_bShowResultDialog = false;
-			/*if (result.m_szRecogTxt[0].equals(lastCarNumber)) {
+
+			if (result.m_szRecogTxt[0].equals(lastCarNumber)) {
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 				return;
-            }*/
-
+            }
+            m_bShowPopupResult = true;
+            m_bShowResultDialog = false;
 //			m_bShowPopupResult = true;
 			Log.e("-xiaomo-", "result.m_szRecogTxt[0]="+result.m_szRecogTxt[0]+"lastCarNumber="+lastCarNumber);
 				//waterMarks[4] = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).format(new Date());
@@ -760,7 +766,8 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
 				//保存图片到本地去
 //				CGlobal.carPath =  CGlobal.SaveRecogBitmap("", CGlobal.myEngine.getRecgBitmap());
             mCameraPreview.takePhoto();//拍第一张照片
-            timeBtn.performClick();
+            //showPicture(takeScreenShoot());
+            //timeBtn.performClick();
 //			m_PopupResult.showAtLocation(mViewfinderView, 0, 0);
 //			m_PopupResult.showAtLocation(mViewfinderView, 0, 0);
 		}
@@ -1076,7 +1083,7 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         //完成之后调用允许查车功能
         m_bShowPopupResult = false;
         m_bShowResultDialog = true;
-		//m_scanHandler.sendEmptyMessage(R.id.restart_preview);
+        m_scanHandler.sendEmptyMessage(R.id.restart_preview);
     }
 
     public void showOption(int iOptionPage)
@@ -1113,6 +1120,16 @@ public class ScanIllegalActivity extends Activity implements SensorEventListener
         carIllegalInfoDao.insert(carIllegalInfo);
     }
 
+
+    private String takeScreenShoot(){
+		final Bitmap bitmap = Bitmap.createBitmap(mViewfinderView.getWidth(), mViewfinderView.getHeight(),
+				Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(bitmap);
+		canvas.drawColor(Color.WHITE);
+        mViewfinderView.layout(0, 0, mViewfinderView.getWidth(), mViewfinderView.getHeight());
+        mViewfinderView.draw(canvas);
+		return CGlobal.SaveRecogBitmap("", bitmap);
+	}
 
 	private void saveInfoToServer(){
 

@@ -88,6 +88,8 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
     private  String path = null;;
     private Message takePicMessage ;
 
+    private PicCallback picCallback;
+
     public static enum LayoutMode
     {
         FitToParent, // Scale to the size that no side is larger than the parent
@@ -133,6 +135,8 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
         mPictureSizeList = cameraParams.getSupportedPictureSizes();
         mbHasSurface = false;
         bIsCameraReleased = true;
+        picCallback = new PicCallback(mCamera);
+
     }
 
    public int  setNextCamera(){
@@ -883,7 +887,7 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                 bitmap.recycle();
                 fos.close();
-                Log.i(TAG, "拍摄成功！");
+                Log.e(TAG, "拍摄成功！");
                 Log.e("-xiaomo-",path);
                 takePicMessage = new Message();
                 takePicMessage.what = R.id.timeBtn;
@@ -912,7 +916,7 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
         }
         mWaitForTakePhoto = true;
         try {
-            mCamera.takePicture(null, null, new PicCallback(mCamera));
+            mCamera.takePicture(null, null, picCallback);
         } catch (Exception e) {
            Log.e("-xiaomo-","mCamera.takePicture",e);
         }
