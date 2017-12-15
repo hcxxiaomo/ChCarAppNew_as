@@ -3,6 +3,7 @@ package com.xiaomo.util;
 
 import android.app.Application;
 
+import com.xiaomo.chcarappnew.activity.LoginActivity;
 import com.xiaomo.chcarappnew.activity.MainActivity;
 import com.zxy.recovery.core.Recovery;
 
@@ -24,7 +25,7 @@ public class MyApplication extends Application {
                 .recoverEnabled(true)
                 //.callback(new MyCrashCallback())
                 .silent(false, Recovery.SilentMode.RECOVER_ACTIVITY_STACK)
-                //.skip(TestActivity.class)
+                .skip(LoginActivity.class)
                 .init(this);
     }
 

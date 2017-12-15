@@ -877,17 +877,18 @@ public class CameraIllegalPreview extends SurfaceView implements SurfaceHolder.C
             }
             File pictureFile = new File(dir.getAbsolutePath(), szFileName);
             path = pictureFile.getAbsolutePath();
-            Log.e("-xiaomo-",path);
-            takePicMessage = new Message();
-            takePicMessage.what = R.id.timeBtn;
-            takePicMessage.obj = path;
-            mActivity.getHandler().sendMessage(takePicMessage);
+
             try {
                 FileOutputStream fos = new FileOutputStream(pictureFile);
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
                 bitmap.recycle();
                 fos.close();
                 Log.i(TAG, "拍摄成功！");
+                Log.e("-xiaomo-",path);
+                takePicMessage = new Message();
+                takePicMessage.what = R.id.timeBtn;
+                takePicMessage.obj = path;
+                mActivity.getHandler().sendMessage(takePicMessage);
             } catch (Exception error) {
                 Log.e(TAG, "拍摄失败",error);
                 //error.printStackTrace();
